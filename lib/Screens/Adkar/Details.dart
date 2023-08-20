@@ -8,8 +8,6 @@ import '../../models/sectionDetails.dart';
 import 'cubit/ahadith_state.dart';
 
 class AdkarDetails extends StatelessWidget {
-  static const _extraScrollSpeed = 80; // your "extra" scroll speed
-  final ScrollController _scrollController = ScrollController();
   final String title;
   AdkarDetails({super.key, required this.title});
 

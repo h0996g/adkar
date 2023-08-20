@@ -40,11 +40,16 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   fluttertoast: ^8.2.2
   vibration: ^1.7.5
+  flutter_native_splash: ^2.2.19
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+flutter_native_splash:
+  color: "#31d444"
+  image : "assets/images/quran.png"
+  android: true
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -65,6 +70,7 @@ flutter:
   assets:
     - assets/db/section.json
     - assets/db/sectionDetails.json
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
