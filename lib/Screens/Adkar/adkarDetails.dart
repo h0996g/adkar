@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
 
 // import 'package:vibration/vibration.dart';
-import '../../models/sectionDetails.dart';
+import '../../models/sectionDetailsModel.dart';
 import 'cubit/ahadith_state.dart';
 
 class AdkarDetails extends StatelessWidget {
@@ -26,15 +26,17 @@ class AdkarDetails extends StatelessWidget {
           body: ListView.builder(
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => dikrItem(
-                AhadithCubit.get(context).dataDetails![index], index, context),
-            itemCount: AhadithCubit.get(context).dataDetails!.length,
+                AhadithCubit.get(context).dataAdkarDetails![index],
+                index,
+                context),
+            itemCount: AhadithCubit.get(context).dataAdkarDetails!.length,
           ),
         );
       },
     );
   }
 
-  Widget dikrItem(SectionDetails model, index, context) {
+  Widget dikrItem(SectionDetailsModel model, index, context) {
     return Padding(
       padding: const EdgeInsets.all(13.0),
       child: Column(

@@ -1,16 +1,16 @@
-class SectionDetails {
+class SectionDetailsModel {
   int? sectionId;
   int? count;
   String? description;
   String? reference;
   String? content;
-  SectionDetails(
+  SectionDetailsModel(
       {this.sectionId,
       this.count,
       this.description,
       this.reference,
       this.content});
-  SectionDetails.fromJson(Map<String, dynamic> json) {
+  SectionDetailsModel.fromJson(Map<String, dynamic> json) {
     sectionId = json['section_id'];
     count = json['count'];
     description = json['description'];

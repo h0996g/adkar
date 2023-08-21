@@ -1,4 +1,5 @@
 import 'package:adkar/Screens/Adkar/Adkarhome.dart';
+import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/helper/constant.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,10 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.grey[800],
                   ),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigatAndReturn(
+                          context: context, page: QuranHomeScreen());
+                    },
                     child: Row(
                       children: [
                         Image.asset("assets/images/iconquran.png", height: 35),

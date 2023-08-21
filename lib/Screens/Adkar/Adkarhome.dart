@@ -1,4 +1,4 @@
-import 'package:adkar/Screens/Adkar/Details.dart';
+import 'package:adkar/Screens/Adkar/adkarDetails.dart';
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/models/sectionModel.dart';
 import 'package:adkar/shared/components/components.dart';

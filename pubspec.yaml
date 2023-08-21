@@ -70,6 +70,8 @@ flutter:
   assets:
     - assets/db/section.json
     - assets/db/sectionDetails.json
+    - assets/db/quran/
+    # - assets/db/quran/nameSurah.json
     - assets/images/
 
   # To add assets to your application, add an assets section, like this:

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:adkar/models/sectionDetails.dart';
+import 'package:adkar/models/quranModel.dart';
+import 'package:adkar/models/sectionDetailsModel.dart';
 import 'package:adkar/models/sectionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ class AhadithCubit extends Cubit<AhadithState> {
   AhadithCubit() : super(AhadithInitial());
   static AhadithCubit get(context) => BlocProvider.of(context);
   List<SectionModel>? dataSections = [];
-  List<SectionDetails>? dataDetails = [];
+  List<SectionDetailsModel>? dataAdkarDetails = [];
 
   Future<void> getSectionDb(context) async {
     DefaultAssetBundle.of(context)
@@ -32,12 +33,12 @@ class AhadithCubit extends Cubit<AhadithState> {
     await DefaultAssetBundle.of(context)
         .loadString('assets/db/sectionDetails.json')
         .then((value) {
-      dataDetails = [];
+      dataAdkarDetails = [];
       var body = jsonDecode(value);
       for (var element in body) {
         if (element['section_id'] == id) {
           print(element);
-          dataDetails!.add(SectionDetails.fromJson(element));
+          dataAdkarDetails!.add(SectionDetailsModel.fromJson(element));
         }
       }
     }).catchError((e) {
@@ -46,13 +47,13 @@ class AhadithCubit extends Cubit<AhadithState> {
   }
 
   void readAdkar(int index) {
-    print(dataDetails![index].count);
-    if (dataDetails![index].count! > 1) {
-      dataDetails![index].count = (dataDetails![index].count!) - 1;
+    print(dataAdkarDetails![index].count);
+    if (dataAdkarDetails![index].count! > 1) {
+      dataAdkarDetails![index].count = (dataAdkarDetails![index].count!) - 1;
       emit(ReadAdkarStateGood());
       return;
     } else {
-      dataDetails!.removeAt(index);
+      dataAdkarDetails!.removeAt(index);
       emit(ReadAdkarStateGood());
       return;
     }

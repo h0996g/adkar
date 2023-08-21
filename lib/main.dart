@@ -1,5 +1,6 @@
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/home/home.dart';
+import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,10 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: ((context) => AhadithCubit()..getSectionDb(context)),
+          ),
+          BlocProvider(
+            create: ((context) => QuranCubit()..getQuranData(context)),
+            lazy: false,
           ),
         ],
         child: MaterialApp(
