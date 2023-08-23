@@ -3,10 +3,12 @@ import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -28,6 +30,16 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
             theme: ThemeData(
                 appBarTheme: const AppBarTheme(
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                      // Status bar color
+                      statusBarColor: Colors.black,
+
+                      // Status bar brightness (optional)
+                      statusBarIconBrightness:
+                          Brightness.light, // For Android (dark icons)
+                      statusBarBrightness:
+                          Brightness.dark, // For iOS (dark icons)
+                    ),
                     iconTheme: IconThemeData(color: Colors.black),
                     color: Colors.white,
                     centerTitle: true),

@@ -42,6 +42,8 @@ dependencies:
   vibration: ^1.7.5
   flutter_native_splash: ^2.2.19
   shared_preferences: ^2.2.0
+  workmanager: ^0.5.1
+  flutter_local_notifications: ^15.1.0+1
 
 dev_dependencies:
   flutter_test:

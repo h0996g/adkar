@@ -1,8 +1,9 @@
 import 'package:adkar/Screens/Adkar/Adkarhome.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
-import 'package:adkar/shared/components/helper/constant.dart';
 import 'package:flutter/material.dart';
+
+import '../../notification.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,6 +11,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Noti.showBigTextNotification(
+            title: 'title',
+            body: 'bodyyyy',
+            fln: Noti.flutterLocalNotificationsPlugin);
+      }),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('حصن المسلم'),

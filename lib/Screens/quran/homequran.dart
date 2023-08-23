@@ -21,7 +21,9 @@ class QuranHomeScreen extends StatelessWidget {
             print(QuranCubit.get(context).dataQuranDetails!);
           }),
           appBar: AppBar(
-              title: Text('القران الكريم'), backgroundColor: Colors.black),
+              iconTheme: IconThemeData(color: Colors.white),
+              title: Text('القران الكريم'),
+              backgroundColor: Colors.black),
           body: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 10),
             physics: BouncingScrollPhysics(),

@@ -19,55 +19,99 @@ class AdkarHome extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'أذكار المسلم',
-              style: TextStyle(color: Colors.black),
-            ),
-            centerTitle: true,
+          // appBar: AppBar(
+          //   iconTheme: IconThemeData(color: Colors.white),
+          //   backgroundColor: Colors.black,
+          //   title: const Text(
+          //     'أذكار المسلم',
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          //   centerTitle: true,
+          // ),
+
+          body: ConditionalBuilder(
+            builder: (BuildContext context) {
+              return CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    iconTheme: IconThemeData(
+                      color: Colors.white,
+                    ),
+                    // title: Text('اذكار الصباح'),
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    elevation: 0,
+                    pinned: true,
+                    centerTitle: false,
+                    expandedHeight: 230,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Image(
+                        image: AssetImage("assets/images/2.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => buildItem(
+                            AhadithCubit.get(context).dataSections![index],
+                            context,
+                            index),
+                        childCount:
+                            AhadithCubit.get(context).dataSections!.length),
+                  ),
+                ],
+              );
+
+              //  Column(
+              //   children: [
+              //     Container(
+              //       height: 300,
+              //       width: double.infinity,
+              //       // color: Colors.amber,
+              //       decoration: BoxDecoration(
+              //           image: DecorationImage(
+              //               image: AssetImage("assets/images/2.jpg"),
+              //               fit: BoxFit.cover)),
+              //     ),
+              //     SizedBox(
+              //       height: 10,
+              //     ),
+              //     Expanded(
+              //     child:
+              //      CustomScrollView(
+              //       slivers: [
+              //         SliverAppBar(
+
+              //         )
+              //       ],
+              //     ),
+
+              //       // child: ListView.separated(
+              //       //   physics: const BouncingScrollPhysics(),
+              //       //   itemBuilder: (context, index) => buildItem(
+              //       //       AhadithCubit.get(context).dataSections![index],
+              //       //       context,
+              //       //       index),
+              //       //   itemCount:
+              //       //       AhadithCubit.get(context).dataSections!.length,
+              //       //   separatorBuilder: (BuildContext context, int index) {
+              //       //     return const SizedBox(
+              //       //       height: 10,
+              //       //     );
+              //       //   },
+              //       // ),
+
+              //    ),
+              //   ],
+
+              // );
+            },
+            condition: AhadithCubit.get(context).dataSections!.isNotEmpty,
+            fallback: (BuildContext context) {
+              return Container();
+            },
           ),
-          body: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ConditionalBuilder(
-                builder: (BuildContext context) {
-                  return Column(
-                    children: [
-                      Container(
-                        height: 250,
-                        width: double.infinity,
-                        // color: Colors.amber,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/2.jpg"),
-                                fit: BoxFit.cover)),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        child: ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => buildItem(
-                              AhadithCubit.get(context).dataSections![index],
-                              context,
-                              index),
-                          itemCount:
-                              AhadithCubit.get(context).dataSections!.length,
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              height: 10,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                condition: AhadithCubit.get(context).dataSections!.isNotEmpty,
-                fallback: (BuildContext context) {
-                  return Container();
-                },
-              )),
         );
       },
     );
@@ -87,34 +131,36 @@ class AdkarHome extends StatelessWidget {
               ));
         });
       },
-      child: Container(
-        width: double.infinity,
-        height: 90,
-        // color: Colors.red,
-        decoration: BoxDecoration(
-          color: AhadithCubit.get(context).colors[index],
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(
+            top: 9, bottom: 3, start: 5, end: 5),
+        child: Container(
+          width: double.infinity,
+          height: 100,
+          decoration: BoxDecoration(
+            color: AhadithCubit.get(context).colors[index],
+            // borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Image.asset(AhadithCubit.get(context).icon[index],
+                      height: 40)),
+              // Spacer(),
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Image.asset(AhadithCubit.get(context).icon[index],
-                    height: 40)),
-            // Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "${model.name}",
-                style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                child: Text(
+                  "${model.name}",
+                  style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
