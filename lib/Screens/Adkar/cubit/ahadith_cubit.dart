@@ -13,7 +13,21 @@ class AhadithCubit extends Cubit<AhadithState> {
   static AhadithCubit get(context) => BlocProvider.of(context);
   List<SectionModel>? dataSections = [];
   List<SectionDetailsModel>? dataAdkarDetails = [];
+  List<String> icon = [
+    'assets/images/morning.png',
+    'assets/images/afternoon.png',
+    'assets/images/get-up.png',
+    'assets/images/ablution.png',
+    'assets/images/sleeping1.png'
+  ];
 
+  List<dynamic> colors = [
+    Colors.amberAccent,
+    Colors.deepOrangeAccent,
+    Colors.brown[400],
+    Colors.blue,
+    Colors.deepPurpleAccent[100]
+  ];
   Future<void> getSectionDb(context) async {
     DefaultAssetBundle.of(context)
         .loadString('assets/db/section.json')

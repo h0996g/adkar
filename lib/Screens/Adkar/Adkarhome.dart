@@ -20,24 +20,47 @@ class AdkarHome extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('أذكار المسلم'),
+            title: const Text(
+              'أذكار المسلم',
+              style: TextStyle(color: Colors.black),
+            ),
             centerTitle: true,
           ),
           body: Padding(
               padding: const EdgeInsets.all(12.0),
               child: ConditionalBuilder(
                 builder: (BuildContext context) {
-                  return ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => buildItem(
-                        AhadithCubit.get(context).dataSections![index],
-                        context),
-                    itemCount: AhadithCubit.get(context).dataSections!.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
+                  return Column(
+                    children: [
+                      Container(
+                        height: 250,
+                        width: double.infinity,
+                        // color: Colors.amber,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/2.jpg"),
+                                fit: BoxFit.cover)),
+                      ),
+                      SizedBox(
                         height: 10,
-                      );
-                    },
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => buildItem(
+                              AhadithCubit.get(context).dataSections![index],
+                              context,
+                              index),
+                          itemCount:
+                              AhadithCubit.get(context).dataSections!.length,
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 10,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   );
                 },
                 condition: AhadithCubit.get(context).dataSections!.isNotEmpty,
@@ -50,7 +73,7 @@ class AdkarHome extends StatelessWidget {
     );
   }
 
-  Widget buildItem(SectionModel model, context) {
+  Widget buildItem(SectionModel model, context, int index) {
     return InkWell(
       onTap: () {
         print(model.id);
@@ -66,23 +89,32 @@ class AdkarHome extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 100,
+        height: 90,
         // color: Colors.red,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-              Colors.lightGreenAccent,
-              Colors.green,
-              // Colors.lightGreen
-            ])),
-        child: Center(
-          child: Text(
-            "${model.name}",
-            style: const TextStyle(
-                fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
-          ),
+        decoration: BoxDecoration(
+          color: AhadithCubit.get(context).colors[index],
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Image.asset(AhadithCubit.get(context).icon[index],
+                    height: 40)),
+            // Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "${model.name}",
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -14,14 +14,15 @@ class AdkarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AhadithCubit, AhadithState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(title),
-            backgroundColor: Colors.blueAccent[100],
+            title: Text(
+              title,
+              style: TextStyle(color: Colors.black),
+            ),
+            // backgroundColor: Colors.blueAccent[100],
           ),
           body: ListView.builder(
             physics: const BouncingScrollPhysics(),
