@@ -5,8 +5,26 @@ import 'package:flutter/material.dart';
 
 import '../../notification.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Noti.init();
+    listenNotification();
+  }
+
+  void listenNotification() => Noti.onNotification.stream.listen((event) {
+        navigatAndReturn(context: context, page: AdkarHome());
+        print('ff');
+      });
 
   @override
   Widget build(BuildContext context) {
