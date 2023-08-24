@@ -1,4 +1,6 @@
 import 'package:adkar/Screens/Adkar/Adkarhome.dart';
+import 'package:adkar/Screens/Adkar/adkarDetails.dart';
+import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +21,27 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Noti.initialize();
     // Noti.initialize();
+
     Noti.init();
     listenNotification();
   }
 
-  void listenNotification() => Noti.onNotification.stream.listen((event) {
-        navigatAndReturn(context: context, page: AdkarHome());
+  void listenNotification() => Noti.onNotification.stream.listen((event) async {
+        if (event == 'adkarSabah') {
+          await AhadithCubit.get(context).getSectionDetails(context, 1);
+          navigatAndReturn(
+              context: context,
+              page: AdkarDetails(
+                title: 'اذكار الصباح',
+              ));
+        } else if (event == "adkarMasa1") {
+          await AhadithCubit.get(context).getSectionDetails(context, 2);
+          navigatAndReturn(
+              context: context,
+              page: AdkarDetails(
+                title: 'اذكار المساء',
+              ));
+        }
       });
 
   @override
@@ -35,9 +52,20 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'title',
             body: 'bodyyyy',
             fln: Noti.flutterLocalNotificationsPlugin,
-            payload: "houss");
+            payload: "adkarSabah");
       }),
       appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () {
+                Noti.cancel(0);
+                print('f');
+              },
+              child: Text(
+                'fdfdf',
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
         backgroundColor: Colors.black,
         title: Text('حصن المسلم'),
       ),
@@ -122,10 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialButton(
               onPressed: () {
                 Noti.showTimeNotificationDaily(
-                    payload: 'oo',
-                    title: 'testTime',
-                    body: 'blablabla',
-                    scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+                    payload: 'adkarMasa1',
+                    title: 'adkarMasa1',
+                    body: 'adkarMasa1',
+                    // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+                    time: TimeOfDay(hour: 15, minute: 17),
                     fln: Noti.flutterLocalNotificationsPlugin);
               },
               child: Icon(

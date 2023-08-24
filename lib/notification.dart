@@ -49,14 +49,15 @@ class Noti {
             importance: Importance.max,
             priority: Priority.high);
     var not = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, title, body, not, payload: payload);
+    await fln.show(id, title, body, not, payload: payload);
   }
 
   static Future showTimeNotificationDaily(
       {var id = 0,
       required String title,
       required String body,
-      required DateTime scheduleDate,
+      required TimeOfDay time,
+      // required DateTime scheduleDate,
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
     tz.initializeTimeZones();
@@ -75,10 +76,11 @@ class Noti {
         title,
         body,
         //  tz.TZDateTime.from(scheduleDate, tz.local)
-        _scheduleDailt(TimeOfDay(hour: 11, minute: 19)),
+        _scheduleDailt(time),
         not,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
+        payload: payload,
         matchDateTimeComponents: DateTimeComponents.time);
   }
 
@@ -91,4 +93,7 @@ class Noti {
         ? scheduleDate.add(Duration(days: 1))
         : scheduleDate;
   }
+
+  static void cancel(int id) => flutterLocalNotificationsPlugin.cancel(id);
+  static void cancelAll(FlutterLocalNotificationsPlugin fln) => fln.cancelAll();
 }

@@ -1,3 +1,4 @@
+bool isNotiOn = false;
 double arabicFontSize = 28;
 double mushafFontSize = 40;
 String replaceFarsiNumber(String input) {

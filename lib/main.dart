@@ -2,12 +2,41 @@ import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
+import 'package:adkar/shared/components/helper/cashHelper.dart';
+import 'package:adkar/shared/components/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+import 'notification.dart';
+
+main() async {
   Bloc.observer = MyBlocObserver();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await CachHelper.init();
+  Noti.init();
+  isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
+  if (isNotiOn == false) {
+    print('awel mra ');
+    await Noti.showTimeNotificationDaily(
+        id: 0,
+        payload: 'adkarSabah',
+        title: 'اذكار الصباح',
+        body: 'اذكار الصباح',
+        // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+        time: TimeOfDay(hour: 7, minute: 30),
+        fln: Noti.flutterLocalNotificationsPlugin);
+    await Noti.showTimeNotificationDaily(
+        id: 1,
+        payload: 'adkarMasa1',
+        title: 'اذكار المساء',
+        body: 'اذكار المساء',
+        // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+        time: TimeOfDay(hour: 4, minute: 30),
+        fln: Noti.flutterLocalNotificationsPlugin);
+    await CachHelper.putcache(key: 'isNotiOn', value: true);
+  }
 
   runApp(const MyApp());
 }
