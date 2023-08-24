@@ -1,1 +1,15 @@
 package vibration 1.8.1  bdlt fih sdk t3  android app build.gradle
+
+
+{
+fi Notification : 
+    1-mipmap/ic_launcher 3la jal Icon t3 Notification
+    2- fl Methode showBigTextNotification  payload li n7ato fih howa li yjini kia ntaka 3la notification 
+    {
+         static final onNotification = BehaviorSubject<String?>();
+          onNotification.add(notificationResponse.payload);
+          kima ndir listen nlgaha f event.payload
+    }
+
+
+}

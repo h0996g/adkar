@@ -17,23 +17,25 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Noti.initialize();
+    // Noti.initialize();
     Noti.init();
     listenNotification();
   }
 
   void listenNotification() => Noti.onNotification.stream.listen((event) {
         navigatAndReturn(context: context, page: AdkarHome());
-        print('ff');
       });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: () {
-        Noti.showBigTextNotification(
+        Noti.showNotification(
             title: 'title',
             body: 'bodyyyy',
-            fln: Noti.flutterLocalNotificationsPlugin);
+            fln: Noti.flutterLocalNotificationsPlugin,
+            payload: "houss");
       }),
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -117,6 +119,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             // Text("\uFD3E" + replaceFarsiNumber("2") + "\uFD3F")
+            MaterialButton(
+              onPressed: () {
+                Noti.showTimeNotificationDaily(
+                    payload: 'oo',
+                    title: 'testTime',
+                    body: 'blablabla',
+                    scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+                    fln: Noti.flutterLocalNotificationsPlugin);
+              },
+              child: Icon(
+                Icons.abc,
+                size: 80,
+              ),
+            )
           ],
         ),
       ),
