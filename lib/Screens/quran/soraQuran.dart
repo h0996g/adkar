@@ -10,7 +10,7 @@ class SoraQuran extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<TextSpan> a = [];
-    QuranCubit.get(context).dataQuranDetails![1].array.forEach((element) {
+    QuranCubit.get(context).dataQuranDetails![index].array.forEach((element) {
       print(element.ar);
       a.add(TextSpan(
           text:
@@ -18,7 +18,12 @@ class SoraQuran extends StatelessWidget {
           style: TextStyle(color: Colors.black, fontSize: 30)));
     });
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          QuranCubit.get(context).dataQuranDetails![index].name!,
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Center(

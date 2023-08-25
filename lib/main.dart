@@ -19,8 +19,18 @@ main() async {
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   if (isNotiOn == false) {
     print('awel mra ');
+
+    for (var notif in notifications) {
+      Noti.showTimeNotificationDaily(
+          id: notif['id'],
+          title: 'فَذَكِّرْ',
+          body: notif['description']!,
+          time: notif['date'],
+          fln: Noti.flutterLocalNotificationsPlugin);
+    }
+
     await Noti.showTimeNotificationDaily(
-        id: 0,
+        id: 25,
         payload: 'adkarSabah',
         title: 'اذكار الصباح',
         body: 'اذكار الصباح',
@@ -28,12 +38,12 @@ main() async {
         time: TimeOfDay(hour: 7, minute: 30),
         fln: Noti.flutterLocalNotificationsPlugin);
     await Noti.showTimeNotificationDaily(
-        id: 1,
+        id: 26,
         payload: 'adkarMasa1',
         title: 'اذكار المساء',
         body: 'اذكار المساء',
         // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-        time: TimeOfDay(hour: 4, minute: 30),
+        time: TimeOfDay(hour: 16, minute: 30),
         fln: Noti.flutterLocalNotificationsPlugin);
     await CachHelper.putcache(key: 'isNotiOn', value: true);
   }

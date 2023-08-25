@@ -47,25 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Noti.showNotification(
-            title: 'title',
-            body: 'bodyyyy',
-            fln: Noti.flutterLocalNotificationsPlugin,
-            payload: "adkarSabah");
-      }),
       appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () {
-                Noti.cancel(0);
-                print('f');
-              },
-              child: Text(
-                'fdfdf',
-                style: TextStyle(color: Colors.white),
-              ))
-        ],
         backgroundColor: Colors.black,
         title: Text('حصن المسلم'),
       ),
@@ -147,21 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             // Text("\uFD3E" + replaceFarsiNumber("2") + "\uFD3F")
-            MaterialButton(
-              onPressed: () {
-                Noti.showTimeNotificationDaily(
-                    payload: 'adkarMasa1',
-                    title: 'adkarMasa1',
-                    body: 'adkarMasa1',
-                    // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-                    time: TimeOfDay(hour: 15, minute: 17),
-                    fln: Noti.flutterLocalNotificationsPlugin);
-              },
-              child: Icon(
-                Icons.abc,
-                size: 80,
-              ),
-            )
           ],
         ),
       ),

@@ -28,7 +28,9 @@ class QuranHomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10),
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => ayaItem(
-                QuranCubit.get(context).dataQuranDetails![index], context),
+                QuranCubit.get(context).dataQuranDetails![index],
+                context,
+                index),
             itemCount: QuranCubit.get(context).dataQuranDetails!.length,
           ),
         );
@@ -36,7 +38,7 @@ class QuranHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget ayaItem(QuranModel model, context) {
+  Widget ayaItem(QuranModel model, context, int index) {
     return Card(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         CircleAvatar(
@@ -50,8 +52,7 @@ class QuranHomeScreen extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              navigatAndReturn(
-                  context: context, page: SoraQuran(index: model.id!));
+              navigatAndReturn(context: context, page: SoraQuran(index: index));
             },
             child: Row(
               children: [
