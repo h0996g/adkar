@@ -147,18 +147,18 @@ List<dynamic> notifications = [
   {
     "description":
         'رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ',
-    "date": TimeOfDay(hour: 15, minute: 10),
+    "date": TimeOfDay(hour: 15, minute: 00),
     "id": 16
   },
   {
     "description":
         'رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً',
-    "date": TimeOfDay(hour: 15, minute: 14),
+    "date": TimeOfDay(hour: 16, minute: 00),
     "id": 17
   },
   {
     "description": 'قَالَ رَبِّ اشْرَحْ لِي صَدْرِي*وَيَسِّرْ لِي أَمْرِي',
-    "date": TimeOfDay(hour: 15, minute: 18),
+    "date": TimeOfDay(hour: 17, minute: 00),
     "id": 18
   },
   {

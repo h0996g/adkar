@@ -55,77 +55,64 @@ class _AudioState extends State<Audio> {
   }
 
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Text(
-          'أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ وَلَوْ كَانَ مِنْ عِنْدِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلافًا كَثِيرًا',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.w600,
-            color: Colors.red.shade400,
-          ),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              audioPlay.seek(Duration.zero);
+              audioPlay.play(UrlSource(url));
+            });
+          },
+          icon: Icon(Icons.replay,
+              color: isCompleted == true
+                  ? Colors.brown.shade400
+                  : Colors.transparent),
+          iconSize: 50,
         ),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  audioPlay.seek(Duration.zero);
-                  audioPlay.play(UrlSource(url));
-                });
-              },
-              icon: Icon(Icons.replay,
-                  color: isCompleted == true
-                      ? Colors.brown.shade400
-                      : Colors.transparent),
-              iconSize: 50,
+        IconButton(
+            icon: Icon(
+              isplaying
+                  ? Icons.pause
+                  : isCompleted
+                      ? Icons.skip_next
+                      : Icons.play_arrow,
+              color: Colors.brown.shade400,
             ),
-            IconButton(
-                icon: Icon(
-                  isplaying
-                      ? Icons.pause
-                      : isCompleted
-                          ? Icons.skip_next
-                          : Icons.play_arrow,
-                  color: Colors.brown.shade400,
-                ),
-                iconSize: 50,
-                onPressed: () async {
-                  if (isplaying) {
-                    await audioPlay.pause();
-                  } else {
-                    // 3la kima yji y3awed myzidch yjib mn firebase
-                    if (isCompleted || url == '') {
-                      int randomAya = Random().nextInt(144);
-                      print(randomAya);
-                      await FirebaseFirestore.instance
-                          .collection('quran')
-                          .doc('$randomAya')
-                          .get()
-                          .then((value) {
-                        url = value['link'];
-                      });
-                    }
+            iconSize: 50,
+            onPressed: () async {
+              if (isplaying) {
+                await audioPlay.pause();
+              } else {
+                // 3la kima yji y3awed myzidch yjib mn firebase
+                if (isCompleted || url == '') {
+                  int randomAya = Random().nextInt(144);
+                  print(randomAya);
+                  await FirebaseFirestore.instance
+                      .collection('quran')
+                      .doc('$randomAya')
+                      .get()
+                      .then((value) {
+                    url = value['link'];
+                  });
+                }
 
-                    await audioPlay.play(UrlSource(url));
-                  }
-                }),
-            Expanded(
-              child: Slider(
-                  secondaryActiveColor: Colors.grey,
-                  inactiveColor: Colors.grey.shade300,
-                  activeColor: Colors.brown,
-                  max: duration.inSeconds.toDouble(),
-                  value: position.inSeconds.toDouble(),
-                  onChanged: (onChanged) async {
-                    final position = Duration(seconds: onChanged.toInt());
-                    await audioPlay.seek(position);
-                    // play audio if was paused
-                    await audioPlay.resume();
-                  }),
-            ),
-          ],
+                await audioPlay.play(UrlSource(url));
+              }
+            }),
+        Expanded(
+          child: Slider(
+              secondaryActiveColor: Colors.grey,
+              inactiveColor: Colors.grey.shade300,
+              activeColor: Colors.brown,
+              max: duration.inSeconds.toDouble(),
+              value: position.inSeconds.toDouble(),
+              onChanged: (onChanged) async {
+                final position = Duration(seconds: onChanged.toInt());
+                await audioPlay.seek(position);
+                // play audio if was paused
+                await audioPlay.resume();
+              }),
         ),
       ],
     );

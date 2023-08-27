@@ -1,4 +1,6 @@
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
+import 'package:adkar/Screens/home/audio.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
@@ -24,13 +26,34 @@ class AdkarDetails extends StatelessWidget {
             ),
             // backgroundColor: Colors.blueAccent[100],
           ),
-          body: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => dikrItem(
-                AhadithCubit.get(context).dataAdkarDetails![index],
-                index,
-                context),
-            itemCount: AhadithCubit.get(context).dataAdkarDetails!.length,
+          body: ConditionalBuilder(
+            builder: (BuildContext context) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) => dikrItem(
+                    AhadithCubit.get(context).dataAdkarDetails![index],
+                    index,
+                    context),
+                itemCount: AhadithCubit.get(context).dataAdkarDetails!.length,
+              );
+            },
+            condition: !AhadithCubit.get(context).dataAdkarDetails!.isEmpty,
+            fallback: (BuildContext context) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'الَّذِينَ آتَيْنَاهُمْ الْكِتَابَ يَتْلُونَهُ حَقَّ تِلَاوَتِهِ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  ),
+                  Audio()
+                ],
+              );
+            },
           ),
         );
       },
