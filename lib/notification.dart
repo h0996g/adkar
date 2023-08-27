@@ -61,7 +61,6 @@ class Noti {
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
     tz.initializeTimeZones();
-    // !mb3d nbdlha rahi t39it t3 Europe zayed b 1H
     tz.setLocalLocation(tz.getLocation('Africa/Algiers'));
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =

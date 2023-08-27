@@ -135,30 +135,30 @@ List<dynamic> notifications = [
   {
     "description":
         'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا',
-    "date": TimeOfDay(hour: 14, minute: 16),
+    "date": TimeOfDay(hour: 13, minute: 00),
     "id": 14
   },
   {
     "description":
         'رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ',
-    "date": TimeOfDay(hour: 14, minute: 20),
+    "date": TimeOfDay(hour: 14, minute: 00),
     "id": 15
   },
   {
     "description":
         'رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ',
-    "date": TimeOfDay(hour: 15, minute: 00),
+    "date": TimeOfDay(hour: 15, minute: 10),
     "id": 16
   },
   {
     "description":
         'رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً',
-    "date": TimeOfDay(hour: 16, minute: 00),
+    "date": TimeOfDay(hour: 15, minute: 14),
     "id": 17
   },
   {
     "description": 'قَالَ رَبِّ اشْرَحْ لِي صَدْرِي*وَيَسِّرْ لِي أَمْرِي',
-    "date": TimeOfDay(hour: 17, minute: 00),
+    "date": TimeOfDay(hour: 15, minute: 18),
     "id": 18
   },
   {
@@ -194,10 +194,10 @@ List<dynamic> notifications = [
     "date": TimeOfDay(hour: 23, minute: 00),
     "id": 24
   },
-  {
-    "description":
-        'رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ',
-    "date": TimeOfDay(hour: 24, minute: 00),
-    "id": 25
-  },
+  // {
+  //   "description":
+  //       'رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ',
+  //   "date": TimeOfDay(hour: 24, minute: 00),
+  //   "id": 25
+  // },
 ];

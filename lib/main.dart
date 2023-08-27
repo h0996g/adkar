@@ -21,7 +21,8 @@ main() async {
     print('awel mra ');
 
     for (var notif in notifications) {
-      Noti.showTimeNotificationDaily(
+      await Noti.showTimeNotificationDaily(
+          payload: 'adkar',
           id: notif['id'],
           title: 'فَذَكِّرْ',
           body: notif['description']!,
