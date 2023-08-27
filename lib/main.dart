@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             create: ((context) => AhadithCubit()..getSectionDb(context)),
           ),
           BlocProvider(
-            create: ((context) => QuranCubit()..getQuranData(context)),
+            create: ((context) => QuranCubit()..getQuranDataApi(context)),
             lazy: false,
           ),
         ],

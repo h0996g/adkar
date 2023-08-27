@@ -1,5 +1,6 @@
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/Screens/quran/soraQuran.dart';
+import 'package:adkar/models/quranApi.dart';
 import 'package:adkar/shared/components/components.dart';
 
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class QuranHomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           floatingActionButton: FloatingActionButton(onPressed: () {
-            print(QuranCubit.get(context).dataQuranDetails!);
+            print(QuranCubit.get(context).dataQuranApi!);
           }),
           appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
@@ -28,23 +29,21 @@ class QuranHomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10),
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => ayaItem(
-                QuranCubit.get(context).dataQuranDetails![index],
-                context,
-                index),
-            itemCount: QuranCubit.get(context).dataQuranDetails!.length,
+                QuranCubit.get(context).dataQuranApi![index], context, index),
+            itemCount: QuranCubit.get(context).dataQuranApi!.length,
           ),
         );
       },
     );
   }
 
-  Widget ayaItem(QuranModel model, context, int index) {
+  Widget ayaItem(QuranApi model, context, int index) {
     return Card(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         CircleAvatar(
           backgroundColor: Colors.transparent,
           child: Image(
-            image: AssetImage(model.type == 'مكية'
+            image: AssetImage(model.revelationType == 'مكية'
                 ? "assets/images/kaaba.png"
                 : "assets/images/madina.png"),
           ),

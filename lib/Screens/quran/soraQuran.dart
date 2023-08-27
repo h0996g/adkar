@@ -1,3 +1,4 @@
+import 'package:adkar/Screens/quran/audioQuran.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -9,18 +10,34 @@ class SoraQuran extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<TextSpan> a = [];
-    QuranCubit.get(context).dataQuranDetails![index].array.forEach((element) {
-      print(element.ar);
-      a.add(TextSpan(
-          text:
-              "${element.ar} \uFD3F${replaceFarsiNumber(element.id.toString())}\uFD3E ",
-          style: TextStyle(color: Colors.black, fontSize: 30)));
+    List<Widget> ayahs = [];
+    // List<TextSpan> a = [];
+    QuranCubit.get(context).dataQuranApi![index].ayahs.forEach((element) {
+      ayahs.add(
+        Column(
+          children: [
+            Text(
+              textDirection: TextDirection.rtl,
+              "${element.text}\uFD3F${replaceFarsiNumber(element.numberInSurah.toString())}\uFD3E",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700),
+            ),
+            AudioQuran(url: element.audio!)
+          ],
+        ),
+      );
+      // print(element.ar);
+      // a.add(TextSpan(
+      //     text:
+      //         "${element.text} \uFD3F${replaceFarsiNumber(element.numberInSurah.toString())}\uFD3E ",
+      //     style: TextStyle(color: Colors.black, fontSize: 30)));
     });
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          QuranCubit.get(context).dataQuranDetails![index].name!,
+          QuranCubit.get(context).dataQuranApi![index].name!,
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -28,12 +45,16 @@ class SoraQuran extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         child: Center(
           child: Container(
-            padding: EdgeInsets.all(10),
-            child: RichText(
-              textDirection: TextDirection.rtl,
-              text: TextSpan(children: a),
-            ),
-          ),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: ayahs,
+              )
+              // RichText(
+              //   textDirection: TextDirection.rtl,
+              //   text: TextSpan(children: a),
+              // ),
+              ),
         ),
       ),
     );
