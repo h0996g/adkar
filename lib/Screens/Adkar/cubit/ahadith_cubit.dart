@@ -11,6 +11,7 @@ import 'ahadith_state.dart';
 class AhadithCubit extends Cubit<AhadithState> {
   AhadithCubit() : super(AhadithInitial());
   static AhadithCubit get(context) => BlocProvider.of(context);
+
   List<SectionModel>? dataSections = [];
   List<SectionDetailsModel>? dataAdkarDetails = [];
   List<String> icon = [

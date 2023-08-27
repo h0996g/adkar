@@ -4,10 +4,12 @@ import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
 import 'package:adkar/shared/components/helper/cashHelper.dart';
 import 'package:adkar/shared/components/helper/constant.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'firebase_options.dart';
 import 'notification.dart';
 
 main() async {
@@ -15,6 +17,9 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await CachHelper.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Noti.init();
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   if (isNotiOn == false) {
