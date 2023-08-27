@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:adkar/models/quranModel.dart';
 import 'package:adkar/models/sectionDetailsModel.dart';
 import 'package:adkar/models/sectionModel.dart';
 import 'package:flutter/material.dart';

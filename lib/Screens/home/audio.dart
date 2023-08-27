@@ -15,6 +15,8 @@ class _AudioState extends State<Audio> {
   bool isCompleted = false;
   final audioPlay = AudioPlayer();
   bool isplaying = false;
+  String url = '';
+
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   @override
@@ -67,6 +69,19 @@ class _AudioState extends State<Audio> {
         Row(
           children: [
             IconButton(
+              onPressed: () {
+                setState(() {
+                  audioPlay.seek(Duration.zero);
+                  audioPlay.play(UrlSource(url));
+                });
+              },
+              icon: Icon(Icons.replay,
+                  color: isCompleted == true
+                      ? Colors.brown.shade400
+                      : Colors.transparent),
+              iconSize: 50,
+            ),
+            IconButton(
                 icon: Icon(
                   isplaying
                       ? Icons.pause
@@ -80,29 +95,29 @@ class _AudioState extends State<Audio> {
                   if (isplaying) {
                     await audioPlay.pause();
                   } else {
-                    String url = '';
-                    int randomAya = Random().nextInt(144);
-                    print(randomAya);
-                    await FirebaseFirestore.instance
-                        .collection('quran')
-                        .doc('$randomAya')
-                        .get()
-                        .then((value) {
-                      url = value['link'];
-                    });
-                    // String url =
-                    //     'https://firebasestorage.googleapis.com/v0/b/quran-28f24.appspot.com/o/quran%2Fal_qurani8-20230827-0012.mp3?alt=media&token=84d7f44c-f8c1-4d65-bbb8-91462f30cfc0';
+                    // 3la kima yji y3awed myzidch yjib mn firebase
+                    if (isCompleted || url == '') {
+                      int randomAya = Random().nextInt(144);
+                      print(randomAya);
+                      await FirebaseFirestore.instance
+                          .collection('quran')
+                          .doc('$randomAya')
+                          .get()
+                          .then((value) {
+                        url = value['link'];
+                      });
+                    }
+
                     await audioPlay.play(UrlSource(url));
                   }
                 }),
             Expanded(
               child: Slider(
-                  // mouseCursor: MouseCursor.defer,
                   secondaryActiveColor: Colors.grey,
                   inactiveColor: Colors.grey.shade300,
                   activeColor: Colors.brown,
-                  value: position.inSeconds.toDouble(),
                   max: duration.inSeconds.toDouble(),
+                  value: position.inSeconds.toDouble(),
                   onChanged: (onChanged) async {
                     final position = Duration(seconds: onChanged.toInt());
                     await audioPlay.seek(position);
