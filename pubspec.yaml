@@ -50,6 +50,7 @@ dependencies:
   file_picker: ^5.3.1
   firebase_storage: ^11.2.6
   cloud_firestore: ^4.9.0
+  audioplayers: ^4.1.0
 
 dev_dependencies:
   flutter_test:
