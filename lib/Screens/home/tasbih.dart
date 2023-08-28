@@ -1,0 +1,143 @@
+import 'package:adkar/shared/components/helper/cashHelper.dart';
+import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+
+class Tasbih extends StatefulWidget {
+  const Tasbih({super.key});
+
+  @override
+  State<Tasbih> createState() => _TasbihState();
+}
+
+class _TasbihState extends State<Tasbih> {
+  final items = ['10', '33', '100'];
+  String? value = CachHelper.getData(key: 'nOfTasbih') ?? '10';
+  double _counter = 0;
+  int index = 0;
+
+  int _indexTasbih = 0;
+  List<String> tasbih = [
+    'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+    'سُبْحَانَ اللَّه الْعَظِيم'
+  ];
+  void _incrementCounter() {
+    setState(() {
+      if (_counter >= 0.98) {
+        _counter = 0.0;
+        index = 0;
+        _indexTasbih = _indexTasbih == 0 ? 1 : 0;
+        return;
+      }
+      index++;
+      _counter = _counter + (1 / int.parse(value!));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey.shade50,
+          shape: BoxShape.rectangle,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade500,
+                offset: Offset(4.0, 4.0),
+                blurRadius: 15,
+                spreadRadius: 1),
+            BoxShadow(
+                color: Colors.white,
+                offset: Offset(-4.0, -4.0),
+                blurRadius: 15,
+                spreadRadius: 1.0)
+          ]),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 5),
+      width: size.width * 0.8,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            textDirection: TextDirection.rtl,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  'حلقة التسبيح  ',
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade700),
+                ),
+              ),
+              DropdownButton(
+                value: value,
+                items: items.map(buildMenuItem).toList(),
+                onChanged: (value) => setState(() {
+                  this.value = value;
+                  CachHelper.putcache(key: 'nOfTasbih', value: this.value);
+                }),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            onTap: () {
+              _incrementCounter();
+              print(value);
+              print(_counter);
+            },
+            child: CircularPercentIndicator(
+              animation: true,
+              animateFromLastPercent: true,
+              circularStrokeCap: CircularStrokeCap.round,
+              curve: Curves.easeInQuad,
+              addAutomaticKeepAlive: true,
+              radius: 100.0,
+              animationDuration: 250,
+
+              lineWidth: 20.0,
+              percent: _counter,
+              center: new Text(
+                '${tasbih[_indexTasbih]}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    shadows: [
+                      Shadow(
+                        color: Colors.grey,
+                        blurRadius: 6,
+                      )
+                    ]),
+              ),
+              progressColor: Color.fromARGB(255, 83, 34, 8),
+              backgroundColor: Color.fromARGB(47, 83, 34, 8),
+
+              // progressColor: Colors.yellow,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            '$index',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          )
+        ],
+      ),
+    ); // Text("\uFD3E" + replaceFarsiNumber("2") + "\uFD3F")
+  }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      );
+}
