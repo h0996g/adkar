@@ -59,7 +59,7 @@ class _TasbihState extends State<Tasbih> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             textDirection: TextDirection.rtl,
             children: [
               Align(
@@ -72,14 +72,21 @@ class _TasbihState extends State<Tasbih> {
                       color: Colors.grey.shade700),
                 ),
               ),
+              Spacer(),
               DropdownButton(
+                iconSize: 0,
                 value: value,
                 items: items.map(buildMenuItem).toList(),
                 onChanged: (value) => setState(() {
                   this.value = value;
                   CachHelper.putcache(key: 'nOfTasbih', value: this.value);
+                  _counter = 0.0;
+                  index = 0;
                 }),
-              )
+              ),
+              SizedBox(
+                width: 10,
+              ),
             ],
           ),
           SizedBox(

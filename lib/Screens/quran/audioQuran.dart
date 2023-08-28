@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:audioplayers/audioplayers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AudioQuran extends StatefulWidget {
   final String url;
@@ -24,11 +22,15 @@ class _AudioQuranState extends State<AudioQuran> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // audioPlay.onPlayerStateChanged.listen((event) {
-    //   setState(() {
-    //     isplaying = event == PlayerState.playing;
-    //   });
-    // });
+
+    audioPlay.onPlayerStateChanged.listen((event) {
+      if (this.mounted) {
+        setState(() {
+          isplaying = event == PlayerState.playing;
+        });
+      }
+    });
+
     // audioPlay.onDurationChanged.listen((event) {
     //   setState(() {
     //     duration = event;
