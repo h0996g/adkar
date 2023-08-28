@@ -18,9 +18,6 @@ class QuranHomeScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(onPressed: () {
-            print(QuranCubit.get(context).dataQuranApi!);
-          }),
           appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
               title: Text('القران الكريم'),
@@ -51,7 +48,7 @@ class QuranHomeScreen extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              navigatAndReturn(context: context, page: SoraQuran(index: index));
+              navigatAndReturn(context: context, page: SoraQuran(id: index));
             },
             child: Row(
               children: [

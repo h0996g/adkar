@@ -60,19 +60,6 @@ class _AudioQuranState extends State<AudioQuran> {
     return Row(
       children: [
         IconButton(
-          onPressed: () {
-            setState(() {
-              audioPlay.seek(Duration.zero);
-              audioPlay.play(UrlSource(widget.url));
-            });
-          },
-          icon: Icon(Icons.replay,
-              color: isCompleted == true
-                  ? Colors.brown.shade400
-                  : Colors.transparent),
-          iconSize: 50,
-        ),
-        IconButton(
             icon: Icon(
               isplaying
                   ? Icons.pause
@@ -89,19 +76,18 @@ class _AudioQuranState extends State<AudioQuran> {
                 await audioPlay.play(UrlSource(widget.url));
               }
             }),
-        Expanded(
-          child: Slider(
-              secondaryActiveColor: Colors.grey,
-              inactiveColor: Colors.grey.shade300,
-              activeColor: Colors.brown,
-              max: duration.inSeconds.toDouble(),
-              value: position.inSeconds.toDouble(),
-              onChanged: (onChanged) async {
-                final position = Duration(seconds: onChanged.toInt());
-                await audioPlay.seek(position);
-                // play audio if was paused
-                await audioPlay.resume();
-              }),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              audioPlay.seek(Duration.zero);
+              audioPlay.play(UrlSource(widget.url));
+            });
+          },
+          icon: Icon(Icons.replay,
+              color: isCompleted == true
+                  ? Colors.brown.shade400
+                  : Colors.transparent),
+          iconSize: 50,
         ),
       ],
     );

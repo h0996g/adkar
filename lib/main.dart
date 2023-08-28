@@ -4,6 +4,7 @@ import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
 import 'package:adkar/shared/components/helper/cashHelper.dart';
 import 'package:adkar/shared/components/helper/constant.dart';
+import 'package:adkar/shared/network/dioHalper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,8 @@ main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  DioHelper.init();
+
   Noti.init();
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   if (isNotiOn == false) {

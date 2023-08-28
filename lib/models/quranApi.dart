@@ -1,16 +1,16 @@
 class QuranApi {
   int? number;
   String? name;
-  String? englishName;
-  String? englishNameTranslation;
+  // String? englishName;
+  // String? englishNameTranslation;
   String? revelationType;
   List<Ayahs> ayahs = [];
 
   QuranApi.fromJson(Map<String, dynamic> json) {
     number = json['number'];
     name = json['name'];
-    englishName = json['englishName'];
-    englishNameTranslation = json['englishNameTranslation'];
+    // englishName = json['englishName'];
+    // englishNameTranslation = json['englishNameTranslation'];
     revelationType = json['revelationType'];
     // if (json['ayahs'] != null) {
     // ayahs = <Ayahs>[];
