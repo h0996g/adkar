@@ -5,8 +5,10 @@ import 'package:adkar/Screens/home/audio.dart';
 import 'package:adkar/Screens/home/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
+import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/helper/cashHelper.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../notification.dart';
 
@@ -18,10 +20,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey globalKeyOne = GlobalKey();
+  final GlobalKey globalKeyTwo = GlobalKey();
+
   @override
   void initState() {
     // TODO: implement initState
+    if (isFirstTimeAdkar)
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([
+          globalKeyOne,
+          globalKeyTwo,
+        ]),
+      );
     super.initState();
+
     Noti.initialize();
     // Noti.initialize();
 
@@ -34,15 +47,22 @@ class _HomeScreenState extends State<HomeScreen> {
           await AhadithCubit.get(context).getSectionDetails(context, 1);
           navigatAndReturn(
               context: context,
-              page: AdkarDetails(
-                title: 'اذكار الصباح',
+              page: ShowCaseWidget(
+                builder: Builder(
+                  builder: (context) => AdkarDetails(
+                    title: 'اذكار الصباح',
+                  ),
+                ),
               ));
         } else if (event == "adkarMasa1") {
           await AhadithCubit.get(context).getSectionDetails(context, 2);
           navigatAndReturn(
               context: context,
-              page: AdkarDetails(
-                title: 'اذكار المساء',
+              page: ShowCaseWidget(
+                builder: Builder(
+                    builder: ((context) => AdkarDetails(
+                          title: 'اذكار المساء',
+                        ))),
               ));
         }
       });
@@ -139,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 50,
               ),
-              Tasbih(),
+              Tasbih(globalKey: globalKeyOne),
               SizedBox(
                 height: 10,
               ),
@@ -152,7 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.red.shade400,
                 ),
               ),
-              Audio()
+              Audio(
+                globalKey: globalKeyTwo,
+              )
             ],
           ),
         ),

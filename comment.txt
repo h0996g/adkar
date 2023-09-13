@@ -13,3 +13,5 @@ fi Notification :
 
 
 }
+
+index li fl suraQuran.dart zdto 3lajal Condition f list view lawla ydir ShowCustumView 3la jal GlobalKey lazm ykon m7tot fi blasa w7da brk 

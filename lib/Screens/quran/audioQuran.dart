@@ -1,9 +1,17 @@
+import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AudioQuran extends StatefulWidget {
   final String url;
-  const AudioQuran({super.key, required this.url});
+  final GlobalKey globalKey;
+  // index bh global key yndar ghir la lawla f liste View
+  final int index;
+  const AudioQuran(
+      {super.key,
+      required this.url,
+      required this.globalKey,
+      required this.index});
 
   @override
   State<AudioQuran> createState() => _AudioQuranState();
@@ -60,23 +68,46 @@ class _AudioQuranState extends State<AudioQuran> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-            icon: Icon(
-              isplaying
-                  ? Icons.pause
-                  : isCompleted
-                      ? Icons.skip_next
-                      : Icons.play_arrow,
-              color: Colors.brown.shade400,
-            ),
-            iconSize: 50,
-            onPressed: () async {
-              if (isplaying) {
-                await audioPlay.pause();
-              } else {
-                await audioPlay.play(UrlSource(widget.url));
-              }
-            }),
+        widget.index == 0
+            ? ShowCaseView(
+                description: '',
+                globalKey: widget.globalKey,
+                title: 'سماع قراءة الاية',
+                child: IconButton(
+                    icon: Icon(
+                      isplaying
+                          ? Icons.pause
+                          : isCompleted
+                              ? Icons.skip_next
+                              : Icons.play_arrow,
+                      color: Colors.brown.shade400,
+                    ),
+                    iconSize: 50,
+                    onPressed: () async {
+                      if (isplaying) {
+                        await audioPlay.pause();
+                      } else {
+                        await audioPlay.play(UrlSource(widget.url));
+                      }
+                    }),
+              )
+            : IconButton(
+                icon: Icon(
+                  isplaying
+                      ? Icons.pause
+                      : isCompleted
+                          ? Icons.skip_next
+                          : Icons.play_arrow,
+                  color: Colors.brown.shade400,
+                ),
+                iconSize: 50,
+                onPressed: () async {
+                  if (isplaying) {
+                    await audioPlay.pause();
+                  } else {
+                    await audioPlay.play(UrlSource(widget.url));
+                  }
+                }),
         IconButton(
           onPressed: () {
             setState(() {

@@ -5,6 +5,7 @@ import 'package:adkar/shared/components/components.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'cubit/ahadith_state.dart';
 
@@ -62,50 +63,6 @@ class AdkarHome extends StatelessWidget {
                   ),
                 ],
               );
-
-              //  Column(
-              //   children: [
-              //     Container(
-              //       height: 300,
-              //       width: double.infinity,
-              //       // color: Colors.amber,
-              //       decoration: BoxDecoration(
-              //           image: DecorationImage(
-              //               image: AssetImage("assets/images/2.jpg"),
-              //               fit: BoxFit.cover)),
-              //     ),
-              //     SizedBox(
-              //       height: 10,
-              //     ),
-              //     Expanded(
-              //     child:
-              //      CustomScrollView(
-              //       slivers: [
-              //         SliverAppBar(
-
-              //         )
-              //       ],
-              //     ),
-
-              //       // child: ListView.separated(
-              //       //   physics: const BouncingScrollPhysics(),
-              //       //   itemBuilder: (context, index) => buildItem(
-              //       //       AhadithCubit.get(context).dataSections![index],
-              //       //       context,
-              //       //       index),
-              //       //   itemCount:
-              //       //       AhadithCubit.get(context).dataSections!.length,
-              //       //   separatorBuilder: (BuildContext context, int index) {
-              //       //     return const SizedBox(
-              //       //       height: 10,
-              //       //     );
-              //       //   },
-              //       // ),
-
-              //    ),
-              //   ],
-
-              // );
             },
             condition: AhadithCubit.get(context).dataSections!.isNotEmpty,
             fallback: (BuildContext context) {
@@ -126,8 +83,12 @@ class AdkarHome extends StatelessWidget {
             .then((value) {
           navigatAndReturn(
               context: context,
-              page: AdkarDetails(
-                title: model.name!,
+              page: ShowCaseWidget(
+                builder: Builder(
+                  builder: (context) => AdkarDetails(
+                    title: model.name!,
+                  ),
+                ),
               ));
         });
       },

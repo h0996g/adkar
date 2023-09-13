@@ -15,6 +15,8 @@ class AdkarDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey globalKey = GlobalKey();
+
     return BlocConsumer<AhadithCubit, AhadithState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -50,7 +52,9 @@ class AdkarDetails extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ),
-                  Audio()
+                  Audio(
+                    globalKey: globalKey,
+                  )
                 ],
               );
             },

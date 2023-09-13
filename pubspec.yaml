@@ -52,13 +52,16 @@ dependencies:
   cloud_firestore: ^4.9.0
   audioplayers: ^4.1.0
   dio: ^5.3.2
+  showcaseview: ^2.0.3
+  rename: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 flutter_native_splash:
-  color: "#31d444"
+  color: "#ffffff"
   image : "assets/images/quran.png"
+
   android: true
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

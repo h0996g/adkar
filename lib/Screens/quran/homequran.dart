@@ -2,11 +2,13 @@ import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/Screens/quran/soraQuran.dart';
 import 'package:adkar/models/quranApi.dart';
 import 'package:adkar/shared/components/components.dart';
+import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/helper/cashHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:showcaseview/showcaseview.dart';
 
-import '../../models/quranModel.dart';
 import 'cubit/quran_state.dart';
 
 class QuranHomeScreen extends StatelessWidget {
@@ -48,7 +50,23 @@ class QuranHomeScreen extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              navigatAndReturn(context: context, page: SoraQuran(id: index));
+              navigatAndReturn(
+                context: context,
+                page: ShowCaseWidget(
+                  onFinish: () async {
+                    await CachHelper.putcache(
+                            key: 'isFirstTimeQuran', value: false)
+                        .then((value) {
+                      isFirstTimeQuran = false;
+                    });
+                  },
+                  builder: Builder(
+                    builder: (context) => SoraQuran(
+                      id: index,
+                    ),
+                  ),
+                ),
+              );
             },
             child: Row(
               children: [

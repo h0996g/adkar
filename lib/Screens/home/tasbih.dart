@@ -1,10 +1,11 @@
 import 'package:adkar/shared/components/helper/cashHelper.dart';
+import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Tasbih extends StatefulWidget {
-  const Tasbih({super.key});
-
+  const Tasbih({super.key, required this.globalKey});
+  final GlobalKey globalKey;
   @override
   State<Tasbih> createState() => _TasbihState();
 }
@@ -73,16 +74,21 @@ class _TasbihState extends State<Tasbih> {
                 ),
               ),
               Spacer(),
-              DropdownButton(
-                iconSize: 0,
-                value: value,
-                items: items.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(() {
-                  this.value = value;
-                  CachHelper.putcache(key: 'nOfTasbih', value: this.value);
-                  _counter = 0.0;
-                  index = 0;
-                }),
+              ShowCaseView(
+                description: 'افتح القائمة واختر عدد تكرار التسبيح',
+                globalKey: widget.globalKey,
+                title: 'عدد تكرار التسبيح',
+                child: DropdownButton(
+                  iconSize: 0,
+                  value: value,
+                  items: items.map(buildMenuItem).toList(),
+                  onChanged: (value) => setState(() {
+                    this.value = value;
+                    CachHelper.putcache(key: 'nOfTasbih', value: this.value);
+                    _counter = 0.0;
+                    index = 0;
+                  }),
+                ),
               ),
               SizedBox(
                 width: 10,

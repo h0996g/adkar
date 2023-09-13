@@ -2,6 +2,7 @@ import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
+import 'package:adkar/shared/components/constant.dart';
 import 'package:adkar/shared/components/helper/cashHelper.dart';
 import 'package:adkar/shared/components/helper/constant.dart';
 import 'package:adkar/shared/network/dioHalper.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'firebase_options.dart';
 import 'notification.dart';
@@ -25,6 +27,8 @@ main() async {
 
   Noti.init();
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
+  isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
+  isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
   if (isNotiOn == false) {
     print('awel mra ');
 
@@ -66,33 +70,47 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: ((context) => AhadithCubit()..getSectionDb(context)),
-          ),
-          BlocProvider(
-            create: ((context) => QuranCubit()..getQuranDataApi(context)),
-            lazy: false,
-          ),
-        ],
-        child: MaterialApp(
-            theme: ThemeData(
-                appBarTheme: const AppBarTheme(
-                    systemOverlayStyle: SystemUiOverlayStyle(
-                      // Status bar color
-                      statusBarColor: Colors.black,
+      providers: [
+        BlocProvider(
+          create: ((context) => AhadithCubit()..getSectionDb(context)),
+        ),
+        BlocProvider(
+          create: ((context) => QuranCubit()..getQuranDataApi(context)),
+          lazy: false,
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+            appBarTheme: const AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  // Status bar color
+                  statusBarColor: Colors.black,
 
-                      // Status bar brightness (optional)
-                      statusBarIconBrightness:
-                          Brightness.light, // For Android (dark icons)
-                      statusBarBrightness:
-                          Brightness.dark, // For iOS (dark icons)
-                    ),
-                    iconTheme: IconThemeData(color: Colors.black),
-                    color: Colors.white,
-                    centerTitle: true),
-                scaffoldBackgroundColor: Colors.white),
-            title: 'Flutter Demo',
-            home: const HomeScreen()));
+                  // Status bar brightness (optional)
+                  statusBarIconBrightness:
+                      Brightness.light, // For Android (dark icons)
+                  statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+                ),
+                iconTheme: IconThemeData(color: Colors.black),
+                color: Colors.white,
+                centerTitle: true),
+            scaffoldBackgroundColor: Colors.white),
+        title: 'Flutter Demo',
+        home: ShowCaseWidget(
+            onComplete: (index, key) {
+              print(index);
+            },
+            onFinish: () async {
+              print('test finich');
+              await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)
+                  .then((value) {
+                isFirstTimeAdkar = false;
+              });
+            },
+            builder: Builder(
+              builder: (context) => HomeScreen(),
+            )),
+      ),
+    );
   }
 }
