@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 Widget defaultForm(
@@ -16,8 +17,10 @@ Widget defaultForm(
         TextInputType? type,
         required Function? validator,
         Function()? onTap,
-        Function(dynamic)? onFieldSubmitted}) =>
+        Function(dynamic)? onFieldSubmitted,
+        TextDirection? textDirection = TextDirection.rtl}) =>
     TextFormField(
+      textDirection: textDirection,
       onTap: onTap,
       readOnly: readOnly,
       maxLength: maxLength,
@@ -59,6 +62,7 @@ Widget defaultSubmit2({
   double width = double.infinity,
   Color background = Colors.blue,
   bool isUpperCase = true,
+  double fontSize = 14,
   double radius = 3.0,
   Function()? onPressed,
   required String text,
@@ -71,12 +75,8 @@ Widget defaultSubmit2({
       ),
       child: MaterialButton(
         onPressed: onPressed,
-        child: Text(
-          isUpperCase ? text.toUpperCase() : text,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        child: Text(isUpperCase ? text.toUpperCase() : text,
+            style: TextStyle(color: Colors.white, fontSize: fontSize)),
       ),
     );
 

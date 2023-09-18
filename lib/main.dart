@@ -1,4 +1,5 @@
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
+import 'package:adkar/Screens/NamesOfAllah/cubit/names_of_allah_cubit.dart';
 import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'firebase_options.dart';
 import 'notification.dart';
@@ -29,6 +31,7 @@ main() async {
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
   isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
+
   if (isNotiOn == false) {
     print('awel mra ');
 
@@ -78,10 +81,14 @@ class MyApp extends StatelessWidget {
           create: ((context) => QuranCubit()..getQuranDataApi(context)),
           lazy: false,
         ),
+        BlocProvider(
+          create: ((context) => NamesOfAllahCubit()..getNames(context)),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
-            appBarTheme: const AppBarTheme(
+            appBarTheme: AppBarTheme(
+                // backgroundColor: Colors.black,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   // Status bar color
                   statusBarColor: Colors.black,
@@ -93,12 +100,22 @@ class MyApp extends StatelessWidget {
                 ),
                 iconTheme: IconThemeData(color: Colors.black),
                 color: Colors.white,
+                titleTextStyle: TextStyle(fontSize: 30, color: Colors.black),
                 centerTitle: true),
             scaffoldBackgroundColor: Colors.white),
         title: 'Flutter Demo',
         home: ShowCaseWidget(
-            onComplete: (index, key) {
-              print(index);
+            onStart: (index, key) async {
+              // if (index == 1) {}
+              if (index == 1) {
+                await Scrollable.ensureVisible(
+                  key.currentContext!,
+                  alignment: -1,
+                );
+              }
+            },
+            onComplete: (index, key) async {
+              // print(index);
             },
             onFinish: () async {
               print('test finich');

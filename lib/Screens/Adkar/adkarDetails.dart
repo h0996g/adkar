@@ -24,7 +24,7 @@ class AdkarDetails extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               title,
-              style: TextStyle(color: Colors.black),
+              // style: TextStyle(color: Colors.black),
             ),
             // backgroundColor: Colors.blueAccent[100],
           ),

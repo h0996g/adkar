@@ -21,9 +21,9 @@ class QuranHomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-              iconTheme: IconThemeData(color: Colors.white),
+              // iconTheme: IconThemeData(color: Colors.white),
               title: Text('القران الكريم'),
-              backgroundColor: Colors.black),
+              backgroundColor: Colors.white),
           body: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 10),
             physics: BouncingScrollPhysics(),

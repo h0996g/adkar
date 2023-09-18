@@ -1,12 +1,13 @@
 import 'package:adkar/Screens/Adkar/Adkarhome.dart';
 import 'package:adkar/Screens/Adkar/adkarDetails.dart';
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
+import 'package:adkar/Screens/NamesOfAllah/namesOfAllah.dart';
 import 'package:adkar/Screens/home/audio.dart';
+import 'package:adkar/Screens/home/suggest.dart';
 import 'package:adkar/Screens/home/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/constant.dart';
-import 'package:adkar/shared/components/helper/cashHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
+
     if (isFirstTimeAdkar)
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => ShowCaseWidget.of(context).startShowCase([
@@ -73,16 +75,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('حصن المسلم'),
+        title: Text(
+          'حصن المسلم',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: SingleChildScrollView(
+          // controller: _scrollController,
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
-                height: 180,
+                height: size.height / 4.5,
                 width: double.infinity,
                 // color: Colors.amber,
                 decoration: BoxDecoration(
@@ -95,69 +101,238 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Row(
                 children: [
-                  Container(
-                    // width: width,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                    ),
-                    child: MaterialButton(
-                      onPressed: () {
-                        navigatAndReturn(
-                            context: context, page: QuranHomeScreen());
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/iconquran.png",
-                              height: 35),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            // isUpperCase ? text.toUpperCase() : text,
-                            "القران الكريم",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
+                  Expanded(
+                    child: Container(
+                      // width: size.width ,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          navigatAndReturn(
+                              context: context, page: QuranHomeScreen());
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/iconquran.png",
+                                height: 35),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  reverse: true,
+                                  child: Text(
+                                    // isUpperCase ? text.toUpperCase() : text,
+                                    "القران الكريم",
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  Spacer(),
-                  Container(
-                    // width: width,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                    ),
-                    child: MaterialButton(
-                      onPressed: () {
-                        navigatAndReturn(context: context, page: AdkarHome());
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/open-hands.png",
-                              height: 35),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            "اذكار المسلم",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
+                  SizedBox(
+                    width: size.width * 0.01,
+                  ),
+                  Expanded(
+                    child: Container(
+                      // width: size.width * 0.4,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          navigatAndReturn(context: context, page: AdkarHome());
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/open-hands.png",
+                                height: 35),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  reverse: true,
+                                  child: Text(
+                                    "اذكار المسلم",
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: 50,
+                height: 10,
+              ),
+
+              // Container(
+              //   // width: width,
+              //   width: size.width / 2,
+              //   decoration: BoxDecoration(
+              //     color: Colors.grey[800],
+              //   ),
+              //   child: MaterialButton(
+              //     onPressed: () {
+              //       navigatAndReturn(context: context, page: AdkarHome());
+              //     },
+              //     child: Row(
+              //       children: [
+              //         Image.asset("assets/images/allah.png", height: 35),
+              //         SizedBox(
+              //           width: 3,
+              //         ),
+              //         Text(
+              //           "اذكار المسلم",
+              //           style: const TextStyle(
+              //               color: Colors.white,
+              //               fontSize: 25,
+              //               fontWeight: FontWeight.w700),
+              //         ),
+              //       ],
+              //     ),
+
+              //   ),
+              // ),
+              // InkWell(
+              //   focusColor: Colors.transparent,
+              //   onTap: () {
+              //     navigatAndReturn(context: context, page: NamesOfAllah());
+              //   },
+              //   child: CircleAvatar(
+              //       radius: 40,
+              //       backgroundColor: Colors.transparent,
+              //       child: Image.asset("assets/images/nameOfAllah.webp",
+              //           height: 100)
+              //       // backgroundImage: AssetImage(
+              //       //   "assets/images/allah.png",
+              //       // ),
+              //       ),
+              // ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      // width: width,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          navigatAndReturn(context: context, page: Suggest());
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/suggestion.png",
+                                height: 35),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  reverse: true,
+                                  child: Text(
+                                    textDirection: TextDirection.rtl,
+                                    // isUpperCase ? text.toUpperCase() : text,
+                                    "ابلاغ او اقتراح",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.01,
+                  ),
+                  Expanded(
+                    child: Container(
+                      // width: width,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          navigatAndReturn(
+                              context: context, page: NamesOfAllah());
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/names.png", height: 35),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  reverse: true,
+                                  child: Text(
+                                    'أسماء ٱللَّه الحسنى',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
               ),
               Tasbih(globalKey: globalKeyOne),
               SizedBox(

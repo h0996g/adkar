@@ -60,12 +60,14 @@ class Noti {
       // required DateTime scheduleDate,
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
+    final styleInformation = BigTextStyleInformation('');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Africa/Algiers'));
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         new AndroidNotificationDetails('channelId', 'channelName',
             playSound: true,
+            styleInformation: styleInformation,
             // sound: RawResourceAndroidNotificationSound('notification'),
             importance: Importance.max,
             priority: Priority.high);
@@ -74,6 +76,7 @@ class Noti {
         id,
         title,
         body,
+
         //  tz.TZDateTime.from(scheduleDate, tz.local)
         _scheduleDailt(time),
         not,
