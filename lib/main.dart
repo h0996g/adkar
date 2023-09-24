@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 import 'firebase_options.dart';
 import 'notification.dart';
@@ -87,16 +86,21 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+            textTheme: TextTheme(
+                headlineSmall: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red.shade400,
+                ),
+                displayMedium: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700)),
             appBarTheme: AppBarTheme(
-                // backgroundColor: Colors.black,
                 systemOverlayStyle: SystemUiOverlayStyle(
-                  // Status bar color
                   statusBarColor: Colors.black,
-
-                  // Status bar brightness (optional)
-                  statusBarIconBrightness:
-                      Brightness.light, // For Android (dark icons)
-                  statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+                  statusBarIconBrightness: Brightness.light,
+                  statusBarBrightness: Brightness.dark,
                 ),
                 iconTheme: IconThemeData(color: Colors.black),
                 color: Colors.white,
@@ -106,7 +110,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         home: ShowCaseWidget(
             onStart: (index, key) async {
-              // if (index == 1) {}
               if (index == 1) {
                 await Scrollable.ensureVisible(
                   key.currentContext!,
@@ -114,9 +117,7 @@ class MyApp extends StatelessWidget {
                 );
               }
             },
-            onComplete: (index, key) async {
-              // print(index);
-            },
+            onComplete: (index, key) async {},
             onFinish: () async {
               print('test finich');
               await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)

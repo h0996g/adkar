@@ -20,16 +20,6 @@ class AdkarHome extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          // appBar: AppBar(
-          //   iconTheme: IconThemeData(color: Colors.white),
-          //   backgroundColor: Colors.black,
-          //   title: const Text(
-          //     'أذكار المسلم',
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   centerTitle: true,
-          // ),
-
           body: ConditionalBuilder(
             builder: (BuildContext context) {
               return CustomScrollView(
@@ -112,13 +102,8 @@ class AdkarHome extends StatelessWidget {
               // Spacer(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  "${model.name}",
-                  style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
+                child: Text("${model.name}",
+                    style: Theme.of(context).textTheme.displayMedium),
               ),
             ],
           ),

@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                height: size.height / 4.5,
+                height: size.height / 5.5,
                 width: double.infinity,
                 // color: Colors.amber,
                 decoration: BoxDecoration(
@@ -128,14 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text(
-                                    // isUpperCase ? text.toUpperCase() : text,
-                                    "القران الكريم",
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                      // isUpperCase ? text.toUpperCase() : text,
+                                      "القران الكريم",
+                                      maxLines: 1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium),
                                 ),
                               ),
                             ),
@@ -172,14 +170,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
-                                  child: Text(
-                                    "اذكار المسلم",
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                  child: Text("اذكار المسلم",
+                                      maxLines: 1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium),
                                 ),
                               ),
                             ),
@@ -193,50 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10,
               ),
-
-              // Container(
-              //   // width: width,
-              //   width: size.width / 2,
-              //   decoration: BoxDecoration(
-              //     color: Colors.grey[800],
-              //   ),
-              //   child: MaterialButton(
-              //     onPressed: () {
-              //       navigatAndReturn(context: context, page: AdkarHome());
-              //     },
-              //     child: Row(
-              //       children: [
-              //         Image.asset("assets/images/allah.png", height: 35),
-              //         SizedBox(
-              //           width: 3,
-              //         ),
-              //         Text(
-              //           "اذكار المسلم",
-              //           style: const TextStyle(
-              //               color: Colors.white,
-              //               fontSize: 25,
-              //               fontWeight: FontWeight.w700),
-              //         ),
-              //       ],
-              //     ),
-
-              //   ),
-              // ),
-              // InkWell(
-              //   focusColor: Colors.transparent,
-              //   onTap: () {
-              //     navigatAndReturn(context: context, page: NamesOfAllah());
-              //   },
-              //   child: CircleAvatar(
-              //       radius: 40,
-              //       backgroundColor: Colors.transparent,
-              //       child: Image.asset("assets/images/nameOfAllah.webp",
-              //           height: 100)
-              //       // backgroundImage: AssetImage(
-              //       //   "assets/images/allah.png",
-              //       // ),
-              //       ),
-              // ),
               Row(
                 children: [
                   Expanded(
@@ -265,17 +216,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text(
-                                    textDirection: TextDirection.rtl,
-                                    // isUpperCase ? text.toUpperCase() : text,
-                                    "ابلاغ او اقتراح",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                      textDirection: TextDirection.rtl,
+                                      // isUpperCase ? text.toUpperCase() : text,
+                                      "ابلاغ او اقتراح",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium),
                                 ),
                               ),
                             ),
@@ -312,15 +260,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
-                                  child: Text(
-                                    'أسماء ٱللَّه الحسنى',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                  child: Text('أسماء ٱللَّه الحسنى',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium),
                                 ),
                               ),
                             ),
@@ -339,14 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 10,
               ),
               Text(
-                'أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ وَلَوْ كَانَ مِنْ عِنْدِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلافًا كَثِيرًا',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red.shade400,
-                ),
-              ),
+                  'أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ وَلَوْ كَانَ مِنْ عِنْدِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلافًا كَثِيرًا',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineSmall),
               Audio(
                 globalKey: globalKeyTwo,
               )
