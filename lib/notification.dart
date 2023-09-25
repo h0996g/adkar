@@ -9,12 +9,12 @@ class Noti {
       FlutterLocalNotificationsPlugin();
   static final onNotification = BehaviorSubject<String?>();
 
-  static Future initialize() async {
-    var androidInit = new AndroidInitializationSettings('mipmap/ic_launcher');
-    var initializationSetting =
-        new InitializationSettings(android: androidInit);
-    await flutterLocalNotificationsPlugin.initialize(initializationSetting);
-  }
+  // static Future initialize() async {
+  //   var androidInit = new AndroidInitializationSettings('mipmap/ic_launcher');
+  //   var initializationSetting =
+  //       new InitializationSettings(android: androidInit);
+  //   await flutterLocalNotificationsPlugin.initialize(initializationSetting);
+  // }
 
 //!  hadi 3la jal win tadik kima tetka 3la notification (path)
   static Future init({bool initSchediled = false}) async {
@@ -25,7 +25,7 @@ class Noti {
       onNotification.add(deatails.notificationResponse!.payload);
     }
 
-    var android = new AndroidInitializationSettings('mipmap/ic_launcher');
+    var android = const AndroidInitializationSettings('mipmap/ic_launcher');
 
     final settings = InitializationSettings(android: android);
     await flutterLocalNotificationsPlugin.initialize(settings,
@@ -43,7 +43,7 @@ class Noti {
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-        new AndroidNotificationDetails('channelId', 'channelName',
+        const AndroidNotificationDetails('channelId', 'channelName',
             playSound: true,
             // sound: RawResourceAndroidNotificationSound('notification'),
             importance: Importance.max,
@@ -60,12 +60,12 @@ class Noti {
       // required DateTime scheduleDate,
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
-    final styleInformation = BigTextStyleInformation('');
+    const styleInformation = BigTextStyleInformation('');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Africa/Algiers'));
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-        new AndroidNotificationDetails('channelId', 'channelName',
+        const AndroidNotificationDetails('channelId', 'channelName',
             playSound: true,
             styleInformation: styleInformation,
             // sound: RawResourceAndroidNotificationSound('notification'),
@@ -92,7 +92,7 @@ class Noti {
     final scheduleDate = tz.TZDateTime(
         tz.local, now.year, now.month, now.day, time.hour, time.minute);
     return scheduleDate.isBefore(now)
-        ? scheduleDate.add(Duration(days: 1))
+        ? scheduleDate.add(const Duration(days: 1))
         : scheduleDate;
   }
 

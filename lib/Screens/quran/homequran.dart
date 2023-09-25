@@ -1,9 +1,9 @@
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
-import 'package:adkar/Screens/quran/soraQuran.dart';
-import 'package:adkar/models/quranApi.dart';
+import 'package:adkar/Screens/quran/sora_quran.dart';
+import 'package:adkar/models/quran_api.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/constant.dart';
-import 'package:adkar/shared/components/helper/cashHelper.dart';
+import 'package:adkar/shared/helper/cash_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +22,11 @@ class QuranHomeScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
               // iconTheme: IconThemeData(color: Colors.white),
-              title: Text('القران الكريم'),
+              title: const Text('القران الكريم'),
               backgroundColor: Colors.white),
           body: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            physics: BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => ayaItem(
                 QuranCubit.get(context).dataQuranApi![index], context, index),
             itemCount: QuranCubit.get(context).dataQuranApi!.length,
@@ -70,10 +70,10 @@ class QuranHomeScreen extends StatelessWidget {
             },
             child: Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Text(
                   model.name!,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),

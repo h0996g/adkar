@@ -19,11 +19,8 @@ class _SuggestState extends State<Suggest> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return BlocConsumer<AhadithCubit, AhadithState>(
       listener: (context, state) {
-        // TODO: implement listener
         if (state is UploadSeggestStateGood) {
           showToast(msg: 'تم الارسال بنجاح', state: ToastStates.success);
         }
@@ -31,12 +28,12 @@ class _SuggestState extends State<Suggest> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('ابلاغ'),
+            title: const Text('ابلاغ'),
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Form(
                 key: formKey,
                 child: Column(
@@ -91,18 +88,18 @@ class _SuggestState extends State<Suggest> {
                               ),
                             );
                           },
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.transparent,
                             child: Icon(
                               Icons.camera_alt,
                               size: 30,
                               color: Colors.blue,
                             ),
-                            backgroundColor: Colors.transparent,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     if (AhadithCubit.get(context).imageCompress != null)
@@ -123,7 +120,7 @@ class _SuggestState extends State<Suggest> {
                                   AhadithCubit.get(context)
                                       .deleteImageSuggest();
                                 },
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   backgroundColor: Colors.transparent,
                                   child: Icon(
                                     Icons.delete_rounded,
@@ -134,16 +131,16 @@ class _SuggestState extends State<Suggest> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           )
                         ],
                       ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     if (state is LoadingSeggustUpload)
-                      Column(
+                      const Column(
                         children: [
                           LinearProgressIndicator(),
                           SizedBox(
@@ -158,7 +155,7 @@ class _SuggestState extends State<Suggest> {
                               .uploadSuggestImg(text: suggestController.text)
                               .then((value) => {
                                     AhadithCubit.get(context)
-                                        .ResetValueSuggest(),
+                                        .resetValueSuggest(),
                                     setState(() {
                                       suggestController.text = '';
                                     })

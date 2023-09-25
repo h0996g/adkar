@@ -22,8 +22,8 @@ class ShowCaseView extends StatelessWidget {
 
         // disableDefaultTargetGestures: true,
         // blurValue: 5,
-        movingAnimationDuration: Duration(milliseconds: 3000),
-        targetPadding: EdgeInsets.all(5),
+        movingAnimationDuration: const Duration(milliseconds: 3000),
+        targetPadding: const EdgeInsets.all(5),
         scaleAnimationCurve: Curves.easeInBack,
         targetBorderRadius: BorderRadius.circular(10),
         descriptionAlignment: TextAlign.right,
@@ -32,12 +32,12 @@ class ShowCaseView extends StatelessWidget {
         key: globalKey,
         title: title,
         description: description,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           color: Colors.red,
           fontSize: 22,
           fontWeight: FontWeight.w600,
         ),
-        descTextStyle: TextStyle(
+        descTextStyle: const TextStyle(
           fontSize: 15,
         ),
 

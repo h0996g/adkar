@@ -27,11 +27,10 @@ class _AudioQuranState extends State<AudioQuran> {
   Duration position = Duration.zero;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     audioPlay.onPlayerStateChanged.listen((event) {
-      if (this.mounted) {
+      if (mounted) {
         setState(() {
           isplaying = event == PlayerState.playing;
         });
@@ -59,12 +58,12 @@ class _AudioQuranState extends State<AudioQuran> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     audioPlay.dispose();
 
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [

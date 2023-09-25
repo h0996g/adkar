@@ -14,19 +14,20 @@ class ExplainName extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
             child: Text(
               name,
-              style: TextStyle(fontSize: 100, fontWeight: FontWeight.w700),
+              style:
+                  const TextStyle(fontSize: 100, fontWeight: FontWeight.w700),
             ),
           ),
           Text(
             explain,
             textDirection: TextDirection.rtl,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w700,
               fontFamily: 'Amiri',

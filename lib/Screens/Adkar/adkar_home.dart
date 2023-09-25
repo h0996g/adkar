@@ -1,6 +1,6 @@
-import 'package:adkar/Screens/Adkar/adkarDetails.dart';
+import 'package:adkar/Screens/Adkar/adkar_details.dart';
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
-import 'package:adkar/models/sectionModel.dart';
+import 'package:adkar/models/section_model.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +15,16 @@ class AdkarHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AhadithCubit, AhadithState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           body: ConditionalBuilder(
             builder: (BuildContext context) {
               return CustomScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 slivers: [
                   SliverAppBar(
-                    iconTheme: IconThemeData(
+                    iconTheme: const IconThemeData(
                       color: Colors.white,
                     ),
                     // title: Text('اذكار الصباح'),
@@ -35,7 +33,7 @@ class AdkarHome extends StatelessWidget {
                     pinned: true,
                     centerTitle: false,
                     expandedHeight: 230,
-                    flexibleSpace: FlexibleSpaceBar(
+                    flexibleSpace: const FlexibleSpaceBar(
                       background: Image(
                         image: AssetImage("assets/images/2.jpg"),
                         fit: BoxFit.cover,
@@ -67,7 +65,7 @@ class AdkarHome extends StatelessWidget {
   Widget buildItem(SectionModel model, context, int index) {
     return InkWell(
       onTap: () {
-        print(model.id);
+        // print(model.id);
         AhadithCubit.get(context)
             .getSectionDetails(context, model.id!)
             .then((value) {
@@ -96,12 +94,12 @@ class AdkarHome extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Image.asset(AhadithCubit.get(context).icon[index],
                       height: 40)),
               // Spacer(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text("${model.name}",
                     style: Theme.of(context).textTheme.displayMedium),
               ),

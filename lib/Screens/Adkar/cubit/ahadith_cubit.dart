@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:adkar/models/sectionDetailsModel.dart';
-import 'package:adkar/models/sectionModel.dart';
+import 'package:adkar/models/section_details_model.dart';
+import 'package:adkar/models/section_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class AhadithCubit extends Cubit<AhadithState> {
       var body = jsonDecode(value);
       for (var element in body) {
         if (element['section_id'] == id) {
-          print(element);
+          // print(element);
           dataAdkarDetails!.add(SectionDetailsModel.fromJson(element));
         }
       }
@@ -66,7 +66,7 @@ class AhadithCubit extends Cubit<AhadithState> {
   }
 
   void readAdkar(int index) {
-    print(dataAdkarDetails![index].count);
+    // print(dataAdkarDetails![index].count);
     if (dataAdkarDetails![index].count! > 1) {
       dataAdkarDetails![index].count = (dataAdkarDetails![index].count!) - 1;
       emit(ReadAdkarStateGood());
@@ -81,11 +81,11 @@ class AhadithCubit extends Cubit<AhadithState> {
 // !--------------------------------- Suggest.dart lifl Home-------------------------------
   File? imageCompress;
   Future<void> imagePickerProfile(ImageSource source) async {
-    final ImagePicker _pickerProfile = ImagePicker();
-    await _pickerProfile.pickImage(source: source).then((value) async {
+    final ImagePicker pickerProfile = ImagePicker();
+    await pickerProfile.pickImage(source: source).then((value) async {
       await FlutterImageCompress.compressAndGetFile(
         File(value!.path).absolute.path,
-        File(value.path).path + '.jpg',
+        '${File(value.path).path}.jpg',
         quality: 10,
       ).then((value) {
         //! test
@@ -106,7 +106,7 @@ class AhadithCubit extends Cubit<AhadithState> {
   String? linkSuggestImg;
   Future<void> uploadSuggestImg({required String? text}) async {
     emit(LoadingSeggustUpload());
-    if (imageCompress != null)
+    if (imageCompress != null) {
       await firebase_storage.FirebaseStorage.instance
           .ref()
           .child('Suggests/${Uri.file(imageCompress!.path).pathSegments.last}')
@@ -114,15 +114,16 @@ class AhadithCubit extends Cubit<AhadithState> {
           .then((p0) async {
         await p0.ref.getDownloadURL().then((value) async {
           linkSuggestImg = value;
-          print(linkSuggestImg);
+          // print(linkSuggestImg);
           // emit(UploadSeggestImgAndGetUrlStateGood());
         }).catchError((e) {
           emit(UploadSeggestImgAndGetUrlStateBad());
         });
       });
+    }
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    print('Running on ${androidInfo.model}');
+    // print('Running on ${androidInfo.model}');
     await FirebaseFirestore.instance.collection('suggests').doc().set({
       'text': text ?? '',
       'link': linkSuggestImg ?? '',
@@ -134,7 +135,7 @@ class AhadithCubit extends Cubit<AhadithState> {
     });
   }
 
-  void ResetValueSuggest() {
+  void resetValueSuggest() {
     linkSuggestImg = null;
     imageCompress = null;
     emit(ResetValueSuggestState());

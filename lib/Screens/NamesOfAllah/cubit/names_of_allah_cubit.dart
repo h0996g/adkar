@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:adkar/models/namesOfAllah.dart';
+import 'package:adkar/models/names_of_allah.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
       for (var element in body) {
         namesModel.add(NamesOfAllahModel.fromJson(element));
       }
-      print(namesModel[1].name);
+      // print(namesModel[1].name);
       emit(GetNamesStateGood());
     }).catchError((e) {
       emit(GetNamesStateBad());

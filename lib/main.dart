@@ -4,9 +4,9 @@ import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
 import 'package:adkar/shared/components/constant.dart';
-import 'package:adkar/shared/components/helper/cashHelper.dart';
-import 'package:adkar/shared/components/helper/constant.dart';
-import 'package:adkar/shared/network/dioHalper.dart';
+import 'package:adkar/shared/helper/cash_helper.dart';
+import 'package:adkar/shared/helper/constant.dart';
+import 'package:adkar/shared/network/dio_halper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,21 +19,17 @@ import 'notification.dart';
 main() async {
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-
   await CachHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   DioHelper.init();
-
   Noti.init();
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
   isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
-
   if (isNotiOn == false) {
     print('awel mra ');
-
     for (var notif in notifications) {
       await Noti.showTimeNotificationDaily(
           payload: 'adkar',
@@ -50,7 +46,7 @@ main() async {
         title: 'اذكار الصباح',
         body: 'اذكار الصباح',
         // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-        time: TimeOfDay(hour: 7, minute: 30),
+        time: const TimeOfDay(hour: 7, minute: 30),
         fln: Noti.flutterLocalNotificationsPlugin);
     await Noti.showTimeNotificationDaily(
         id: 26,
@@ -58,11 +54,10 @@ main() async {
         title: 'اذكار المساء',
         body: 'اذكار المساء',
         // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-        time: TimeOfDay(hour: 16, minute: 30),
+        time: const TimeOfDay(hour: 16, minute: 30),
         fln: Noti.flutterLocalNotificationsPlugin);
     await CachHelper.putcache(key: 'isNotiOn', value: true);
   }
-
   runApp(const MyApp());
 }
 
@@ -92,11 +87,11 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.red.shade400,
                 ),
-                displayMedium: TextStyle(
+                displayMedium: const TextStyle(
                     color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.w700)),
-            appBarTheme: AppBarTheme(
+            appBarTheme: const AppBarTheme(
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: Colors.black,
                   statusBarIconBrightness: Brightness.light,
@@ -126,7 +121,7 @@ class MyApp extends StatelessWidget {
               });
             },
             builder: Builder(
-              builder: (context) => HomeScreen(),
+              builder: (context) => const HomeScreen(),
             )),
       ),
     );

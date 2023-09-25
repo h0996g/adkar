@@ -1,10 +1,10 @@
-import 'package:adkar/Screens/Adkar/Adkarhome.dart';
-import 'package:adkar/Screens/Adkar/adkarDetails.dart';
+import 'package:adkar/Screens/Adkar/adkar_home.dart';
+import 'package:adkar/Screens/Adkar/adkar_details.dart';
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
-import 'package:adkar/Screens/NamesOfAllah/namesOfAllah.dart';
-import 'package:adkar/Screens/home/audio.dart';
+import 'package:adkar/Screens/NamesOfAllah/names_of_allah.dart';
+import 'package:adkar/shared/components/audio.dart';
 import 'package:adkar/Screens/home/suggest.dart';
-import 'package:adkar/Screens/home/tasbih.dart';
+import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/constant.dart';
@@ -26,18 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
-    if (isFirstTimeAdkar)
+    if (isFirstTimeAdkar) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => ShowCaseWidget.of(context).startShowCase([
           globalKeyOne,
           globalKeyTwo,
         ]),
       );
+    }
     super.initState();
 
-    Noti.initialize();
     // Noti.initialize();
 
     Noti.init();
@@ -46,26 +44,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void listenNotification() => Noti.onNotification.stream.listen((event) async {
         if (event == 'adkarSabah') {
-          await AhadithCubit.get(context).getSectionDetails(context, 1);
-          navigatAndReturn(
+          await AhadithCubit.get(context)
+              .getSectionDetails(context, 1)
+              .then((value) {
+            navigatAndReturn(
               context: context,
               page: ShowCaseWidget(
                 builder: Builder(
-                  builder: (context) => AdkarDetails(
+                  builder: (context) => const AdkarDetails(
                     title: 'اذكار الصباح',
                   ),
                 ),
-              ));
+              ),
+            );
+          });
         } else if (event == "adkarMasa1") {
-          await AhadithCubit.get(context).getSectionDetails(context, 2);
-          navigatAndReturn(
-              context: context,
-              page: ShowCaseWidget(
-                builder: Builder(
-                    builder: ((context) => AdkarDetails(
-                          title: 'اذكار المساء',
-                        ))),
-              ));
+          await AhadithCubit.get(context)
+              .getSectionDetails(context, 2)
+              .then((value) {
+            navigatAndReturn(
+                context: context,
+                page: ShowCaseWidget(
+                  builder: Builder(
+                      builder: ((context) => const AdkarDetails(
+                            title: 'اذكار المساء',
+                          ))),
+                ));
+          });
         }
       });
 
@@ -75,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'حصن المسلم',
           style: TextStyle(color: Colors.white),
         ),
@@ -84,19 +89,19 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(0.0),
         child: SingleChildScrollView(
           // controller: _scrollController,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
                 height: size.height / 5.5,
                 width: double.infinity,
                 // color: Colors.amber,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/images/1.jpg"),
                         fit: BoxFit.cover)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -111,20 +116,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: MaterialButton(
                         onPressed: () {
                           navigatAndReturn(
-                              context: context, page: QuranHomeScreen());
+                              context: context, page: const QuranHomeScreen());
                         },
                         child: Row(
                           children: [
                             Image.asset("assets/images/iconquran.png",
                                 height: 35),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text(
@@ -154,20 +159,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          navigatAndReturn(context: context, page: AdkarHome());
+                          navigatAndReturn(
+                              context: context, page: const AdkarHome());
                         },
                         child: Row(
                           children: [
                             Image.asset("assets/images/open-hands.png",
                                 height: 35),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text("اذكار المسلم",
@@ -185,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -199,20 +205,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          navigatAndReturn(context: context, page: Suggest());
+                          navigatAndReturn(
+                              context: context, page: const Suggest());
                         },
                         child: Row(
                           children: [
                             Image.asset("assets/images/suggestion.png",
                                 height: 35),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text(
@@ -245,19 +252,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: MaterialButton(
                         onPressed: () {
                           navigatAndReturn(
-                              context: context, page: NamesOfAllah());
+                              context: context, page: const NamesOfAllah());
                         },
                         child: Row(
                           children: [
                             Image.asset("assets/images/names.png", height: 35),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   reverse: true,
                                   child: Text('أسماء ٱللَّه الحسنى',
@@ -276,11 +283,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Tasbih(globalKey: globalKeyOne),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(

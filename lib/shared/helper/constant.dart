@@ -58,140 +58,140 @@ List<dynamic> notifications = [
   {
     "description":
         'اللَّهُمَّ إنِّي أَسْأَلُكَ الهُدَى وَالتُّقَى، وَالْعَفَافَ وَالْغِنَى',
-    "date": TimeOfDay(hour: 0, minute: 00),
+    "date": const TimeOfDay(hour: 0, minute: 00),
     "id": 1
   },
   {
     "description":
         'رَبِّ إِنِّي أَعُوذُ بِكَ أَنْ أَسْأَلَكَ مَا لَيْسَ لِي بِهِ عِلْمٌ ۖ وَإِلَّا تَغْفِرْ لِي وَتَرْحَمْنِي أَكُن مِّنَ الْخَاسِرِينَ',
-    "date": TimeOfDay(hour: 1, minute: 00),
+    "date": const TimeOfDay(hour: 1, minute: 00),
     "id": 2
   },
   {
     "description":
         'رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا ۖ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ',
-    "date": TimeOfDay(hour: 2, minute: 00),
+    "date": const TimeOfDay(hour: 2, minute: 00),
     "id": 3
   },
   {
     "description":
         'رَّبِّ أَنزِلْنِي مُنزَلًا مُّبَارَكًا وَأَنتَ خَيْرُ الْمُنزِلِينَ',
-    "date": TimeOfDay(hour: 3, minute: 00),
+    "date": const TimeOfDay(hour: 3, minute: 00),
     "id": 4
   },
   {
     "description":
         'اللَّهمَّ إنِّي أسألُك أنِّي أَشهَدُ أنَّك أنت اللهُ، لا إلهَ إلَّا أنت، الأحدُ الصمدُ، الذي لم يَلِدْ ولم يولَدْ، ولم يكُنْ له كُفوًا أحدٌ',
-    "date": TimeOfDay(hour: 4, minute: 00),
+    "date": const TimeOfDay(hour: 4, minute: 00),
     "id": 5
   },
   {
     "description":
         'اللَّهُمَّ إنِّي أعُوذُ بكَ مِنَ الهَمِّ والحَزَنِ، والعَجْزِ والكَسَلِ، والبُخْلِ، والجُبْنِ، وضَلَعِ الدَّيْنِ، وغَلَبَةِ الرِّجالِ',
-    "date": TimeOfDay(hour: 5, minute: 00),
+    "date": const TimeOfDay(hour: 5, minute: 00),
     "id": 6
   },
   {
     "description":
         'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
-    "date": TimeOfDay(hour: 6, minute: 00),
+    "date": const TimeOfDay(hour: 6, minute: 00),
     "id": 7
   },
   {
     "description":
         'لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ',
-    "date": TimeOfDay(hour: 7, minute: 00),
+    "date": const TimeOfDay(hour: 7, minute: 00),
     "id": 8
   },
   {
     "description": 'رَّبِّ زِدْنِي عِلْمًا',
-    "date": TimeOfDay(hour: 8, minute: 00),
+    "date": const TimeOfDay(hour: 8, minute: 00),
     "id": 9
   },
   {
     "description":
         'اللَّهمَّ إنِّي أسألُك من خيرِ ما أُمِرَتْ بِه وأعوذُ بِك من شرِّ ما أُمِرَت بِه',
-    "date": TimeOfDay(hour: 9, minute: 00),
+    "date": const TimeOfDay(hour: 9, minute: 00),
     "id": 10
   },
   {
     "description":
         'اللهمَّ إني أسألُك من كل خيرٍ خزائنُه بيدِك، وأعوذُ بك من كل شرٍّ خزائنُه بيدِك',
-    "date": TimeOfDay(hour: 10, minute: 00),
+    "date": const TimeOfDay(hour: 10, minute: 00),
     "id": 11
   },
   {
     "description":
         'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي ۖ إِنِّي تُبْتُ إِلَيْكَ وَإِنِّي مِنَ الْمُسْلِمِينَ',
-    "date": TimeOfDay(hour: 11, minute: 00),
+    "date": const TimeOfDay(hour: 11, minute: 00),
     "id": 12
   },
   {
     "description":
         'اللَّهُمَّ إنِّي أعُوذُ بكَ مِنَ البُخْلِ، وأَعُوذُ بكَ مِنَ الجُبْنِ، وأَعُوذُ بكَ أنْ أُرَدَّ إلى أرْذَلِ العُمُرِ، وأَعُوذُ بكَ مِن فِتْنَةِ الدُّنْيَا -يَعْنِي فِتْنَةَ الدَّجَّالِ- وأَعُوذُ بكَ مِن عَذَابِ القَبْرِ',
-    "date": TimeOfDay(hour: 12, minute: 00),
+    "date": const TimeOfDay(hour: 12, minute: 00),
     "id": 13
   },
   {
     "description":
         'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا',
-    "date": TimeOfDay(hour: 13, minute: 00),
+    "date": const TimeOfDay(hour: 13, minute: 00),
     "id": 14
   },
   {
     "description":
         'رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ',
-    "date": TimeOfDay(hour: 14, minute: 00),
+    "date": const TimeOfDay(hour: 14, minute: 00),
     "id": 15
   },
   {
     "description":
         'رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ',
-    "date": TimeOfDay(hour: 15, minute: 00),
+    "date": const TimeOfDay(hour: 15, minute: 00),
     "id": 16
   },
   {
     "description":
         'رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً',
-    "date": TimeOfDay(hour: 16, minute: 00),
+    "date": const TimeOfDay(hour: 16, minute: 00),
     "id": 17
   },
   {
     "description": 'قَالَ رَبِّ اشْرَحْ لِي صَدْرِي*وَيَسِّرْ لِي أَمْرِي',
-    "date": TimeOfDay(hour: 17, minute: 00),
+    "date": const TimeOfDay(hour: 17, minute: 00),
     "id": 18
   },
   {
     "description":
         'اللَّهُمَّ إنِّي أَعُوذُ بكَ مِن زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ',
-    "date": TimeOfDay(hour: 18, minute: 00),
+    "date": const TimeOfDay(hour: 18, minute: 00),
     "id": 19
   },
   {
     "description":
         'اللَّهمَّ إنِّي أعوذُ بِك من شرِّ ما عَمِلتُ ، ومن شرِّ ما لم أعمَلْ',
-    "date": TimeOfDay(hour: 19, minute: 00),
+    "date": const TimeOfDay(hour: 19, minute: 00),
     "id": 20
   },
   {
     "description": 'رَبِّ نَجِّنِي مِنَ الْقَوْمِ الظَّالِمِينَ',
-    "date": TimeOfDay(hour: 20, minute: 00),
+    "date": const TimeOfDay(hour: 20, minute: 00),
     "id": 21
   },
   {
     "description": 'رَبِّ هَبْ لِي حُكْمًا وَأَلْحِقْنِي بِالصَّالِحِينَ',
-    "date": TimeOfDay(hour: 21, minute: 00),
+    "date": const TimeOfDay(hour: 21, minute: 00),
     "id": 22
   },
   {
     "description": 'اللَّهمَّ أحسَنتَ خَلقي فأحسِن خُلُقي',
-    "date": TimeOfDay(hour: 22, minute: 00),
+    "date": const TimeOfDay(hour: 22, minute: 00),
     "id": 23
   },
   {
     "description":
         'رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِن ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ',
-    "date": TimeOfDay(hour: 23, minute: 00),
+    "date": const TimeOfDay(hour: 23, minute: 00),
     "id": 24
   },
   // {

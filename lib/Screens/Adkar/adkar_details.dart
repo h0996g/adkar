@@ -1,17 +1,16 @@
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
-import 'package:adkar/Screens/home/audio.dart';
+import 'package:adkar/shared/components/audio.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
 
-// import 'package:vibration/vibration.dart';
-import '../../models/sectionDetailsModel.dart';
+import '../../models/section_details_model.dart';
 import 'cubit/ahadith_state.dart';
 
 class AdkarDetails extends StatelessWidget {
   final String title;
-  AdkarDetails({super.key, required this.title});
+  const AdkarDetails({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +36,12 @@ class AdkarDetails extends StatelessWidget {
                 itemCount: AhadithCubit.get(context).dataAdkarDetails!.length,
               );
             },
-            condition: !AhadithCubit.get(context).dataAdkarDetails!.isEmpty,
+            condition: AhadithCubit.get(context).dataAdkarDetails!.isNotEmpty,
             fallback: (BuildContext context) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'الَّذِينَ آتَيْنَاهُمْ الْكِتَابَ يَتْلُونَهُ حَقَّ تِلَاوَتِهِ',
                     textAlign: TextAlign.center,
                     style: TextStyle(

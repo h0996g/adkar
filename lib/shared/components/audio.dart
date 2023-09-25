@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Audio extends StatefulWidget {
-  Audio({super.key, required this.globalKey});
+  const Audio({super.key, required this.globalKey});
   final GlobalKey globalKey;
   @override
   State<Audio> createState() => _AudioState();
@@ -22,21 +22,32 @@ class _AudioState extends State<Audio> {
   Duration position = Duration.zero;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     audioPlay.onPlayerStateChanged.listen((event) {
-      setState(() {
-        isplaying = event == PlayerState.playing;
-      });
+      if (mounted) {
+        setState(() {
+          isplaying = event == PlayerState.playing;
+        });
+      }
     });
     audioPlay.onDurationChanged.listen((event) {
-      setState(() {
-        duration = event;
-      });
-      audioPlay.onPositionChanged.listen((event) {
+      if (mounted) {
         setState(() {
-          position = event;
+          duration = event;
         });
+      }
+      // setState(() {
+      //   duration = event;
+      // });
+      audioPlay.onPositionChanged.listen((event) {
+        if (mounted) {
+          setState(() {
+            position = event;
+          });
+        }
+        // setState(() {
+        //   position = event;
+        // });
       });
     });
     audioPlay.onPlayerStateChanged.listen((event) {
@@ -50,11 +61,11 @@ class _AudioState extends State<Audio> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     audioPlay.dispose();
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ShowCaseView(
       description: '',

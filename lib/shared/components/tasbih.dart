@@ -1,4 +1,7 @@
-import 'package:adkar/shared/components/helper/cashHelper.dart';
+import 'dart:async';
+import 'dart:io';
+
+import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -31,6 +34,18 @@ class _TasbihState extends State<Tasbih> {
       }
       index++;
       _counter = _counter + (1 / int.parse(value!));
+      if (_counter >= 0.98) {
+        Future.delayed(const Duration(milliseconds: 700), () {
+          if (_counter >= 0.98) {
+            setState(() {
+              _counter = 0.0;
+              index = 0;
+              _indexTasbih = _indexTasbih == 0 ? 1 : 0;
+              return;
+            });
+          }
+        });
+      }
     });
   }
 
@@ -46,16 +61,16 @@ class _TasbihState extends State<Tasbih> {
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.shade500,
-                offset: Offset(4.0, 4.0),
+                offset: const Offset(4.0, 4.0),
                 blurRadius: 15,
                 spreadRadius: 1),
-            BoxShadow(
+            const BoxShadow(
                 color: Colors.white,
                 offset: Offset(-4.0, -4.0),
                 blurRadius: 15,
                 spreadRadius: 1.0)
           ]),
-      padding: EdgeInsetsDirectional.symmetric(vertical: 5),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
       width: size.width * 0.8,
       child: Column(
         children: [
@@ -73,7 +88,7 @@ class _TasbihState extends State<Tasbih> {
                       color: Colors.grey.shade700),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               ShowCaseView(
                 description: 'افتح القائمة واختر عدد تكرار التسبيح',
                 globalKey: widget.globalKey,
@@ -90,12 +105,12 @@ class _TasbihState extends State<Tasbih> {
                   }),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           InkWell(
@@ -115,10 +130,10 @@ class _TasbihState extends State<Tasbih> {
 
               lineWidth: 20.0,
               percent: _counter,
-              center: new Text(
-                '${tasbih[_indexTasbih]}',
+              center: Text(
+                tasbih[_indexTasbih],
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
                     shadows: [
@@ -128,18 +143,18 @@ class _TasbihState extends State<Tasbih> {
                       )
                     ]),
               ),
-              progressColor: Color.fromARGB(255, 83, 34, 8),
-              backgroundColor: Color.fromARGB(47, 83, 34, 8),
+              progressColor: const Color.fromARGB(255, 83, 34, 8),
+              backgroundColor: const Color.fromARGB(47, 83, 34, 8),
 
               // progressColor: Colors.yellow,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             '$index',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           )
         ],
       ),
@@ -150,7 +165,7 @@ class _TasbihState extends State<Tasbih> {
         value: item,
         child: Text(
           item,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       );
 }

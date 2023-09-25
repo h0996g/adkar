@@ -1,6 +1,6 @@
 import 'package:adkar/Screens/NamesOfAllah/cubit/names_of_allah_cubit.dart';
-import 'package:adkar/Screens/NamesOfAllah/explainName.dart';
-import 'package:adkar/models/namesOfAllah.dart';
+import 'package:adkar/Screens/NamesOfAllah/explain_name.dart';
+import 'package:adkar/models/names_of_allah.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,22 +13,20 @@ class NamesOfAllah extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NamesOfAllahCubit, NamesOfAllahState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         NamesOfAllahCubit cubit = NamesOfAllahCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               'أسماء ٱللَّه الحسنى',
               // style: TextStyle(color: Colors.black),
             ),
           ),
           body: ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              return NamesOfAllahItem(context, cubit.namesModel[index], index);
+              return namesOfAllahItem(context, cubit.namesModel[index], index);
             },
             itemCount: cubit.namesModel.length,
           ),
@@ -37,7 +35,7 @@ class NamesOfAllah extends StatelessWidget {
     );
   }
 
-  Widget NamesOfAllahItem(
+  Widget namesOfAllahItem(
       BuildContext context, NamesOfAllahModel model, int index) {
     return InkWell(
       onTap: () {
@@ -57,13 +55,13 @@ class NamesOfAllah extends StatelessWidget {
             Text(
               textDirection: TextDirection.rtl,
               model.name!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 40,
                 // fontWeight: FontWeight.w500,
                 // fontFamily: "Amiri"
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Image.asset("assets/images/languages.png", height: 35),
           ],
         ),
