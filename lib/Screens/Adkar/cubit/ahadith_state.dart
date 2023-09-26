@@ -4,6 +4,12 @@ class AhadithInitial extends AhadithState {}
 
 class GetSectionStateGood extends AhadithState {}
 
+class ShowChangeSizeTixtStateGood extends AhadithState {}
+
+class ShowchangeSliderValueStateGood extends AhadithState {}
+
+class ShowchangeSliderValueWithButtonStateGood extends AhadithState {}
+
 class GetSectionStateBad extends AhadithState {}
 
 class ReadAdkarStateGood extends AhadithState {}

@@ -28,6 +28,8 @@ main() async {
   isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
   isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
   isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
+  sizeAdkarText =
+      await CachHelper.getData(key: 'sizeAdkarText') ?? sizeAdkarText;
   if (isNotiOn == false) {
     print('awel mra ');
     for (var notif in notifications) {

@@ -100,8 +100,13 @@ class AdkarHome extends StatelessWidget {
               // Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text("${model.name}",
-                    style: Theme.of(context).textTheme.displayMedium),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  reverse: true,
+                  child: Text("${model.name}",
+                      style: Theme.of(context).textTheme.displayMedium),
+                ),
               ),
             ],
           ),

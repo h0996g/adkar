@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../models/section_details_model.dart';
+import '../../shared/components/constant.dart';
+import '../../shared/helper/cash_helper.dart';
 import 'cubit/ahadith_state.dart';
 
 class AdkarDetails extends StatelessWidget {
@@ -21,19 +23,77 @@ class AdkarDetails extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    if (AhadithCubit.get(context).ischangeSize) {
+                      CachHelper.putcache(
+                          key: 'sizeAdkarText', value: sizeAdkarText);
+                    }
+                    AhadithCubit.get(context).showSliderChangeSizeText();
+                  },
+                  icon: Icon(AhadithCubit.get(context).ischangeSize
+                      ? Icons.done_all
+                      : Icons.text_fields))
+            ],
             title: Text(
               title,
             ),
           ),
           body: ConditionalBuilder(
             builder: (BuildContext context) {
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => dikrItem(
-                    AhadithCubit.get(context).dataAdkarDetails![index],
-                    index,
-                    context),
-                itemCount: AhadithCubit.get(context).dataAdkarDetails!.length,
+              return Column(
+                children: [
+                  AhadithCubit.get(context).ischangeSize
+                      ? Column(
+                          children: [
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    AhadithCubit.get(context)
+                                        .changeSliderValueWithButton('minus');
+                                  },
+                                  icon: Image.asset("assets/images/minus.png",
+                                      height: 35),
+                                ),
+                                Expanded(
+                                  child: Slider(
+                                      value:
+                                          AhadithCubit.get(context).valueSlider,
+                                      onChanged: (onChange) {
+                                        AhadithCubit.get(context)
+                                            .changeSliderValue(onChange);
+                                      }),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    AhadithCubit.get(context)
+                                        .changeSliderValueWithButton('plus');
+                                  },
+                                  icon: Image.asset("assets/images/plus.png",
+                                      height: 35),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        )
+                      : const SizedBox(),
+                  Expanded(
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => dikrItem(
+                          AhadithCubit.get(context).dataAdkarDetails![index],
+                          index,
+                          context),
+                      itemCount:
+                          AhadithCubit.get(context).dataAdkarDetails!.length,
+                    ),
+                  ),
+                ],
               );
             },
             condition: AhadithCubit.get(context).dataAdkarDetails!.isNotEmpty,
@@ -76,8 +136,8 @@ class AdkarDetails extends StatelessWidget {
               color: Colors.grey[50],
               child: Text('${model.content}',
                   textDirection: TextDirection.rtl,
-                  style: const TextStyle(
-                      fontSize: 26, fontWeight: FontWeight.w600)),
+                  style: TextStyle(
+                      fontSize: sizeAdkarText, fontWeight: FontWeight.w600)),
             ),
           ),
           Row(

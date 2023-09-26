@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:adkar/shared/components/show_case_widget.dart';
@@ -21,8 +20,8 @@ class _TasbihState extends State<Tasbih> {
 
   int _indexTasbih = 0;
   List<String> tasbih = [
-    'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
-    'سُبْحَانَ اللَّه الْعَظِيم'
+    'سُبْحَانَ اللَّهِ\n وَبِحَمْدِهِ',
+    'سُبْحَانَ اللَّه\n الْعَظِيم'
   ];
   void _incrementCounter() {
     setState(() {
@@ -52,6 +51,7 @@ class _TasbihState extends State<Tasbih> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    // print(size.width);
 
     return Container(
       decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _TasbihState extends State<Tasbih> {
               circularStrokeCap: CircularStrokeCap.round,
               curve: Curves.easeInQuad,
               addAutomaticKeepAlive: true,
-              radius: 100.0,
+              radius: 104,
               animationDuration: 250,
 
               lineWidth: 20.0,

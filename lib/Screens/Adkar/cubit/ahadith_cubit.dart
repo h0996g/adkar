@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:adkar/models/section_details_model.dart';
 import 'package:adkar/models/section_model.dart';
+import 'package:adkar/shared/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,31 @@ class AhadithCubit extends Cubit<AhadithState> {
     Colors.blue,
     Colors.deepPurpleAccent[100]
   ];
+  bool ischangeSize = false;
+  double valueSlider = sizeAdkarText / 100;
+  void showSliderChangeSizeText() {
+    ischangeSize = !ischangeSize;
+    emit(ShowChangeSizeTixtStateGood());
+  }
+
+  void changeSliderValue(double onChange) {
+    valueSlider = onChange;
+    sizeAdkarText = valueSlider * 100;
+    emit(ShowchangeSliderValueStateGood());
+  }
+
+  void changeSliderValueWithButton(String operation) {
+    if (operation == 'plus' && valueSlider < 0.95) {
+      valueSlider = valueSlider + 0.05;
+      sizeAdkarText = valueSlider * 100;
+    } else if (operation == 'minus' && valueSlider > 0.05) {
+      valueSlider = valueSlider - 0.05;
+      sizeAdkarText = valueSlider * 100;
+    }
+
+    emit(ShowchangeSliderValueWithButtonStateGood());
+  }
+
   Future<void> getSectionDb(context) async {
     DefaultAssetBundle.of(context)
         .loadString('assets/db/section.json')
