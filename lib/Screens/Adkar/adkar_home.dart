@@ -35,7 +35,7 @@ class AdkarHome extends StatelessWidget {
                     expandedHeight: 230,
                     flexibleSpace: const FlexibleSpaceBar(
                       background: Image(
-                        image: AssetImage("assets/images/2.jpg"),
+                        image: AssetImage("assets/images/888-6.jpg"),
                         fit: BoxFit.cover,
                       ),
                     ),
