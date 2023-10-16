@@ -128,6 +128,7 @@ class _AudioState extends State<Audio> {
                   final position = Duration(seconds: onChanged.toInt());
                   await audioPlay.seek(position);
                   // play audio if was paused
+
                   await audioPlay.resume();
                 }),
           ),

@@ -21,20 +21,21 @@ class AdkarDetails extends StatelessWidget {
     return BlocConsumer<AhadithCubit, AhadithState>(
       listener: (context, state) {},
       builder: (context, state) {
+        AhadithCubit cubit = AhadithCubit.get(context);
+
         return Scaffold(
           appBar: AppBar(
             actions: [
               IconButton(
                   onPressed: () {
-                    if (AhadithCubit.get(context).ischangeSize) {
+                    if (cubit.ischangeSize) {
                       CachHelper.putcache(
                           key: 'sizeAdkarText', value: sizeAdkarText);
                     }
-                    AhadithCubit.get(context).showSliderChangeSizeText();
+                    cubit.showSliderChangeSizeText();
                   },
-                  icon: Icon(AhadithCubit.get(context).ischangeSize
-                      ? Icons.done_all
-                      : Icons.text_fields))
+                  icon: Icon(
+                      cubit.ischangeSize ? Icons.done_all : Icons.text_fields))
             ],
             title: Text(
               title,
@@ -44,32 +45,28 @@ class AdkarDetails extends StatelessWidget {
             builder: (BuildContext context) {
               return Column(
                 children: [
-                  AhadithCubit.get(context).ischangeSize
+                  cubit.ischangeSize
                       ? Column(
                           children: [
                             Row(
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    AhadithCubit.get(context)
-                                        .changeSliderValueWithButton('minus');
+                                    cubit.changeSliderValueWithButton('minus');
                                   },
                                   icon: Image.asset("assets/images/minus.png",
                                       height: 35),
                                 ),
                                 Expanded(
                                   child: Slider(
-                                      value:
-                                          AhadithCubit.get(context).valueSlider,
+                                      value: cubit.valueSlider,
                                       onChanged: (onChange) {
-                                        AhadithCubit.get(context)
-                                            .changeSliderValue(onChange);
+                                        cubit.changeSliderValue(onChange);
                                       }),
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    AhadithCubit.get(context)
-                                        .changeSliderValueWithButton('plus');
+                                    cubit.changeSliderValueWithButton('plus');
                                   },
                                   icon: Image.asset("assets/images/plus.png",
                                       height: 35),
@@ -86,17 +83,14 @@ class AdkarDetails extends StatelessWidget {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) => dikrItem(
-                          AhadithCubit.get(context).dataAdkarDetails![index],
-                          index,
-                          context),
-                      itemCount:
-                          AhadithCubit.get(context).dataAdkarDetails!.length,
+                          cubit.dataAdkarDetails![index], index, context),
+                      itemCount: cubit.dataAdkarDetails!.length,
                     ),
                   ),
                 ],
               );
             },
-            condition: AhadithCubit.get(context).dataAdkarDetails!.isNotEmpty,
+            condition: cubit.dataAdkarDetails!.isNotEmpty,
             fallback: (BuildContext context) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,

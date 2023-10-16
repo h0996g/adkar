@@ -17,6 +17,7 @@ class AdkarHome extends StatelessWidget {
     return BlocConsumer<AhadithCubit, AhadithState>(
       listener: (context, state) {},
       builder: (context, state) {
+        AhadithCubit cubit = AhadithCubit.get(context);
         return Scaffold(
           body: ConditionalBuilder(
             builder: (BuildContext context) {
@@ -43,16 +44,13 @@ class AdkarHome extends StatelessWidget {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (context, index) => buildItem(
-                            AhadithCubit.get(context).dataSections![index],
-                            context,
-                            index),
-                        childCount:
-                            AhadithCubit.get(context).dataSections!.length),
+                            cubit.dataSections![index], context, index),
+                        childCount: cubit.dataSections!.length),
                   ),
                 ],
               );
             },
-            condition: AhadithCubit.get(context).dataSections!.isNotEmpty,
+            condition: cubit.dataSections!.isNotEmpty,
             fallback: (BuildContext context) {
               return Container();
             },
@@ -105,6 +103,7 @@ class AdkarHome extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   reverse: true,
                   child: Text("${model.name}",
+                      textDirection: TextDirection.rtl,
                       style: Theme.of(context).textTheme.displayMedium),
                 ),
               ),

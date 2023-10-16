@@ -19,6 +19,7 @@ class QuranHomeScreen extends StatelessWidget {
     return BlocConsumer<QuranCubit, QuranState>(
       listener: (context, state) {},
       builder: (context, state) {
+        QuranCubit cubit = QuranCubit.get(context);
         return Scaffold(
           appBar: AppBar(
               // iconTheme: IconThemeData(color: Colors.white),
@@ -27,9 +28,9 @@ class QuranHomeScreen extends StatelessWidget {
           body: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => ayaItem(
-                QuranCubit.get(context).dataQuranApi![index], context, index),
-            itemCount: QuranCubit.get(context).dataQuranApi!.length,
+            itemBuilder: (context, index) =>
+                ayaItem(cubit.dataQuranApi![index], context, index),
+            itemCount: cubit.dataQuranApi!.length,
           ),
         );
       },
