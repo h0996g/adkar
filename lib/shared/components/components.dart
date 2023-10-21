@@ -5,6 +5,7 @@ Widget defaultForm(
         {required TextEditingController controller,
         bool obscureText = false,
         bool readOnly = false,
+        InputBorder border = const OutlineInputBorder(),
         required TextInputAction textInputAction,
         Widget? suffixIcon,
         Widget? suffix,
@@ -16,9 +17,13 @@ Widget defaultForm(
         TextInputType? type,
         required Function? validator,
         Function()? onTap,
+        bool autofocus = false,
+        Function(dynamic)? onChanged,
         Function(dynamic)? onFieldSubmitted,
         TextDirection? textDirection = TextDirection.rtl}) =>
     TextFormField(
+      autofocus: true,
+      onChanged: onChanged,
       textDirection: textDirection,
       onTap: onTap,
       readOnly: readOnly,
@@ -33,7 +38,7 @@ Widget defaultForm(
           suffixIcon: suffixIcon,
           suffix: suffix,
           prefixIcon: prefixIcon,
-          border: const OutlineInputBorder(),
+          border: border,
           labelText: label),
       controller: controller,
       validator: (String? value) {

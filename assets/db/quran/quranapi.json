@@ -2,6 +2,7 @@
     {
         "number": 1,
         "name": "سُورَةُ ٱلْفَاتِحَةِ",
+        "name2": "سُورَةُ الفاتحة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -93,6 +94,7 @@
     {
         "number": 2,
         "name": "سُورَةُ البَقَرَةِ",
+        "name2": "سُورَةُ البقرة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -3532,6 +3534,7 @@
     {
         "number": 3,
         "name": "سُورَةُ آلِ عِمۡرَانَ",
+        "name2": "سُورَةُ ال عمران",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -5939,6 +5942,7 @@
     {
         "number": 4,
         "name": "سُورَةُ النِّسَاءِ",
+        "name2": "سُورَةُ النساء",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -8058,6 +8062,7 @@
     {
         "number": 5,
         "name": "سُورَةُ المَائـِدَةِ",
+        "name2": "سُورَةُ المائدة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -9505,6 +9510,7 @@
     {
         "number": 6,
         "name": "سُورَةُ الأَنۡعَامِ",
+        "name2": "سُورَةُ الانعام",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -11492,6 +11498,7 @@
     {
         "number": 7,
         "name": "سُورَةُ الأَعۡرَافِ",
+        "name2": "سُورَةُ الاعراف",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -13975,6 +13982,7 @@
     {
         "number": 8,
         "name": "سُورَةُ الأَنفَالِ",
+        "name2": "سُورَةُ الانفال",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -14882,6 +14890,7 @@
     {
         "number": 9,
         "name": "سُورَةُ التَّوۡبَةِ",
+        "name2": "سُورَةُ التوبة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -16437,6 +16446,7 @@
     {
         "number": 10,
         "name": "سُورَةُ يُونُسَ",
+        "name2": "سُورَةُ يونس",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -17752,6 +17762,7 @@
     {
         "number": 11,
         "name": "سُورَةُ هُودٍ",
+        "name2": "سُورَةُ هود",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -19235,6 +19246,7 @@
     {
         "number": 12,
         "name": "سُورَةُ يُوسُفَ",
+        "name2": "سُورَةُ يوسف",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -20574,6 +20586,7 @@
     {
         "number": 13,
         "name": "سُورَةُ الرَّعۡدِ",
+        "name2": "سُورَةُ الرعد",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -21101,6 +21114,7 @@
     {
         "number": 14,
         "name": "سُورَةُ إِبۡرَاهِيمَ",
+        "name2": "سُورَةُ ابراهيم",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -21732,6 +21746,7 @@
     {
         "number": 15,
         "name": "سُورَةُ الحِجۡرِ",
+        "name2": "سُورَةُ الحجر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -22927,6 +22942,7 @@
     {
         "number": 16,
         "name": "سُورَةُ النَّحۡلِ",
+        "name2": "سُورَةُ النحل",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -24474,6 +24490,7 @@
     {
         "number": 17,
         "name": "سُورَةُ الإِسۡرَاءِ",
+        "name2": "سُورَةُ الاسراء",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -25817,6 +25834,7 @@
     {
         "number": 18,
         "name": "سُورَةُ الكَهۡفِ",
+        "name2": "سُورَةُ الكهف",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -27144,6 +27162,7 @@
     {
         "number": 19,
         "name": "سُورَةُ مَرۡيَمَ",
+        "name2": "سُورَةُ مريم",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -28331,6 +28350,7 @@
     {
         "number": 20,
         "name": "سُورَةُ طه",
+        "name2": "سُورَةُ طه",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -29958,6 +29978,7 @@
     {
         "number": 21,
         "name": "سُورَةُ الأَنبِيَاءِ",
+        "name2": "سُورَةُ الانبياء",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -31309,6 +31330,7 @@
     {
         "number": 22,
         "name": "سُورَةُ الحَجِّ",
+        "name2": "سُورَةُ الحج",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -32260,6 +32282,7 @@
     {
         "number": 23,
         "name": "سُورَةُ المُؤۡمِنُونَ",
+        "name2": "سُورَةُ المؤمنون",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -33683,6 +33706,7 @@
     {
         "number": 24,
         "name": "سُورَةُ النُّورِ",
+        "name2": "سُورَةُ النور",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -34458,6 +34482,7 @@
     {
         "number": 25,
         "name": "سُورَةُ الفُرۡقَانِ",
+        "name2": "سُورَةُ الفرقان",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -35393,6 +35418,7 @@
     {
         "number": 26,
         "name": "سُورَةُ الشُّعَرَاءِ",
+        "name2": "سُورَةُ الشعراء",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -38124,6 +38150,7 @@
     {
         "number": 27,
         "name": "سُورَةُ النَّمۡلِ",
+        "name2": "سُورَةُ النمل",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -39251,6 +39278,7 @@
     {
         "number": 28,
         "name": "سُورَةُ القَصَصِ",
+        "name2": "سُورَةُ القصص",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -40314,6 +40342,7 @@
     {
         "number": 29,
         "name": "سُورَةُ العَنكَبُوتِ",
+        "name2": "سُورَةُ العنكبوت",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -41149,6 +41178,7 @@
     {
         "number": 30,
         "name": "سُورَةُ الرُّومِ",
+        "name2": "سُورَةُ الروم",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -41876,6 +41906,7 @@
     {
         "number": 31,
         "name": "سُورَةُ لُقۡمَانَ",
+        "name2": "سُورَةُ لقمان",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -42291,6 +42322,7 @@
     {
         "number": 32,
         "name": "سُورَةُ السَّجۡدَةِ",
+        "name2": "سُورَةُ السجدة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -42662,6 +42694,7 @@
     {
         "number": 33,
         "name": "سُورَةُ الأَحۡزَابِ",
+        "name2": "سُورَةُ الاحزاب",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -43545,6 +43578,7 @@
     {
         "number": 34,
         "name": "سُورَةُ سَبَإٍ",
+        "name2": "سُورَةُ سبا",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -44200,6 +44234,7 @@
     {
         "number": 35,
         "name": "سُورَةُ فَاطِرٍ",
+        "name2": "سُورَةُ فاطر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -44747,6 +44782,7 @@
     {
         "number": 36,
         "name": "سُورَةُ يسٓ",
+        "name2": "سُورَةُ يس",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -45750,6 +45786,7 @@
     {
         "number": 37,
         "name": "سُورَةُ الصَّافَّاتِ",
+        "name2": "سُورَةُ الصافات",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -47941,6 +47978,7 @@
     {
         "number": 38,
         "name": "سُورَةُ صٓ",
+        "name2": "سُورَةُ ص",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -49008,6 +49046,7 @@
     {
         "number": 39,
         "name": "سُورَةُ الزُّمَرِ",
+        "name2": "سُورَةُ الزمر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -49915,6 +49954,7 @@
     {
         "number": 40,
         "name": "سُورَةُ غَافِرٍ",
+        "name2": "سُورَةُ غافر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -50942,6 +50982,7 @@
     {
         "number": 41,
         "name": "سُورَةُ فُصِّلَتۡ",
+        "name2": "سُورَةُ فصلت",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -51601,6 +51642,7 @@
     {
         "number": 42,
         "name": "سُورَةُ الشُّورَىٰ",
+        "name2": "سُورَةُ الشورى",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -52244,6 +52286,7 @@
     {
         "number": 43,
         "name": "سُورَةُ الزُّخۡرُفِ",
+        "name2": "سُورَةُ الزخرف",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -53319,6 +53362,7 @@
     {
         "number": 44,
         "name": "سُورَةُ الدُّخَانِ",
+        "name2": "سُورَةُ الدخان",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -54034,6 +54078,7 @@
     {
         "number": 45,
         "name": "سُورَةُ الجَاثِيَةِ",
+        "name2": "سُورَةُ الجاثية",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -54485,6 +54530,7 @@
     {
         "number": 46,
         "name": "سُورَةُ الأَحۡقَافِ",
+        "name2": "سُورَةُ الاحقاف",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -54912,6 +54958,7 @@
     {
         "number": 47,
         "name": "سُورَةُ مُحَمَّدٍ",
+        "name2": "سُورَةُ محمد",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -55375,6 +55422,7 @@
     {
         "number": 48,
         "name": "سُورَةُ الفَتۡحِ",
+        "name2": "سُورَةُ الفتح",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -55730,6 +55778,7 @@
     {
         "number": 49,
         "name": "سُورَةُ الحُجُرَاتِ",
+        "name2": "سُورَةُ الحجرات",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -55953,6 +56002,7 @@
     {
         "number": 50,
         "name": "سُورَةُ قٓ",
+        "name2": "سُورَةُ ق",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -56500,6 +56550,7 @@
     {
         "number": 51,
         "name": "سُورَةُ الذَّارِيَاتِ",
+        "name2": "سُورَةُ الذاريات",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -57227,6 +57278,7 @@
     {
         "number": 52,
         "name": "سُورَةُ الطُّورِ",
+        "name2": "سُورَةُ الطور",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -57822,6 +57874,7 @@
     {
         "number": 53,
         "name": "سُورَةُ النَّجۡمِ",
+        "name2": "سُورَةُ النجم",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -58577,6 +58630,7 @@
     {
         "number": 54,
         "name": "سُورَةُ القَمَرِ",
+        "name2": "سُورَةُ القمر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -59244,6 +59298,7 @@
     {
         "number": 55,
         "name": "سُورَةُ الرَّحۡمَٰن",
+        "name2": "سُورَةُ الرحمن",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -60187,6 +60242,7 @@
     {
         "number": 56,
         "name": "سُورَةُ الوَاقِعَةِ",
+        "name2": "سُورَةُ الواقعة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -61346,6 +61402,7 @@
     {
         "number": 57,
         "name": "سُورَةُ الحَدِيدِ",
+        "name2": "سُورَةُ الحديد",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -61701,6 +61758,7 @@
     {
         "number": 58,
         "name": "سُورَةُ المُجَادلَةِ",
+        "name2": "سُورَةُ المجادلة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -61972,6 +62030,7 @@
     {
         "number": 59,
         "name": "سُورَةُ الحَشۡرِ",
+        "name2": "سُورَةُ الحشر",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -62267,6 +62326,7 @@
     {
         "number": 60,
         "name": "سُورَةُ المُمۡتَحنَةِ",
+        "name2": "سُورَةُ الممتحنة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -62430,6 +62490,7 @@
     {
         "number": 61,
         "name": "سُورَةُ الصَّفِّ",
+        "name2": "سُورَةُ الصف",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -62605,6 +62666,7 @@
     {
         "number": 62,
         "name": "سُورَةُ الجُمُعَةِ",
+        "name2": "سُورَةُ الجمعة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -62744,6 +62806,7 @@
     {
         "number": 63,
         "name": "سُورَةُ المُنَافِقُونَ",
+        "name2": "سُورَةُ المنافقون",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -62883,6 +62946,7 @@
     {
         "number": 64,
         "name": "سُورَةُ التَّغَابُنِ",
+        "name2": "سُورَةُ التغابن",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -63106,6 +63170,7 @@
     {
         "number": 65,
         "name": "سُورَةُ الطَّلَاقِ",
+        "name2": "سُورَةُ الطلاق",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -63257,6 +63322,7 @@
     {
         "number": 66,
         "name": "سُورَةُ التَّحۡرِيمِ",
+        "name2": "سُورَةُ التحريم",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -63408,6 +63474,7 @@
     {
         "number": 67,
         "name": "سُورَةُ المُلۡكِ",
+        "name2": "سُورَةُ الملك",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -63775,6 +63842,7 @@
     {
         "number": 68,
         "name": "سُورَةُ القَلَمِ",
+        "name2": "سُورَةُ القلم",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -64406,6 +64474,7 @@
     {
         "number": 69,
         "name": "سُورَةُ الحَاقَّةِ",
+        "name2": "سُورَةُ الحاقة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -65037,6 +65106,7 @@
     {
         "number": 70,
         "name": "سُورَةُ المَعَارِجِ",
+        "name2": "سُورَةُ المعارج",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -65572,6 +65642,7 @@
     {
         "number": 71,
         "name": "سُورَةُ نُوحٍ",
+        "name2": "سُورَةُ نوح",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -65915,6 +65986,7 @@
     {
         "number": 72,
         "name": "سُورَةُ الجِنِّ",
+        "name2": "سُورَةُ الجن",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -66258,6 +66330,7 @@
     {
         "number": 73,
         "name": "سُورَةُ المُزَّمِّلِ",
+        "name2": "سُورَةُ المزمل",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -66505,6 +66578,7 @@
     {
         "number": 74,
         "name": "سُورَةُ المُدَّثِّرِ",
+        "name2": "سُورَةُ المدثر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -67184,6 +67258,7 @@
     {
         "number": 75,
         "name": "سُورَةُ القِيَامَةِ",
+        "name2": "سُورَةُ القيامة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -67671,6 +67746,7 @@
     {
         "number": 76,
         "name": "سُورَةُ الإِنسَانِ",
+        "name2": "سُورَةُ الانسان",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -68050,6 +68126,7 @@
     {
         "number": 77,
         "name": "سُورَةُ المُرۡسَلَاتِ",
+        "name2": "سُورَةُ المرسلات",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -68657,6 +68734,7 @@
     {
         "number": 78,
         "name": "سُورَةُ النَّبَإِ",
+        "name2": "سُورَةُ النبا",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -69144,6 +69222,7 @@
     {
         "number": 79,
         "name": "سُورَةُ النَّازِعَاتِ",
+        "name2": "سُورَةُ النازعات",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -69703,6 +69782,7 @@
     {
         "number": 80,
         "name": "سُورَةُ عَبَسَ",
+        "name2": "سُورَةُ عبس",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -70214,6 +70294,7 @@
     {
         "number": 81,
         "name": "سُورَةُ التَّكۡوِيرِ",
+        "name2": "سُورَةُ التكوير",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -70569,6 +70650,7 @@
     {
         "number": 82,
         "name": "سُورَةُ الانفِطَارِ",
+        "name2": "سُورَةُ الانفطار",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -70804,6 +70886,7 @@
     {
         "number": 83,
         "name": "سُورَةُ المُطَفِّفِينَ",
+        "name2": "سُورَةُ المطففين",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -71243,6 +71326,7 @@
     {
         "number": 84,
         "name": "سُورَةُ الانشِقَاقِ",
+        "name2": "سُورَةُ الانشقاق",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -71554,6 +71638,7 @@
     {
         "number": 85,
         "name": "سُورَةُ البُرُوجِ",
+        "name2": "سُورَةُ البروج",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -71825,6 +71910,7 @@
     {
         "number": 86,
         "name": "سُورَةُ الطَّارِقِ",
+        "name2": "سُورَةُ الطارق",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -72036,6 +72122,7 @@
     {
         "number": 87,
         "name": "سُورَةُ الأَعۡلَىٰ",
+        "name2": "سُورَةُ الاعلى",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -72271,6 +72358,7 @@
     {
         "number": 88,
         "name": "سُورَةُ الغَاشِيَةِ",
+        "name2": "سُورَةُ الغاشية",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -72590,6 +72678,7 @@
     {
         "number": 89,
         "name": "سُورَةُ الفَجۡرِ",
+        "name2": "سُورَةُ الفجر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -72957,6 +73046,7 @@
     {
         "number": 90,
         "name": "سُورَةُ البَلَدِ",
+        "name2": "سُورَةُ البلد",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73204,6 +73294,7 @@
     {
         "number": 91,
         "name": "سُورَةُ الشَّمۡسِ",
+        "name2": "سُورَةُ الشمس",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73391,6 +73482,7 @@
     {
         "number": 92,
         "name": "سُورَةُ اللَّيۡلِ",
+        "name2": "سُورَةُ الليل",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73650,6 +73742,7 @@
     {
         "number": 93,
         "name": "سُورَةُ الضُّحَىٰ",
+        "name2": "سُورَةُ الضحى",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73789,6 +73882,7 @@
     {
         "number": 94,
         "name": "سُورَةُ الشَّرۡحِ",
+        "name2": "سُورَةُ الشرح",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73892,6 +73986,7 @@
     {
         "number": 95,
         "name": "سُورَةُ التِّينِ",
+        "name2": "سُورَةُ التين",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -73995,6 +74090,7 @@
     {
         "number": 96,
         "name": "سُورَةُ العَلَقِ",
+        "name2": "سُورَةُ العلق",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74234,6 +74330,7 @@
     {
         "number": 97,
         "name": "سُورَةُ القَدۡرِ",
+        "name2": "سُورَةُ القدر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74301,6 +74398,7 @@
     {
         "number": 98,
         "name": "سُورَةُ البَيِّنَةِ",
+        "name2": "سُورَةُ البينة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -74404,6 +74502,7 @@
     {
         "number": 99,
         "name": "سُورَةُ الزَّلۡزَلَةِ",
+        "name2": "سُورَةُ الزلزلة",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -74507,6 +74606,7 @@
     {
         "number": 100,
         "name": "سُورَةُ العَادِيَاتِ",
+        "name2": "سُورَةُ العاديات",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74646,6 +74746,7 @@
     {
         "number": 101,
         "name": "سُورَةُ القَارِعَةِ",
+        "name2": "سُورَةُ القارعة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74785,6 +74886,7 @@
     {
         "number": 102,
         "name": "سُورَةُ التَّكَاثُرِ",
+        "name2": "سُورَةُ التكاثر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74888,6 +74990,7 @@
     {
         "number": 103,
         "name": "سُورَةُ العَصۡرِ",
+        "name2": "سُورَةُ العصر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -74931,6 +75034,7 @@
     {
         "number": 104,
         "name": "سُورَةُ الهُمَزَةِ",
+        "name2": "سُورَةُ الهمزة",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75046,6 +75150,7 @@
     {
         "number": 105,
         "name": "سُورَةُ الفِيلِ",
+        "name2": "سُورَةُ الفيل",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75113,6 +75218,7 @@
     {
         "number": 106,
         "name": "سُورَةُ قُرَيۡشٍ",
+        "name2": "سُورَةُ قريش",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75168,6 +75274,7 @@
     {
         "number": 107,
         "name": "سُورَةُ المَاعُونِ",
+        "name2": "سُورَةُ الماعون",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75259,6 +75366,7 @@
     {
         "number": 108,
         "name": "سُورَةُ الكَوۡثَرِ",
+        "name2": "سُورَةُ الكوثر",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75302,6 +75410,7 @@
     {
         "number": 109,
         "name": "سُورَةُ الكَافِرُونَ",
+        "name2": "سُورَةُ الكافرون",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75381,6 +75490,7 @@
     {
         "number": 110,
         "name": "سُورَةُ النَّصۡرِ",
+        "name2": "سُورَةُ النصر",
         "revelationType": "Medinan",
         "ayahs": [
             {
@@ -75424,6 +75534,7 @@
     {
         "number": 111,
         "name": "سُورَةُ المَسَدِ",
+        "name2": "سُورَةُ المسد",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75491,6 +75602,7 @@
     {
         "number": 112,
         "name": "سُورَةُ الإِخۡلَاصِ",
+        "name2": "سُورَةُ الاخلاص",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75546,6 +75658,7 @@
     {
         "number": 113,
         "name": "سُورَةُ الفَلَقِ",
+        "name2": "سُورَةُ الفلق",
         "revelationType": "Meccan",
         "ayahs": [
             {
@@ -75613,6 +75726,7 @@
     {
         "number": 114,
         "name": "سُورَةُ النَّاسِ",
+        "name2": "سُورَةُ الناس",
         "revelationType": "Meccan",
         "ayahs": [
             {

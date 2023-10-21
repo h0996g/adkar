@@ -11,8 +11,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QuranCubit extends Cubit<QuranState> {
   QuranCubit() : super(QuranInitial());
   static QuranCubit get(context) => BlocProvider.of(context);
-
+  //hadi bh tji fefaultform t3 search mnin tkon true wtwli listview tkhdm 3la searchSoraList
+  bool isSearchSora = false;
   List<QuranApi>? dataQuranApi = [];
+  List<QuranApi>? searchSoraList = [];
+
+  void shearchTgelSora() {
+    isSearchSora = !isSearchSora;
+    emit(TogelSearchSoraState());
+  }
+
+  void searchSora(String query) {
+    final suggetions = dataQuranApi!.where((element) {
+      final soraName = element.nameSearch!.toLowerCase();
+      final input = query.toLowerCase();
+      return soraName.contains(input);
+    }).toList();
+    searchSoraList = suggetions;
+    emit(SearchSoraStateGood());
+  }
+
+  void resetValue() {
+    searchSoraList = dataQuranApi;
+    isSearchSora = false;
+    emit(ResetValuesStateGood());
+  }
 
   Future<void> getQuranDataApi(BuildContext context) async {
     await DefaultAssetBundle.of(context)
@@ -24,6 +47,7 @@ class QuranCubit extends Cubit<QuranState> {
       for (var element in body) {
         dataQuranApi!.add(QuranApi.fromJson(element));
       }
+      searchSoraList = dataQuranApi;
       // print(dataQuranApi![0].name);
       emit(GetQuranDataStateGood());
     }).catchError((e) {

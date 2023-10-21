@@ -2,7 +2,13 @@ abstract class QuranState {}
 
 class QuranInitial extends QuranState {}
 
+class ResetValuesStateGood extends QuranState {}
+
 class GetQuranDataStateGood extends QuranState {}
+
+class TogelSearchSoraState extends QuranState {}
+
+class SearchSoraStateGood extends QuranState {}
 
 class GetQuranDataStateBad extends QuranState {}
 

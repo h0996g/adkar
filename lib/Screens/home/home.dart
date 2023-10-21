@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: MaterialButton(
                         onPressed: () {
                           navigatAndReturn(
-                              context: context, page: const QuranHomeScreen());
+                              context: context, page: QuranHomeScreen());
                         },
                         child: Row(
                           children: [

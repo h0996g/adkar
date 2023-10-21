@@ -11,8 +11,22 @@ import 'package:showcaseview/showcaseview.dart';
 
 import 'cubit/quran_state.dart';
 
-class QuranHomeScreen extends StatelessWidget {
-  const QuranHomeScreen({super.key});
+class QuranHomeScreen extends StatefulWidget {
+  QuranHomeScreen({super.key});
+
+  @override
+  State<QuranHomeScreen> createState() => _QuranHomeScreenState();
+}
+
+class _QuranHomeScreenState extends State<QuranHomeScreen> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    QuranCubit.get(context).resetValue();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +36,58 @@ class QuranHomeScreen extends StatelessWidget {
         QuranCubit cubit = QuranCubit.get(context);
         return Scaffold(
           appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      cubit.shearchTgelSora();
+                    },
+                    icon: Icon(
+                        cubit.isSearchSora ? Icons.search_off : Icons.search))
+              ],
               // iconTheme: IconThemeData(color: Colors.white),
               title: const Text('القران الكريم'),
               backgroundColor: Colors.white),
-          body: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
-                ayaItem(cubit.dataQuranApi![index], context, index),
-            itemCount: cubit.dataQuranApi!.length,
+          body: Column(
+            children: [
+              if (cubit.isSearchSora)
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  child: defaultForm(
+                    onChanged: (value) {
+                      cubit.searchSora(value.toString());
+                    },
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'اسم السورة القرانية',
+                    controller: searchController,
+                    textInputAction: TextInputAction.done,
+                    validator: () {},
+                  ),
+                ),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => ayaItem(
+                    cubit.isSearchSora
+                        ? cubit.searchSoraList![index]
+                        : cubit.dataQuranApi![index],
+                    context,
+                  ),
+                  itemCount: cubit.isSearchSora
+                      ? cubit.searchSoraList!.length
+                      : cubit.dataQuranApi!.length,
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  Widget ayaItem(QuranApi model, context, int index) {
+  Widget ayaItem(QuranApi model, context) {
     return Card(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         CircleAvatar(
@@ -63,7 +113,7 @@ class QuranHomeScreen extends StatelessWidget {
                   },
                   builder: Builder(
                     builder: (context) => SoraQuran(
-                      id: index,
+                      id: model.number! - 1,
                     ),
                   ),
                 ),

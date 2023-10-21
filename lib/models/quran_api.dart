@@ -1,6 +1,8 @@
 class QuranApi {
   int? number;
   String? name;
+  String? nameSearch;
+
   // String? englishName;
   // String? englishNameTranslation;
   String? revelationType;
@@ -8,6 +10,7 @@ class QuranApi {
 
   QuranApi.fromJson(Map<String, dynamic> json) {
     number = json['number'];
+    nameSearch = json['name2'];
     name = json['name'];
     // englishName = json['englishName'];
     // englishNameTranslation = json['englishNameTranslation'];
