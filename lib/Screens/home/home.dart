@@ -8,8 +8,11 @@ import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/constant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 import '../../notification.dart';
 
@@ -21,6 +24,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Map<String, dynamic>? update;
+  Map<String, dynamic>? itemupdate;
+  int? currentVersion;
+  int? currentUpdateVersion;
   final GlobalKey globalKeyOne = GlobalKey();
   final GlobalKey globalKeyTwo = GlobalKey();
 
@@ -40,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Noti.init();
     listenNotification();
+    checkUpdate();
   }
 
   void listenNotification() => Noti.onNotification.stream.listen((event) async {
@@ -302,5 +310,59 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void _showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => Directionality(
+              textDirection: TextDirection.rtl,
+              child: AlertDialog(
+                title: const Text("يوجد تحديث جديد"),
+                content: const Text(""),
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('later')),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        StoreRedirect.redirect(
+                            androidAppId: "com.h0774g.alhou");
+                        Navigator.pop(context);
+                      },
+                      child: const Text('update'))
+                ],
+              ),
+            ));
+  }
+
+  Future<void> checkUpdate() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    currentVersion = getExtendedVersionNumber(version);
+
+    await FirebaseFirestore.instance
+        .collection('update')
+        .doc('details')
+        .get()
+        .then((value) {
+      update = value.data();
+      itemupdate = update!['update'];
+      String updateVersion = update!['version'];
+      currentUpdateVersion = getExtendedVersionNumber(updateVersion);
+      print(update!['update']);
+    });
+    print(currentVersion);
+    print(currentUpdateVersion);
+    Future.delayed(Duration.zero, () {
+      if (currentUpdateVersion! > currentVersion!) {
+        _showAlert(context);
+      }
+    });
   }
 }
