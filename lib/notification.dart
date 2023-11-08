@@ -97,5 +97,5 @@ class Noti {
   }
 
   static void cancel(int id) => flutterLocalNotificationsPlugin.cancel(id);
-  static void cancelAll(FlutterLocalNotificationsPlugin fln) => fln.cancelAll();
+  static void cancelAll() => flutterLocalNotificationsPlugin.cancelAll();
 }

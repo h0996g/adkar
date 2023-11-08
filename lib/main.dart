@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import 'Screens/settings/cubit/settings_cubit.dart';
 import 'firebase_options.dart';
 import 'notification.dart';
 
@@ -25,41 +26,8 @@ main() async {
   );
   DioHelper.init();
   Noti.init();
-  isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? false;
-  isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
-  isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
-  sizeAdkarText =
-      await CachHelper.getData(key: 'sizeAdkarText') ?? sizeAdkarText;
-  if (isNotiOn == false) {
-    print('awel mra ');
-    for (var notif in notifications) {
-      await Noti.showTimeNotificationDaily(
-          payload: 'adkar',
-          id: notif['id'],
-          title: 'فَذَكِّرْ',
-          body: notif['description']!,
-          time: notif['date'],
-          fln: Noti.flutterLocalNotificationsPlugin);
-    }
-
-    await Noti.showTimeNotificationDaily(
-        id: 25,
-        payload: 'adkarSabah',
-        title: 'اذكار الصباح',
-        body: 'اذكار الصباح',
-        // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-        time: const TimeOfDay(hour: 7, minute: 30),
-        fln: Noti.flutterLocalNotificationsPlugin);
-    await Noti.showTimeNotificationDaily(
-        id: 26,
-        payload: 'adkarMasa1',
-        title: 'اذكار المساء',
-        body: 'اذكار المساء',
-        // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-        time: const TimeOfDay(hour: 16, minute: 30),
-        fln: Noti.flutterLocalNotificationsPlugin);
-    await CachHelper.putcache(key: 'isNotiOn', value: true);
-  }
+  await cacheHelperRecoveryValue();
+  await firstTimeNoti(isFirstTime: isFirstTime);
   runApp(const MyApp());
 }
 
@@ -79,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: ((context) => NamesOfAllahCubit()..getNames(context)),
+        ),
+        BlocProvider(
+          create: ((context) => SettingsCubit()),
         ),
       ],
       child: MaterialApp(

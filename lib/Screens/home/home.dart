@@ -2,6 +2,7 @@ import 'package:adkar/Screens/Adkar/adkar_home.dart';
 import 'package:adkar/Screens/Adkar/adkar_details.dart';
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/NamesOfAllah/names_of_allah.dart';
+import 'package:adkar/Screens/settings/settings.dart';
 import 'package:adkar/shared/components/audio.dart';
 import 'package:adkar/Screens/home/suggest.dart';
 import 'package:adkar/shared/components/tasbih.dart';
@@ -92,6 +93,16 @@ class _HomeScreenState extends State<HomeScreen> {
           'حصن المسلم',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                navigatAndReturn(context: context, page: const Setting());
+              },
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(0.0),
@@ -313,32 +324,64 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showAlert(BuildContext context) {
+    List<TextSpan> textSpanList = [];
+    print(itemupdate);
+    itemupdate!.forEach((key, value) {
+      textSpanList.add(TextSpan(
+          text: "\n$key :",
+          style: const TextStyle(
+              color: Colors.red, fontSize: 19, fontWeight: FontWeight.w700)));
+
+      textSpanList.add(TextSpan(
+          text: "$value",
+          style: const TextStyle(
+              color: Colors.black, fontSize: 19, fontWeight: FontWeight.w500)));
+    });
+
     showDialog(
-        context: context,
-        builder: (context) => Directionality(
-              textDirection: TextDirection.rtl,
-              child: AlertDialog(
-                title: const Text("يوجد تحديث جديد"),
-                content: const Text(""),
-                actions: [
-                  TextButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('later')),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  TextButton(
-                      onPressed: () async {
-                        StoreRedirect.redirect(
-                            androidAppId: "com.h0774g.alhou");
-                        Navigator.pop(context);
-                      },
-                      child: const Text('update'))
-                ],
+      context: context,
+      builder: (BuildContext context) {
+        // RichText richText =
+        //     RichText(text: const TextSpan(children: <TextSpan>[]));
+
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: Text(update!['title'] ?? ''),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  update!['subTitle'] ?? '',
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                RichText(
+                  text: TextSpan(children: textSpanList),
+                  textDirection: TextDirection.rtl,
+                )
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("لاحقا"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-            ));
+              TextButton(
+                child: const Text("تحديث الآن"),
+                onPressed: () {
+                  StoreRedirect.redirect(androidAppId: "com.h0774g.alhou");
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> checkUpdate() async {
@@ -352,14 +395,14 @@ class _HomeScreenState extends State<HomeScreen> {
         .get()
         .then((value) {
       update = value.data();
-      itemupdate = update!['update'];
+      itemupdate = update!['updates'];
       String updateVersion = update!['version'];
       currentUpdateVersion = getExtendedVersionNumber(updateVersion);
-      print(update!['update']);
+      // print(update!['updates']);
     });
     print(currentVersion);
     print(currentUpdateVersion);
-    Future.delayed(Duration.zero, () {
+    await Future.delayed(Duration.zero, () {
       if (currentUpdateVersion! > currentVersion!) {
         _showAlert(context);
       }
