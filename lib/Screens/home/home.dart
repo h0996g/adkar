@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    if (isFirstTimeAdkar) {
+    if (isFirstTimeAdkarCH) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => ShowCaseWidget.of(context).startShowCase([
           globalKeyOne,
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Noti.initialize();
 
-    Noti.init();
+    // Noti.init();
     listenNotification();
     checkUpdate();
   }

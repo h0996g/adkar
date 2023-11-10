@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-bool isFirstTime = false;
-bool isNotiOn = true;
+bool isFirstTimeAppCH = false;
+bool isNotiOnCH = true;
 
 double arabicFontSize = 28;
 double mushafFontSize = 40;

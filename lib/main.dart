@@ -27,7 +27,7 @@ main() async {
   DioHelper.init();
   Noti.init();
   await cacheHelperRecoveryValue();
-  await firstTimeNoti(isFirstTime: isFirstTime);
+  await firstTimeNoti(isFirstTime: isFirstTimeAppCH);
   runApp(const MyApp());
 }
 
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
               print('test finich');
               await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)
                   .then((value) {
-                isFirstTimeAdkar = false;
+                isFirstTimeAdkarCH = false;
               });
             },
             builder: Builder(

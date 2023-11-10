@@ -30,7 +30,7 @@ class AdkarDetails extends StatelessWidget {
                   onPressed: () {
                     if (cubit.ischangeSize) {
                       CachHelper.putcache(
-                          key: 'sizeAdkarText', value: sizeAdkarText);
+                          key: 'sizeAdkarText', value: sizeAdkarTextCH);
                     }
                     cubit.showSliderChangeSizeText();
                   },
@@ -131,7 +131,7 @@ class AdkarDetails extends StatelessWidget {
               child: Text('${model.content}',
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
-                      fontSize: sizeAdkarText, fontWeight: FontWeight.w600)),
+                      fontSize: sizeAdkarTextCH, fontWeight: FontWeight.w600)),
             ),
           ),
           Row(

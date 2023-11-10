@@ -108,7 +108,7 @@ class _QuranHomeScreenState extends State<QuranHomeScreen> {
                     await CachHelper.putcache(
                             key: 'isFirstTimeQuran', value: false)
                         .then((value) {
-                      isFirstTimeQuran = false;
+                      isFirstTimeQuranCH = false;
                     });
                   },
                   builder: Builder(

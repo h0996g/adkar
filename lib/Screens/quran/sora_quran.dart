@@ -22,7 +22,7 @@ class _SoraQuranState extends State<SoraQuran> {
 
   @override
   void initState() {
-    if (isFirstTimeQuran) {
+    if (isFirstTimeQuranCH) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => ShowCaseWidget.of(context)
             .startShowCase([globalKeyOne, globalKeyTwo]),

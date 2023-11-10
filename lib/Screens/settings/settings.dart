@@ -1,4 +1,5 @@
 import 'package:adkar/Screens/settings/cubit/settings_cubit.dart';
+import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,12 +102,40 @@ class Setting extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      child: const Text(
-                        "5:00 " + "ص",
+                      // focusNode: FocusNode(skipTraversal: ),
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.grey[100]!)),
+                      child: Text(
+                        "${cubit.selectedTimeSabah.hourOfPeriod}:${((cubit.selectedTimeSabah.minute >= 0 && cubit.selectedTimeSabah.minute < 10) ? '0' : '')}${cubit.selectedTimeSabah.minute} ${(cubit.selectedTimeSabah.period.name == 'am') ? "ص" : "م"}",
                         textDirection: TextDirection.rtl,
-                        style: TextStyle(fontSize: 19),
+                        style: TextStyle(
+                            fontSize: 19,
+                            color: Colors.green,
+                            decoration: cubit.switchNoti
+                                ? TextDecoration.none
+                                : TextDecoration.lineThrough,
+                            decorationColor: cubit.switchNoti
+                                ? Colors.transparent
+                                : Colors.black,
+                            decorationThickness: 4),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (cubit.switchNoti == false) {
+                          return;
+                        }
+                        final TimeOfDay? timeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: cubit.selectedTimeSabah,
+                            initialEntryMode: TimePickerEntryMode.dial);
+                        if (timeOfDay != null) {
+                          cubit.changeTimePicker(
+                              sabahOrMasaa: 'sabah', timeOfDay: timeOfDay);
+                          // bh nkhabi fl cach wnbdl time f notification tni
+                          await cubit.changeTimeAdkar(
+                              sabahOrMasaa: 'sabah', timeOfDay: timeOfDay);
+                        }
+                      },
                     )
                   ],
                 ),
@@ -128,12 +157,39 @@ class Setting extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      child: const Text(
-                        "6:00 " + "م",
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.grey[100]!)),
+                      child: Text(
+                        "${cubit.selectedTimeMasaa.hourOfPeriod}:${((cubit.selectedTimeMasaa.minute >= 0 && cubit.selectedTimeMasaa.minute < 10) ? '0' : '')}${cubit.selectedTimeMasaa.minute} ${(cubit.selectedTimeMasaa.period.name == 'am') ? "ص" : "م"}",
                         textDirection: TextDirection.rtl,
-                        style: TextStyle(fontSize: 19),
+                        style: TextStyle(
+                            fontSize: 19,
+                            color: Colors.green,
+                            decoration: cubit.switchNoti
+                                ? TextDecoration.none
+                                : TextDecoration.lineThrough,
+                            decorationColor: cubit.switchNoti
+                                ? Colors.transparent
+                                : Colors.black,
+                            decorationThickness: 4),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (cubit.switchNoti == false) {
+                          return;
+                        }
+                        final TimeOfDay? timeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: cubit.selectedTimeMasaa,
+                            initialEntryMode: TimePickerEntryMode.dial);
+                        if (timeOfDay != null) {
+                          cubit.changeTimePicker(
+                              sabahOrMasaa: 'masaa', timeOfDay: timeOfDay);
+                          // bh nkhabi fl cach wnbdl time f notification tni
+                          await cubit.changeTimeAdkar(
+                              sabahOrMasaa: 'masaa', timeOfDay: timeOfDay);
+                        }
+                      },
                     )
                   ],
                 ),

@@ -4,9 +4,12 @@ import '../../notification.dart';
 import '../helper/cash_helper.dart';
 import '../helper/constant.dart';
 
-bool isFirstTimeAdkar = true;
-bool isFirstTimeQuran = true;
-double sizeAdkarText = 26;
+bool isFirstTimeAdkarCH = true;
+bool isFirstTimeQuranCH = true;
+TimeOfDay adkarTimeSabahCH = const TimeOfDay(hour: 23, minute: 23);
+TimeOfDay adkarTimeMasaaCH = const TimeOfDay(hour: 16, minute: 30);
+
+double sizeAdkarTextCH = 26;
 // ! hadi bh ndir compare bin version t3 App (1.0.1 m3a 1.0.3 mital )
 int getExtendedVersionNumber(String version) {
   List versionCells = version.split('.');
@@ -40,23 +43,36 @@ Future<void> activeNotification() async {
       title: 'اذكار الصباح',
       body: 'اذكار الصباح',
       // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-      time: const TimeOfDay(hour: 7, minute: 30),
+      time: adkarTimeSabahCH,
       fln: Noti.flutterLocalNotificationsPlugin);
+
   await Noti.showTimeNotificationDaily(
       id: 26,
       payload: 'adkarMasa1',
       title: 'اذكار المساء',
       body: 'اذكار المساء',
       // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
-      time: const TimeOfDay(hour: 16, minute: 30),
+      time: adkarTimeMasaaCH,
       fln: Noti.flutterLocalNotificationsPlugin);
 }
 
 Future<void> cacheHelperRecoveryValue() async {
-  isFirstTime = await CachHelper.getData(key: "isFirstTime") ?? false;
-  isNotiOn = await CachHelper.getData(key: "isNotiOn") ?? true;
-  isFirstTimeAdkar = await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
-  isFirstTimeQuran = await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
-  sizeAdkarText =
-      await CachHelper.getData(key: 'sizeAdkarText') ?? sizeAdkarText;
+  isFirstTimeAppCH = await CachHelper.getData(key: "isFirstTime") ?? false;
+  isNotiOnCH = await CachHelper.getData(key: "isNotiOn") ?? true;
+  isFirstTimeAdkarCH =
+      await CachHelper.getData(key: 'isFirstTimeAdkar') ?? true;
+  isFirstTimeQuranCH =
+      await CachHelper.getData(key: 'isFirstTimeQuran') ?? true;
+  sizeAdkarTextCH =
+      await CachHelper.getData(key: 'sizeAdkarText') ?? sizeAdkarTextCH;
+  adkarTimeSabahCH = TimeOfDay(
+      hour: await CachHelper.getData(key: 'adkarTimeSabahCH.hour') ??
+          adkarTimeSabahCH.hour,
+      minute: await CachHelper.getData(key: 'adkarTimeSabahCH.minute') ??
+          adkarTimeSabahCH.minute);
+  adkarTimeMasaaCH = TimeOfDay(
+      hour: await CachHelper.getData(key: 'adkarTimeMasaaCH.hour') ??
+          adkarTimeMasaaCH.hour,
+      minute: await CachHelper.getData(key: 'adkarTimeMasaaCH.minute') ??
+          adkarTimeMasaaCH.minute);
 }

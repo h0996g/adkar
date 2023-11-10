@@ -35,7 +35,7 @@ class AhadithCubit extends Cubit<AhadithState> {
     Colors.deepPurpleAccent[100]
   ];
   bool ischangeSize = false;
-  double valueSlider = sizeAdkarText / 100;
+  double valueSlider = sizeAdkarTextCH / 100;
   void showSliderChangeSizeText() {
     ischangeSize = !ischangeSize;
     emit(ShowChangeSizeTixtStateGood());
@@ -43,17 +43,17 @@ class AhadithCubit extends Cubit<AhadithState> {
 
   void changeSliderValue(double onChange) {
     valueSlider = onChange;
-    sizeAdkarText = valueSlider * 100;
+    sizeAdkarTextCH = valueSlider * 100;
     emit(ShowchangeSliderValueStateGood());
   }
 
   void changeSliderValueWithButton(String operation) {
     if (operation == 'plus' && valueSlider < 0.95) {
       valueSlider = valueSlider + 0.05;
-      sizeAdkarText = valueSlider * 100;
+      sizeAdkarTextCH = valueSlider * 100;
     } else if (operation == 'minus' && valueSlider > 0.05) {
       valueSlider = valueSlider - 0.05;
-      sizeAdkarText = valueSlider * 100;
+      sizeAdkarTextCH = valueSlider * 100;
     }
 
     emit(ShowchangeSliderValueWithButtonStateGood());
