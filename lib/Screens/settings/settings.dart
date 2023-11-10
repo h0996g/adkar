@@ -3,6 +3,7 @@ import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/components/components.dart';
 import 'cubit/settings_state.dart';
 
 class Setting extends StatelessWidget {
@@ -50,6 +51,13 @@ class Setting extends StatelessWidget {
 
                         thumbColor: MaterialStateProperty.all(Colors.grey[200]),
                         onChanged: (value) {
+                          value
+                              ? showToast(
+                                  msg: 'تم تفعيل التنبيهات بنجاح',
+                                  state: ToastStates.success)
+                              : showToast(
+                                  msg: 'تم تعطيل التنبيهات',
+                                  state: ToastStates.warning);
                           cubit.changeSwitchListTile(value, 'switchNoti');
                         },
                         value: cubit.switchNoti,
@@ -134,6 +142,9 @@ class Setting extends StatelessWidget {
                           // bh nkhabi fl cach wnbdl time f notification tni
                           await cubit.changeTimeAdkar(
                               sabahOrMasaa: 'sabah', timeOfDay: timeOfDay);
+                          showToast(
+                              msg: 'تم تعديل موعد اذكار الصباح بنجاح',
+                              state: ToastStates.success);
                         }
                       },
                     )
@@ -188,6 +199,9 @@ class Setting extends StatelessWidget {
                           // bh nkhabi fl cach wnbdl time f notification tni
                           await cubit.changeTimeAdkar(
                               sabahOrMasaa: 'masaa', timeOfDay: timeOfDay);
+                          showToast(
+                              msg: 'تم تعديل موعد اذكار المساء بنجاح',
+                              state: ToastStates.success);
                         }
                       },
                     )
