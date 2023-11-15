@@ -6,7 +6,7 @@ import '../helper/constant.dart';
 
 bool isFirstTimeAdkarCH = true;
 bool isFirstTimeQuranCH = true;
-TimeOfDay adkarTimeSabahCH = const TimeOfDay(hour: 23, minute: 23);
+TimeOfDay adkarTimeSabahCH = const TimeOfDay(hour: 5, minute: 30);
 TimeOfDay adkarTimeMasaaCH = const TimeOfDay(hour: 16, minute: 30);
 
 double sizeAdkarTextCH = 26;

@@ -12,7 +12,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'cubit/quran_state.dart';
 
 class QuranHomeScreen extends StatefulWidget {
-  QuranHomeScreen({super.key});
+  const QuranHomeScreen({super.key});
 
   @override
   State<QuranHomeScreen> createState() => _QuranHomeScreenState();

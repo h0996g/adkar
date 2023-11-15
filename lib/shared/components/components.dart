@@ -22,7 +22,7 @@ Widget defaultForm(
         Function(dynamic)? onFieldSubmitted,
         TextDirection? textDirection = TextDirection.rtl}) =>
     TextFormField(
-      autofocus: true,
+      autofocus: autofocus,
       onChanged: onChanged,
       textDirection: textDirection,
       onTap: onTap,

@@ -103,7 +103,7 @@ class Setting extends StatelessWidget {
                   children: [
                     const Expanded(
                       child: Text(
-                        'موعد التنبيهات لاذكار الصباح',
+                        'موعد التنبيهات لأذكار الصباح',
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.w500),
@@ -143,7 +143,7 @@ class Setting extends StatelessWidget {
                           await cubit.changeTimeAdkar(
                               sabahOrMasaa: 'sabah', timeOfDay: timeOfDay);
                           showToast(
-                              msg: 'تم تعديل موعد اذكار الصباح بنجاح',
+                              msg: 'تم تعديل موعد أذكار الصباح بنجاح',
                               state: ToastStates.success);
                         }
                       },
@@ -161,7 +161,7 @@ class Setting extends StatelessWidget {
                   children: [
                     const Expanded(
                       child: Text(
-                        'موعد التنبيهات لاذكار المساء',
+                        'موعد التنبيهات لأذكار المساء',
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.w500),
@@ -200,7 +200,7 @@ class Setting extends StatelessWidget {
                           await cubit.changeTimeAdkar(
                               sabahOrMasaa: 'masaa', timeOfDay: timeOfDay);
                           showToast(
-                              msg: 'تم تعديل موعد اذكار المساء بنجاح',
+                              msg: 'تم تعديل موعد أذكار المساء بنجاح',
                               state: ToastStates.success);
                         }
                       },

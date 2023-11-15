@@ -328,9 +328,11 @@ class _HomeScreenState extends State<HomeScreen> {
     print(itemupdate);
     itemupdate!.forEach((key, value) {
       textSpanList.add(TextSpan(
-          text: "\n$key :",
-          style: const TextStyle(
-              color: Colors.red, fontSize: 19, fontWeight: FontWeight.w700)));
+          text: "\n$key ",
+          style: TextStyle(
+              color: Colors.red[300],
+              fontSize: 19,
+              fontWeight: FontWeight.w700)));
 
       textSpanList.add(TextSpan(
           text: "$value",

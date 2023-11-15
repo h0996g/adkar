@@ -45,8 +45,9 @@ class _SuggestState extends State<Suggest> {
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: defaultForm(
+                            autofocus: false,
                             controller: suggestController,
-                            textInputAction: TextInputAction.none,
+                            textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "يجب ان لا يكون الموضوع فارغ";
