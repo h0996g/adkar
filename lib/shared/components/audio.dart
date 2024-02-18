@@ -20,6 +20,7 @@ class _AudioState extends State<Audio> {
 
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
+  Duration timeLeft = Duration.zero;
   @override
   void initState() {
     super.initState();
@@ -43,6 +44,7 @@ class _AudioState extends State<Audio> {
         if (mounted) {
           setState(() {
             position = event;
+            timeLeft = duration - position;
           });
         }
         // setState(() {
@@ -81,7 +83,7 @@ class _AudioState extends State<Audio> {
               });
             },
             icon: Icon(Icons.replay,
-                color: isCompleted == true
+                color: isCompleted == true || isplaying
                     ? Colors.brown.shade400
                     : Colors.transparent),
             iconSize: 50,
@@ -122,7 +124,7 @@ class _AudioState extends State<Audio> {
                 inactiveColor: Colors.grey.shade300,
                 activeColor: Colors.brown,
                 // max: duration.inSeconds.toDouble(),
-                max: duration.inSeconds.toDouble() + 1.0,
+                max: duration.inSeconds.toDouble() + 2.0,
                 value: position.inSeconds.toDouble(),
                 onChanged: (onChanged) async {
                   final position = Duration(seconds: onChanged.toInt());
@@ -131,6 +133,23 @@ class _AudioState extends State<Audio> {
 
                   await audioPlay.resume();
                 }),
+          ),
+          Text(
+            timeLeft
+                .toString()
+                .split('.')
+                .first
+                .padLeft(8, "0")
+                .substring(3, 8),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                color: isplaying == true || isCompleted
+                    ? Colors.brown.shade400
+                    : Colors.transparent),
+          ),
+          const SizedBox(
+            width: 10,
           ),
         ],
       ),
