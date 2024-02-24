@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:adkar/models/section_details_model.dart';
 import 'package:adkar/models/section_model.dart';
-import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../shared/helper/constant.dart';
 import 'ahadith_state.dart';
 
 class AhadithCubit extends Cubit<AhadithState> {

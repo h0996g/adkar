@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../models/section_details_model.dart';
-import '../../shared/components/constant.dart';
+import '../../shared/components/functions.dart';
 import '../../shared/helper/cash_helper.dart';
+import '../../shared/helper/constant.dart';
 import 'cubit/ahadith_state.dart';
 
 class AdkarDetails extends StatelessWidget {

@@ -115,7 +115,7 @@ class _AudioQuranState extends State<AudioQuran> {
             });
           },
           icon: Icon(Icons.replay,
-              color: isCompleted == true
+              color: isCompleted == true && isplaying
                   ? Colors.brown.shade400
                   : Colors.transparent),
           iconSize: 50,

@@ -2,13 +2,14 @@ import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/Screens/quran/sora_quran.dart';
 import 'package:adkar/models/quran_api.dart';
 import 'package:adkar/shared/components/components.dart';
-import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../../shared/helper/constant.dart';
 import 'cubit/quran_state.dart';
 
 class QuranHomeScreen extends StatefulWidget {

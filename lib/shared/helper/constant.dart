@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 
 bool isFirstTimeAppCH = false;
 bool isNotiOnCH = true;
+bool isFirstTimeAdkarCH = true;
+bool isFirstTimeQuranCH = true;
+TimeOfDay adkarTimeSabahCH = const TimeOfDay(hour: 6, minute: 00);
+TimeOfDay adkarTimeMasaaCH = const TimeOfDay(hour: 16, minute: 30);
+double sizeAdkarTextCH = 26;
 
 double arabicFontSize = 28;
 double mushafFontSize = 40;
-String replaceFarsiNumber(String input) {
-  const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  const farsi = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-
-  for (int i = 0; i < english.length; i++) {
-    input = input.replaceAll(english[i], farsi[i]);
-  }
-
-  return input;
-}
 
 List<String> smallDo3a2 = [
   'اللَّهُمَّ إنِّي أَسْأَلُكَ الهُدَى وَالتُّقَى، وَالْعَفَافَ وَالْغِنَى',

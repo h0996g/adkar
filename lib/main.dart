@@ -3,7 +3,7 @@ import 'package:adkar/Screens/NamesOfAllah/cubit/names_of_allah_cubit.dart';
 import 'package:adkar/Screens/home/home.dart';
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/shared/blocObserver/observer.dart';
-import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:adkar/shared/network/dio_halper.dart';

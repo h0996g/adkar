@@ -1,12 +1,13 @@
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/models/quran_api.dart';
-import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../shared/components/audio_quran.dart';
 import '../../shared/helper/constant.dart';
+// import '../../shared/helper/constant.dart';
 
 class SoraQuran extends StatefulWidget {
   final int id;

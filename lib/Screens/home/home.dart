@@ -8,7 +8,7 @@ import 'package:adkar/Screens/home/suggest.dart';
 import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
-import 'package:adkar/shared/components/constant.dart';
+import 'package:adkar/shared/components/functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -16,6 +16,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 import '../../notification.dart';
+import '../../shared/helper/constant.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,10 +26,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Map<String, dynamic>? update;
-  Map<String, dynamic>? itemupdate;
-  int? currentVersion;
-  int? currentUpdateVersion;
   final GlobalKey globalKeyOne = GlobalKey();
   final GlobalKey globalKeyTwo = GlobalKey();
 
@@ -47,41 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // Noti.initialize();
 
     // Noti.init();
-    listenNotification();
-    checkUpdate();
+    listenNotification(context);
+    checkUpdate(context);
   }
-
-  void listenNotification() => Noti.onNotification.stream.listen((event) async {
-        if (event == 'adkarSabah') {
-          await AhadithCubit.get(context)
-              .getSectionDetails(context, 1)
-              .then((value) {
-            navigatAndReturn(
-              context: context,
-              page: ShowCaseWidget(
-                builder: Builder(
-                  builder: (context) => const AdkarDetails(
-                    title: 'اذكار الصباح',
-                  ),
-                ),
-              ),
-            );
-          });
-        } else if (event == "adkarMasa1") {
-          await AhadithCubit.get(context)
-              .getSectionDetails(context, 2)
-              .then((value) {
-            navigatAndReturn(
-                context: context,
-                page: ShowCaseWidget(
-                  builder: Builder(
-                      builder: ((context) => const AdkarDetails(
-                            title: 'اذكار المساء',
-                          ))),
-                ));
-          });
-        }
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: MaterialButton(
                         onPressed: () {
                           navigatAndReturn(
-                              context: context, page: QuranHomeScreen());
+                              context: context, page: const QuranHomeScreen());
                         },
                         child: Row(
                           children: [
@@ -321,93 +286,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  void _showAlert(BuildContext context) {
-    List<TextSpan> textSpanList = [];
-    print(itemupdate);
-    itemupdate!.forEach((key, value) {
-      textSpanList.add(TextSpan(
-          text: "\n$key ",
-          style: TextStyle(
-              color: Colors.red[300],
-              fontSize: 19,
-              fontWeight: FontWeight.w700)));
-
-      textSpanList.add(TextSpan(
-          text: "$value",
-          style: const TextStyle(
-              color: Colors.black, fontSize: 19, fontWeight: FontWeight.w500)));
-    });
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // RichText richText =
-        //     RichText(text: const TextSpan(children: <TextSpan>[]));
-
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: AlertDialog(
-            title: Text(update!['title'] ?? ''),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  update!['subTitle'] ?? '',
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                RichText(
-                  text: TextSpan(children: textSpanList),
-                  textDirection: TextDirection.rtl,
-                )
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text("لاحقا"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text("تحديث الآن"),
-                onPressed: () {
-                  StoreRedirect.redirect(androidAppId: "com.h0774g.alhou");
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> checkUpdate() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version;
-    currentVersion = getExtendedVersionNumber(version);
-
-    await FirebaseFirestore.instance
-        .collection('update')
-        .doc('details')
-        .get()
-        .then((value) {
-      update = value.data();
-      itemupdate = update!['updates'];
-      String updateVersion = update!['version'];
-      currentUpdateVersion = getExtendedVersionNumber(updateVersion);
-      // print(update!['updates']);
-    });
-    print(currentVersion);
-    print(currentUpdateVersion);
-    await Future.delayed(Duration.zero, () {
-      if (currentUpdateVersion! > currentVersion!) {
-        _showAlert(context);
-      }
-    });
   }
 }

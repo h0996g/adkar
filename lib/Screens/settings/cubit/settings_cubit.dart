@@ -4,7 +4,7 @@ import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../shared/components/constant.dart';
+import '../../../shared/components/functions.dart';
 import '../../../shared/helper/cash_helper.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
