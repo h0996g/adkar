@@ -1,6 +1,4 @@
 import 'package:adkar/Screens/Adkar/adkar_home.dart';
-import 'package:adkar/Screens/Adkar/adkar_details.dart';
-import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/Screens/NamesOfAllah/names_of_allah.dart';
 import 'package:adkar/Screens/settings/settings.dart';
 import 'package:adkar/shared/components/audio.dart';
@@ -9,13 +7,9 @@ import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:adkar/shared/components/functions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:store_redirect/store_redirect.dart';
 
-import '../../notification.dart';
 import '../../shared/helper/constant.dart';
 
 class HomeScreen extends StatefulWidget {

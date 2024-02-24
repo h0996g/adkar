@@ -74,11 +74,7 @@ class _AudioQuranState extends State<AudioQuran> {
                 title: 'سماع قراءة الاية',
                 child: IconButton(
                     icon: Icon(
-                      isplaying
-                          ? Icons.pause
-                          : isCompleted
-                              ? Icons.skip_next
-                              : Icons.play_arrow,
+                      isplaying ? Icons.pause : Icons.play_arrow,
                       color: Colors.brown.shade400,
                     ),
                     iconSize: 50,
@@ -92,11 +88,7 @@ class _AudioQuranState extends State<AudioQuran> {
               )
             : IconButton(
                 icon: Icon(
-                  isplaying
-                      ? Icons.pause
-                      : isCompleted
-                          ? Icons.skip_next
-                          : Icons.play_arrow,
+                  isplaying ? Icons.pause : Icons.play_arrow,
                   color: Colors.brown.shade400,
                 ),
                 iconSize: 50,
@@ -115,7 +107,7 @@ class _AudioQuranState extends State<AudioQuran> {
             });
           },
           icon: Icon(Icons.replay,
-              color: isCompleted == true && isplaying
+              color: isplaying == true
                   ? Colors.brown.shade400
                   : Colors.transparent),
           iconSize: 50,
