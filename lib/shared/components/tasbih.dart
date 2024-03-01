@@ -19,39 +19,101 @@ class _TasbihState extends State<Tasbih> {
   int index = 0;
 
   int _indexTasbih = 0;
+  String selectTasbih = "2";
   List<String> tasbih = [
     'سُبْحَانَ اللَّهِ\n وَبِحَمْدِهِ',
     'سُبْحَانَ اللَّه\n الْعَظِيم'
   ];
+  List<String> tasbih2 = [
+    'سُبْحَانَ اللَّهِ ',
+    'الْحَمْدُ لِلَّهِ',
+    'لا إِلَهَ إِلا اللَّهُ',
+    'اللَّهُ أَكْبَر'
+  ];
+
   void _incrementCounter() {
     setState(() {
-      if (_counter >= 0.98) {
-        _counter = 0.0;
-        index = 0;
-        _indexTasbih = _indexTasbih == 0 ? 1 : 0;
-        return;
-      }
-      index++;
-      _counter = _counter + (1 / int.parse(value!));
-      if (_counter >= 0.98) {
-        Future.delayed(const Duration(milliseconds: 700), () {
-          if (_counter >= 0.98) {
-            setState(() {
-              _counter = 0.0;
-              index = 0;
-              _indexTasbih = _indexTasbih == 0 ? 1 : 0;
-              return;
-            });
-          }
-        });
+      if (selectTasbih == "1") {
+        if (_counter >= 0.98) {
+          _counter = 0.0;
+          index = 0;
+          _indexTasbih = _indexTasbih == 0 ? 1 : 0;
+          return;
+        }
+        index++;
+        _counter = _counter + (1 / int.parse(value!));
+        if (_counter >= 0.98) {
+          Future.delayed(const Duration(milliseconds: 700), () {
+            if (_counter >= 0.98) {
+              setState(() {
+                _counter = 0.0;
+                index = 0;
+                _indexTasbih = _indexTasbih == 0 ? 1 : 0;
+                return;
+              });
+            }
+          });
+        }
+      } else if (selectTasbih == "2") {
+        if (_counter >= 0.98) {
+          _counter = 0.0;
+          index = 0;
+          _indexTasbih = (_indexTasbih + 1) % tasbih2.length;
+          return;
+        }
+        index++;
+        _counter = _counter + (1 / int.parse(value!));
+        if (_counter >= 0.98) {
+          Future.delayed(const Duration(milliseconds: 700), () {
+            if (_counter >= 0.98) {
+              setState(() {
+                _counter = 0.0;
+                index = 0;
+                _indexTasbih = (_indexTasbih + 1) % tasbih2.length;
+                return;
+              });
+            }
+          });
+        }
       }
     });
+  }
+
+  void _showTasbihSelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          children: <Widget>[
+            ListTile(
+              title: const Text(
+                  'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'),
+              onTap: () {
+                setState(() {
+                  selectTasbih = "1";
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: const Text(
+                  'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر'),
+              onTap: () {
+                setState(() {
+                  selectTasbih = "2";
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // print(size.width);
 
     return Container(
       decoration: BoxDecoration(
@@ -75,7 +137,6 @@ class _TasbihState extends State<Tasbih> {
       child: Column(
         children: [
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             textDirection: TextDirection.rtl,
             children: [
               Align(
@@ -94,7 +155,7 @@ class _TasbihState extends State<Tasbih> {
                 globalKey: widget.globalKey,
                 title: 'عدد تكرار التسبيح',
                 child: DropdownButton(
-                  iconSize: 0,
+                  iconSize: 28,
                   value: value,
                   items: items.map(buildMenuItem).toList(),
                   onChanged: (value) => setState(() {
@@ -119,6 +180,9 @@ class _TasbihState extends State<Tasbih> {
               print(value);
               print(_counter);
             },
+            onLongPress: () {
+              _showTasbihSelectionDialog(context);
+            },
             child: CircularPercentIndicator(
               animation: true,
               animateFromLastPercent: true,
@@ -127,11 +191,12 @@ class _TasbihState extends State<Tasbih> {
               addAutomaticKeepAlive: true,
               radius: 104,
               animationDuration: 250,
-
               lineWidth: 20.0,
               percent: _counter,
               center: Text(
-                tasbih[_indexTasbih],
+                selectTasbih == "1"
+                    ? tasbih[_indexTasbih]
+                    : tasbih2[_indexTasbih],
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 30,
@@ -145,8 +210,6 @@ class _TasbihState extends State<Tasbih> {
               ),
               progressColor: const Color.fromARGB(255, 83, 34, 8),
               backgroundColor: const Color.fromARGB(47, 83, 34, 8),
-
-              // progressColor: Colors.yellow,
             ),
           ),
           const SizedBox(
@@ -158,7 +221,7 @@ class _TasbihState extends State<Tasbih> {
           )
         ],
       ),
-    ); // Text("\uFD3E" + replaceFarsiNumber("2") + "\uFD3F")
+    );
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

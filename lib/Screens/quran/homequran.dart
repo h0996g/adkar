@@ -2,7 +2,6 @@ import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/Screens/quran/sora_quran.dart';
 import 'package:adkar/models/quran_api.dart';
 import 'package:adkar/shared/components/components.dart';
-import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 
 import 'package:flutter/material.dart';
