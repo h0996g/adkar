@@ -104,7 +104,7 @@ class _AudioState extends State<Audio> {
                 } else {
                   // 3la kima yji y3awed myzidch yjib mn firebase
                   if (isCompleted || url == '') {
-                    int randomAya = Random().nextInt(340);
+                    int randomAya = Random().nextInt(370);
                     print(randomAya);
                     await FirebaseFirestore.instance
                         .collection('quran')

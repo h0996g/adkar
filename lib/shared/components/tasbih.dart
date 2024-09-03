@@ -19,7 +19,7 @@ class _TasbihState extends State<Tasbih> {
   int index = 0;
 
   int _indexTasbih = 0;
-  String selectTasbih = "2";
+  String? selectTasbih = CachHelper.getData(key: 'selectTasbih') ?? "1";
   List<String> tasbih = [
     'سُبْحَانَ اللَّهِ\n وَبِحَمْدِهِ',
     'سُبْحَانَ اللَّه\n الْعَظِيم'
@@ -83,29 +83,36 @@ class _TasbihState extends State<Tasbih> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          children: <Widget>[
-            ListTile(
-              title: const Text(
-                  'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'),
-              onTap: () {
-                setState(() {
-                  selectTasbih = "1";
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: const Text(
-                  'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر'),
-              onTap: () {
-                setState(() {
-                  selectTasbih = "2";
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: SimpleDialog(
+            children: <Widget>[
+              ListTile(
+                title: const Text(
+                    'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'),
+                onTap: () {
+                  setState(() {
+                    selectTasbih = "1";
+                    CachHelper.putcache(
+                        key: 'selectTasbih', value: selectTasbih);
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: const Text(
+                    'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر'),
+                onTap: () {
+                  setState(() {
+                    selectTasbih = "2";
+                    CachHelper.putcache(
+                        key: 'selectTasbih', value: selectTasbih);
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
         );
       },
     );

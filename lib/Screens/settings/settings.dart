@@ -1,4 +1,5 @@
 import 'package:adkar/Screens/settings/cubit/settings_cubit.dart';
+import 'package:adkar/notification.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,9 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+      ),
       appBar: AppBar(
         title: const Text("الاعدادات"),
       ),

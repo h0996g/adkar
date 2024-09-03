@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Container item(
       BuildContext context, String urlIcon, String title, Widget page) {
     return Container(
+      margin: const EdgeInsetsDirectional.symmetric(horizontal: 5),
       height: 60.0,
       decoration: BoxDecoration(
         color: Colors.grey[800],

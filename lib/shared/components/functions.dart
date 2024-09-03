@@ -30,12 +30,14 @@ Future<void> activeNotification() async {
   print('ra7 ndir active l notificaiotn');
   for (var notif in notifications) {
     await Noti.showTimeNotificationDaily(
-        payload: 'adkar',
-        id: notif['id'],
-        title: 'فَذَكِّرْ',
-        body: notif['description']!,
-        time: notif['date'],
-        fln: Noti.flutterLocalNotificationsPlugin);
+      payload: 'adkar',
+      id: notif['id'],
+      title: 'فَذَكِّرْ',
+      body: notif['description']!,
+      time: notif['date'],
+      fln: Noti.flutterLocalNotificationsPlugin,
+      removeAfter: const Duration(seconds: 120),
+    );
   }
 
   await Noti.showTimeNotificationDaily(

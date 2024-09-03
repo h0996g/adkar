@@ -46,44 +46,53 @@ class Noti {
         const AndroidNotificationDetails('channelId', 'channelName',
             playSound: true,
             // sound: RawResourceAndroidNotificationSound('notification'),
-            importance: Importance.max,
+            importance: Importance.min,
+            channelShowBadge: false,
+            maxProgress: 1,
+            number: 1,
+            onlyAlertOnce: true,
+            showWhen: false,
+            autoCancel: true,
             priority: Priority.high);
     var not = NotificationDetails(android: androidPlatformChannelSpecifics);
     await fln.show(id, title, body, not, payload: payload);
   }
 
-  static Future showTimeNotificationDaily(
-      {var id = 0,
-      required String title,
-      required String body,
-      required TimeOfDay time,
-      // required DateTime scheduleDate,
-      var payload,
-      required FlutterLocalNotificationsPlugin fln}) async {
+  static Future showTimeNotificationDaily({
+    var id = 0,
+    required String title,
+    required String body,
+    required TimeOfDay time,
+    var payload,
+    required FlutterLocalNotificationsPlugin fln,
+    Duration removeAfter = const Duration(seconds: 30), // New parameter
+  }) async {
     const styleInformation = BigTextStyleInformation('');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Africa/Algiers'));
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-        const AndroidNotificationDetails('channelId', 'channelName',
-            playSound: true,
-            styleInformation: styleInformation,
-            // sound: RawResourceAndroidNotificationSound('notification'),
-            importance: Importance.max,
-            priority: Priority.high);
+        AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      playSound: true,
+      styleInformation: styleInformation,
+      importance: Importance.max,
+      priority: Priority.high,
+      timeoutAfter: removeAfter.inMilliseconds, // Add this line
+    );
     var not = NotificationDetails(android: androidPlatformChannelSpecifics);
     await fln.zonedSchedule(
-        id,
-        title,
-        body,
-
-        //  tz.TZDateTime.from(scheduleDate, tz.local)
-        _scheduleDailt(time),
-        not,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        payload: payload,
-        matchDateTimeComponents: DateTimeComponents.time);
+      id,
+      title,
+      body,
+      _scheduleDailt(time),
+      not,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: payload,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 
   static tz.TZDateTime _scheduleDailt(TimeOfDay time) {
