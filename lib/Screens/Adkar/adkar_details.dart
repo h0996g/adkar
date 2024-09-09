@@ -1,12 +1,12 @@
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
-import 'package:adkar/shared/components/audio.dart';
+import 'package:adkar/shared/components/audio_adkar.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../models/section_details_model.dart';
-import '../../shared/components/functions.dart';
 import '../../shared/helper/cash_helper.dart';
 import '../../shared/helper/constant.dart';
 import 'cubit/ahadith_state.dart';
@@ -18,7 +18,6 @@ class AdkarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey globalKey = GlobalKey();
-
     return BlocConsumer<AhadithCubit, AhadithState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -26,60 +25,86 @@ class AdkarDetails extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white, // White icon
+              ),
+            ),
             actions: [
               IconButton(
-                  onPressed: () {
-                    if (cubit.ischangeSize) {
-                      CachHelper.putcache(
-                          key: 'sizeAdkarText', value: sizeAdkarTextCH);
-                    }
-                    cubit.showSliderChangeSizeText();
-                  },
-                  icon: Icon(
-                      cubit.ischangeSize ? Icons.done_all : Icons.text_fields))
+                onPressed: () {
+                  if (cubit.ischangeSize) {
+                    CachHelper.putcache(
+                        key: 'sizeAdkarText', value: sizeAdkarTextCH);
+                  }
+                  cubit.showSliderChangeSizeText();
+                },
+                icon: Icon(
+                  cubit.ischangeSize ? Icons.done_all : Icons.text_fields,
+                  color: Colors.white, // White icon
+                ),
+              )
             ],
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.brown.shade700, Colors.brown.shade500],
+                ),
+              ),
+            ),
             title: Text(
               title,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.sp), // White text with responsive size
             ),
           ),
           body: ConditionalBuilder(
             builder: (BuildContext context) {
               return Column(
                 children: [
-                  cubit.ischangeSize
-                      ? Column(
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    cubit.changeSliderValueWithButton('minus');
-                                  },
-                                  icon: Image.asset("assets/images/minus.png",
-                                      height: 35),
-                                ),
-                                Expanded(
-                                  child: Slider(
-                                      value: cubit.valueSlider,
-                                      onChanged: (onChange) {
-                                        cubit.changeSliderValue(onChange);
-                                      }),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    cubit.changeSliderValueWithButton('plus');
-                                  },
-                                  icon: Image.asset("assets/images/plus.png",
-                                      height: 35),
-                                )
-                              ],
+                  if (cubit.ischangeSize) ...[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              cubit.changeSliderValueWithButton('minus');
+                            },
+                            icon: Image.asset(
+                              "assets/images/minus.png",
+                              height: 35.h,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        )
-                      : const SizedBox(),
+                          ),
+                          Expanded(
+                            child: Slider(
+                              value: cubit.valueSlider,
+                              onChanged: (onChange) {
+                                cubit.changeSliderValue(onChange);
+                              },
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              cubit.changeSliderValueWithButton('plus');
+                            },
+                            icon: Image.asset(
+                              "assets/images/plus.png",
+                              height: 35.h,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                  ],
                   Expanded(
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
@@ -93,21 +118,22 @@ class AdkarDetails extends StatelessWidget {
             },
             condition: cubit.dataAdkarDetails!.isNotEmpty,
             fallback: (BuildContext context) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'الَّذِينَ آتَيْنَاهُمْ الْكِتَابَ يَتْلُونَهُ حَقَّ تِلَاوَتِهِ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'الَّذِينَ آتَيْنَاهُمْ الْكِتَابَ يَتْلُونَهُ حَقَّ تِلَاوَتِهِ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.red),
-                  ),
-                  Audio(
-                    globalKey: globalKey,
-                  )
-                ],
+                        color: Colors.red,
+                      ),
+                    ),
+                    AudioAdkar(globalKey: globalKey),
+                  ],
+                ),
               );
             },
           ),
@@ -116,60 +142,81 @@ class AdkarDetails extends StatelessWidget {
     );
   }
 
-  Widget dikrItem(SectionDetailsModel model, index, context) {
+  Widget dikrItem(SectionDetailsModel model, int index, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(13.0),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              Vibration.vibrate(duration: 20);
-
-              AhadithCubit.get(context).readAdkar(index);
-            },
-            child: Card(
-              color: Colors.grey[50],
-              child: Text('${model.content}',
+      padding: EdgeInsets.all(16.w),
+      child: InkWell(
+        onTap: () {
+          Vibration.vibrate(duration: 20);
+          AhadithCubit.get(context).readAdkar(index);
+        },
+        child: Card(
+          color: Colors.white,
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r), // Rounded corners
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${model.content}',
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
-                      fontSize: sizeAdkarTextCH, fontWeight: FontWeight.w600)),
-            ),
-          ),
-          Row(
-            children: [
-              MaterialButton(
-                color: Colors.grey,
-                onPressed: () {},
-                child: const Row(
+                    fontSize: sizeAdkarTextCH.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.brown[800], // Text color for readability
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.share,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'مشاركة',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.brown[600],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
                       ),
-                    )
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.share, color: Colors.white, size: 20.sp),
+                          SizedBox(width: 8.w),
+                          Text(
+                            'مشاركة',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Vibration.vibrate(duration: 20);
+                        AhadithCubit.get(context).readAdkar(index);
+                      },
+                      child: Text(
+                        "التكرار ${model.count}",
+                        style: TextStyle(
+                          fontSize: 22.sp,
+                          color: Colors.brown[400],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              const Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Vibration.vibrate(duration: 20);
-                    AhadithCubit.get(context).readAdkar(index);
-                  },
-                  child: Text(
-                    "التكرار ${model.count}",
-                    style: const TextStyle(fontSize: 25, color: Colors.grey),
-                  ))
-            ],
-          )
-        ],
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

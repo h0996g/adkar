@@ -1,139 +1,237 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:adkar/Screens/Adkar/adkar_home.dart';
 import 'package:adkar/Screens/NamesOfAllah/names_of_allah.dart';
-import 'package:adkar/Screens/home/suggest.dart';
-import 'package:adkar/Screens/settings/settings.dart';
-import 'package:adkar/shared/components/audio.dart';
-import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/Screens/quran/homequran.dart';
-import 'package:adkar/shared/components/components.dart';
-import 'package:adkar/shared/components/functions.dart';
-import 'package:flutter/material.dart';
-import 'package:showcaseview/showcaseview.dart';
-
-import '../../shared/helper/constant.dart';
+import 'package:adkar/Screens/settings/settings.dart';
+import 'package:adkar/Screens/home/suggest.dart';
+import 'package:adkar/shared/components/tasbih.dart';
+import 'package:adkar/shared/components/audio.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey globalKeyOne = GlobalKey();
-  final GlobalKey globalKeyTwo = GlobalKey();
-
-  @override
-  void initState() {
-    if (isFirstTimeAdkarCH) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([
-          globalKeyOne,
-          globalKeyTwo,
-        ]),
-      );
-    }
-    super.initState();
-
-    // Noti.initialize();
-
-    // Noti.init();
-    listenNotification(context);
-    checkUpdate(context);
-  }
+  final List<Map<String, dynamic>> _menuItems = [
+    {
+      'title': 'اذكار المسلم',
+      'icon': 'assets/images/open-hands.png',
+      'page': const AdkarHome(),
+    },
+    {
+      'title': 'القران الكريم',
+      'icon': 'assets/images/iconquran.png',
+      'page': const QuranHomeScreen(),
+    },
+    {
+      'title': 'أسماء ٱللَّه الحسنى',
+      'icon': 'assets/images/names.png',
+      'page': const NamesOfAllah(),
+    },
+    {
+      'title': 'ابلاغ او اقتراح',
+      'icon': 'assets/images/suggestion.png',
+      'page': Suggest(),
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'حصن المسلم',
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(),
+        );
+      },
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Text(
+        'حصن المسلم',
+        style: TextStyle(
+          fontSize: 24.sp,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
         ),
-        actions: [setting(context)],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: SingleChildScrollView(
-          // controller: _scrollController,
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              item(context, "assets/images/open-hands.png", "اذكار المسلم",
-                  const AdkarHome()),
-              const SizedBox(
-                height: 10,
-              ),
-              item(context, "assets/images/iconquran.png", "القران الكريم",
-                  const QuranHomeScreen()),
-              const SizedBox(
-                height: 10,
-              ),
-              item(context, "assets/images/names.png", "أسماء ٱللَّه الحسنى",
-                  const NamesOfAllah()),
-              const SizedBox(
-                height: 10,
-              ),
-              item(context, "assets/images/suggestion.png", "ابلاغ او اقتراح",
-                  const Suggest()),
-              const SizedBox(
-                height: 10,
-              ),
-              Tasbih(globalKey: globalKeyOne),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                  'أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ وَلَوْ كَانَ مِنْ عِنْدِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلافًا كَثِيرًا',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall),
-              Audio(
-                globalKey: globalKeyTwo,
-              )
-            ],
+      actions: [
+        IconButton(
+          icon: Icon(Icons.settings, color: Colors.white, size: 24.sp),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Setting()),
           ),
+        ),
+      ],
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.brown.shade700, Colors.brown.shade500],
+          ),
+        ),
+      ),
+      elevation: 0,
+    );
+  }
+
+  Widget _buildBody() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.brown.shade50, Colors.white],
+        ),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildMenuGrid(),
+            SizedBox(height: 20.h),
+            _buildTasbihSection(),
+            SizedBox(height: 20.h),
+            _buildQuranVerse(),
+            SizedBox(height: 20.h),
+            _buildAudioPlayer(),
+            SizedBox(height: 20.h),
+          ],
         ),
       ),
     );
   }
 
-  IconButton setting(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          navigatAndReturn(context: context, page: const Setting());
+  Widget _buildMenuGrid() {
+    return Padding(
+      padding: EdgeInsets.all(16.w),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1.2,
+          crossAxisSpacing: 16.w,
+          mainAxisSpacing: 16.h,
+        ),
+        itemCount: _menuItems.length,
+        itemBuilder: (context, index) {
+          return _buildMenuItem(_menuItems[index]);
         },
-        icon: const Icon(
-          Icons.settings,
-        ));
+      ),
+    );
   }
 
-  Container item(
-      BuildContext context, String urlIcon, String title, Widget page) {
-    return Container(
-      margin: const EdgeInsetsDirectional.symmetric(horizontal: 5),
-      height: 60.0,
-      decoration: BoxDecoration(
-        color: Colors.grey[800],
+  Widget _buildMenuItem(Map<String, dynamic> item) {
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => item['page']),
       ),
-      child: MaterialButton(
-        onPressed: () {
-          navigatAndReturn(context: context, page: page);
-        },
-        child: Row(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.brown.shade100, Colors.brown.shade50],
+          ),
+          borderRadius: BorderRadius.circular(15.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.brown.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(urlIcon, height: 35),
-            const Spacer(),
+            Image.asset(item['icon'], height: 50.h),
+            SizedBox(height: 10.h),
             Text(
-                // isUpperCase ? text.toUpperCase() : text,
-                title,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.displayMedium),
+              item['title'],
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown.shade800,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTasbihSection() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Tasbih(globalKey: GlobalKey()),
+    );
+  }
+
+  Widget _buildQuranVerse() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.brown.shade100, Colors.brown.shade50],
+        ),
+        borderRadius: BorderRadius.circular(15.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.brown.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            'أَفَلا يَتَدَبَّرُونَ الْقُرْآنَ وَلَوْ كَانَ مِنْ عِنْدِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلافًا كَثِيرًا',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.red.shade700,
+              height: 1.5,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            'سورة النساء - آية 82',
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontStyle: FontStyle.italic,
+              color: Colors.brown.shade600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAudioPlayer() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Audio(globalKey: GlobalKey()),
     );
   }
 }

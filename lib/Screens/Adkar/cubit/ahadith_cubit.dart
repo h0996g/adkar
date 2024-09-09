@@ -21,8 +21,8 @@ class AhadithCubit extends Cubit<AhadithState> {
   List<SectionModel>? dataSections = [];
   List<SectionDetailsModel>? dataAdkarDetails = [];
   List<String> icon = [
-    'assets/images/morning.png',
-    'assets/images/afternoon.png',
+    'assets/images/morningnew.png',
+    'assets/images/afternoonnew.png',
     'assets/images/get-up.png',
     'assets/images/ablution.png',
     'assets/images/sleeping1.png'

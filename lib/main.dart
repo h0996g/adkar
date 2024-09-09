@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import 'Screens/settings/cubit/settings_cubit.dart';
@@ -54,30 +55,52 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        locale: const Locale('ar'), // Set the locale to Arabic
+        supportedLocales: const [Locale('ar')], // Define supported locales
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale?.languageCode) {
+              return supportedLocale;
+            }
+          }
+          return supportedLocales.first;
+        },
         theme: ThemeData(
             textTheme: TextTheme(
-                headlineSmall: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red.shade400,
-                ),
-                displayMedium: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700)),
-            appBarTheme: const AppBarTheme(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: Colors.black,
-                  statusBarIconBrightness: Brightness.light,
-                  statusBarBrightness: Brightness.dark,
-                ),
-                iconTheme: IconThemeData(color: Colors.black),
-                color: Colors.white,
-                titleTextStyle: TextStyle(fontSize: 30, color: Colors.black),
-                centerTitle: true),
+              headlineSmall: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w600,
+                color: Colors.red.shade400,
+              ),
+              displayMedium: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700),
+            ),
+            appBarTheme: AppBarTheme(
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
+              ),
+              iconTheme: const IconThemeData(color: Colors.black),
+              // color: Colors.white,
+              backgroundColor:
+                  Colors.brown[800], // Primary color for the app bar
+
+              titleTextStyle:
+                  const TextStyle(fontSize: 30, color: Colors.white),
+              actionsIconTheme: const IconThemeData(color: Colors.white),
+              centerTitle: true,
+            ),
             scaffoldBackgroundColor: Colors.white),
         title: 'Flutter Demo',
-        home: ShowCaseWidget(
+        home: Directionality(
+          textDirection: TextDirection.rtl, // Set the direction to RTL
+          child: ShowCaseWidget(
             onStart: (index, key) async {
               if (index == 1) {
                 await Scrollable.ensureVisible(
@@ -88,7 +111,7 @@ class MyApp extends StatelessWidget {
             },
             onComplete: (index, key) async {},
             onFinish: () async {
-              print('test finich');
+              print('test finish');
               await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)
                   .then((value) {
                 isFirstTimeAdkarCH = false;
@@ -96,7 +119,9 @@ class MyApp extends StatelessWidget {
             },
             builder: Builder(
               builder: (context) => const HomeScreen(),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

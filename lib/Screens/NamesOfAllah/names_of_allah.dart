@@ -18,62 +18,68 @@ class NamesOfAllah extends StatelessWidget {
         NamesOfAllahCubit cubit = NamesOfAllahCubit.get(context);
         return Scaffold(
           appBar: AppBar(
+            leading: const BackButton(color: Colors.white),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.brown.shade700, Colors.brown.shade500],
+                ),
+              ),
+            ),
             title: const Text(
               'أسماء ٱللَّه الحسنى',
-              // style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           body: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return namesOfAllahItem(context, cubit.namesModel[index], index);
-            },
             itemCount: cubit.namesModel.length,
+            itemBuilder: (context, index) {
+              return _namesOfAllahItem(context, cubit.namesModel[index], index);
+            },
           ),
         );
       },
     );
   }
 
-  Widget namesOfAllahItem(
+  Widget _namesOfAllahItem(
       BuildContext context, NamesOfAllahModel model, int index) {
     return InkWell(
       onTap: () {
         navigatAndReturn(
-            context: context,
-            page: ExplainName(
-              id: index,
-              name: model.name!,
-              explain: model.text!,
-            ));
+          context: context,
+          page: ExplainName(
+            id: index,
+            name: model.name!,
+            explain: model.text!,
+          ),
+        );
       },
       child: Card(
+        color: Colors.white,
         elevation: 5,
-        child: Row(
-          textDirection: TextDirection.rtl,
-          children: [
-            Text(
-              textDirection: TextDirection.rtl,
-              model.name!,
-              style: const TextStyle(
-                fontSize: 40,
-                // fontWeight: FontWeight.w500,
-                // fontFamily: "Amiri"
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Text(
+                model.name!,
+                style: const TextStyle(
+                  fontSize: 30,
+                ),
               ),
-            ),
-            const Spacer(),
-            Image.asset("assets/images/languages.png", height: 35),
-          ],
+              const Spacer(),
+              Image.asset(
+                "assets/images/languages.png",
+                height: 35,
+              ),
+            ],
+          ),
         ),
-
-        // Text(
-        //   textDirection: TextDirection.ltr,
-        //   model.text!,
-        //   style: TextStyle(
-        //     fontSize: 10,
-        //     fontWeight: FontWeight.w500,
-        //   ),
-        // ),
       ),
     );
   }

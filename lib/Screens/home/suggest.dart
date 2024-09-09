@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:adkar/Screens/Adkar/cubit/ahadith_cubit.dart';
 import 'package:adkar/shared/components/components.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,24 @@ class _SuggestState extends State<Suggest> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.brown.shade700, Colors.brown.shade500],
+                ),
+              ),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            ),
             title: const Text('ابلاغ'),
           ),
           body: Padding(
@@ -39,62 +59,140 @@ class _SuggestState extends State<Suggest> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Stack(
                       alignment: Alignment.topLeft,
                       children: [
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: defaultForm(
-                            autofocus: false,
-                            controller: suggestController,
-                            textInputAction: TextInputAction.done,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "يجب ان لا يكون الموضوع فارغ";
-                              }
-                            },
-                            maxLines: 5,
-                            hintText: 'ابلاغ عن خطا او اقتراح تعديل',
-                          ),
+                        defaultForm(
+                          autofocus: false,
+                          controller: suggestController,
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "يجب ان لا يكون الموضوع فارغ";
+                            }
+                          },
+                          maxLines: 5,
+                          hintText: 'ابلاغ عن خطا او اقتراح تعديل',
                         ),
                         InkWell(
                           onTap: () {
-                            showDialog(
+                            showModalBottomSheet(
                               context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text("Choose the source :"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () async {
-                                        await AhadithCubit.get(context)
-                                            .imagePickerProfile(
-                                                ImageSource.camera)
-                                            .then((value) {
-                                          Navigator.pop(context);
-                                        });
-                                      },
-                                      child: const Text("Camera")),
-                                  TextButton(
-                                    onPressed: () async {
-                                      await AhadithCubit.get(context)
-                                          .imagePickerProfile(
-                                              ImageSource.gallery)
-                                          .then((value) {
-                                        Navigator.pop(context);
-                                      });
-                                    },
-                                    child: const Text("Gallery"),
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.9),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
                                   ),
-                                ],
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 10,
+                                      offset: Offset(0, -5),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        "Choose the source:",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Center(
+                                        // Center the row of buttons
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize
+                                              .min, // Minimize the row size
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await AhadithCubit.get(context)
+                                                    .imagePickerProfile(
+                                                        ImageSource.camera)
+                                                    .then((value) {
+                                                  Navigator.pop(context);
+                                                });
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors
+                                                    .brown, // Set the background color to brown
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10), // Rounded corners
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical:
+                                                            10), // Padding
+                                              ),
+                                              child: const Text(
+                                                "Camera",
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .white), // White text color
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                                width:
+                                                    10), // Space between buttons
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await AhadithCubit.get(context)
+                                                    .imagePickerProfile(
+                                                        ImageSource.gallery)
+                                                    .then((value) {
+                                                  Navigator.pop(context);
+                                                });
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors
+                                                    .brown, // Set the background color to brown
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10), // Rounded corners
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical:
+                                                            10), // Padding
+                                              ),
+                                              child: const Text(
+                                                "Gallery",
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .white), // White text color
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             );
                           },
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                             backgroundColor: Colors.transparent,
                             child: Icon(
                               Icons.camera_alt,
                               size: 30,
-                              color: Colors.blue,
+                              color: Colors.brown[300]!,
                             ),
                           ),
                         ),
@@ -162,15 +260,10 @@ class _SuggestState extends State<Suggest> {
                                     })
                                   });
                         }
-
-                        //     .then((value) {
-                        //   // AhadithCubit.get(context).ResetValueSuggest();
-                        //   // suggestController.dispose();
-                        // });
                       },
                       text: 'ارسال',
                       fontSize: 22,
-                      background: Colors.grey,
+                      background: Colors.brown[400]!,
                     )
                   ],
                 ),

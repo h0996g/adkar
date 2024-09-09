@@ -6,6 +6,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'cubit/ahadith_state.dart';
 
@@ -25,34 +26,41 @@ class AdkarHome extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 slivers: [
                   SliverAppBar(
-                    iconTheme: const IconThemeData(
-                      color: Colors.white,
-                    ),
-                    // title: Text('اذكار الصباح'),
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    iconTheme: const IconThemeData(color: Colors.white),
+                    backgroundColor: Colors.brown,
                     elevation: 0,
                     pinned: true,
                     centerTitle: false,
-                    expandedHeight: 230,
-                    flexibleSpace: const FlexibleSpaceBar(
-                      background: Image(
-                        image: AssetImage("assets/images/888-6.jpg"),
+                    expandedHeight: 200.h,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Image.asset(
+                        "assets/images/888-6.jpg",
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
+                  SliverPadding(
+                    padding: EdgeInsets.all(16.w),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.2,
+                        crossAxisSpacing: 16.w,
+                        mainAxisSpacing: 16.h,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
                         (context, index) => buildItem(
                             cubit.dataSections![index], context, index),
-                        childCount: cubit.dataSections!.length),
+                        childCount: cubit.dataSections!.length,
+                      ),
+                    ),
                   ),
                 ],
               );
             },
             condition: cubit.dataSections!.isNotEmpty,
             fallback: (BuildContext context) {
-              return Container();
+              return const Center(child: CircularProgressIndicator());
             },
           ),
         );
@@ -63,7 +71,6 @@ class AdkarHome extends StatelessWidget {
   Widget buildItem(SectionModel model, context, int index) {
     return InkWell(
       onTap: () {
-        // print(model.id);
         AhadithCubit.get(context)
             .getSectionDetails(context, model.id!)
             .then((value) {
@@ -78,37 +85,48 @@ class AdkarHome extends StatelessWidget {
               ));
         });
       },
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(
-            top: 9, bottom: 3, start: 5, end: 5),
-        child: Container(
-          width: double.infinity,
-          height: 100,
-          decoration: BoxDecoration(
-            color: AhadithCubit.get(context).colors[index],
-            // borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Image.asset(AhadithCubit.get(context).icon[index],
-                      height: 40)),
-              // Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  reverse: true,
-                  child: Text("${model.name}",
-                      textDirection: TextDirection.rtl,
-                      style: Theme.of(context).textTheme.displayMedium),
-                ),
-              ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.brown.shade100,
+              Colors.brown.shade50,
             ],
           ),
+          borderRadius: BorderRadius.circular(15.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.brown.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              AhadithCubit.get(context).icon[index],
+              height: 50.h,
+            ),
+            SizedBox(height: 10.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Text(
+                "${model.name}",
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown.shade800,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

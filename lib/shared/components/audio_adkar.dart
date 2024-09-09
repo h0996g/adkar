@@ -5,14 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Audio extends StatefulWidget {
-  const Audio({super.key, required this.globalKey});
+class AudioAdkar extends StatefulWidget {
+  const AudioAdkar({super.key, required this.globalKey});
   final GlobalKey globalKey;
   @override
-  State<Audio> createState() => _AudioState();
+  State<AudioAdkar> createState() => _AudioAdkarState();
 }
 
-class _AudioState extends State<Audio> {
+class _AudioAdkarState extends State<AudioAdkar> {
   final audioPlay = AudioPlayer();
   bool isPlaying = false;
   String url = '';
@@ -72,15 +72,11 @@ class _AudioState extends State<Audio> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.brown.shade50, Colors.brown.shade100],
-          ),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(15.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.brown.withOpacity(0.1),
+              color: Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 3,
               offset: const Offset(0, 2),
@@ -107,11 +103,11 @@ class _AudioState extends State<Audio> {
         children: [
           Text(
             formatTime(position),
-            style: TextStyle(color: Colors.brown.shade700, fontSize: 12.sp),
+            style: TextStyle(color: Colors.black, fontSize: 12.sp),
           ),
           Text(
             formatTime(duration),
-            style: TextStyle(color: Colors.brown.shade700, fontSize: 12.sp),
+            style: TextStyle(color: Colors.black, fontSize: 12.sp),
           ),
         ],
       ),
@@ -137,8 +133,8 @@ class _AudioState extends State<Audio> {
           final newPosition = Duration(seconds: value.toInt());
           await audioPlay.seek(newPosition);
         },
-        activeColor: Colors.brown.shade600,
-        inactiveColor: Colors.brown.shade200,
+        activeColor: Colors.black,
+        inactiveColor: Colors.grey.shade300,
       ),
     );
   }
@@ -147,11 +143,11 @@ class _AudioState extends State<Audio> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildControlButton(Icons.skip_next, _playPreviousAya),
+        _buildControlButton(Icons.skip_previous, _playPreviousAya),
         SizedBox(width: 16.w),
         _buildPlayPauseButton(),
         SizedBox(width: 16.w),
-        _buildControlButton(Icons.skip_previous, _playNextAya),
+        _buildControlButton(Icons.skip_next, _playNextAya),
       ],
     );
   }
@@ -159,11 +155,11 @@ class _AudioState extends State<Audio> {
   Widget _buildControlButton(IconData icon, VoidCallback onPressed) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.brown.shade100,
+        color: Colors.grey.shade200,
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        icon: Icon(icon, color: Colors.brown.shade700),
+        icon: Icon(icon, color: Colors.black),
         onPressed: onPressed,
       ),
     );
@@ -172,7 +168,7 @@ class _AudioState extends State<Audio> {
   Widget _buildPlayPauseButton() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.brown.shade200,
+        color: Colors.grey.shade200,
         shape: BoxShape.circle,
       ),
       child: Transform.rotate(
@@ -180,7 +176,7 @@ class _AudioState extends State<Audio> {
         child: IconButton(
           icon: Icon(
             isPlaying ? Icons.pause : Icons.play_arrow,
-            color: Colors.brown.shade800,
+            color: Colors.black,
           ),
           iconSize: 36.sp,
           onPressed: _playPause,

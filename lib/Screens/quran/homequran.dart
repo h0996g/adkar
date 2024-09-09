@@ -36,33 +36,57 @@ class _QuranHomeScreenState extends State<QuranHomeScreen> {
         QuranCubit cubit = QuranCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      cubit.shearchTgelSora();
-                    },
-                    icon: Icon(
-                        cubit.isSearchSora ? Icons.search_off : Icons.search))
-              ],
-              // iconTheme: IconThemeData(color: Colors.white),
-              title: const Text('القران الكريم'),
-              backgroundColor: Colors.white),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.brown.shade700, Colors.brown.shade500],
+                ),
+              ),
+            ),
+            // backgroundColor: Colors.brown[800], // Primary color for the app bar
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white, // White icon
+              ),
+            ),
+            title: const Text('القران الكريم'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  cubit.shearchTgelSora();
+                },
+                icon: Icon(
+                  cubit.isSearchSora ? Icons.search_off : Icons.search,
+                ),
+              ),
+            ],
+          ),
           body: Column(
             children: [
               if (cubit.isSearchSora)
-                Container(
-                  margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                  child: defaultForm(
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search),
+                      hintText: 'اسم السورة القرانية',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
                     onChanged: (value) {
                       cubit.searchSora(value.toString());
                     },
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: 'اسم السورة القرانية',
-                    controller: searchController,
-                    textInputAction: TextInputAction.done,
-                    validator: () {},
                   ),
                 ),
               Expanded(
@@ -88,52 +112,37 @@ class _QuranHomeScreenState extends State<QuranHomeScreen> {
   }
 
   Widget ayaItem(QuranApi model, context) {
-    return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        CircleAvatar(
-          backgroundColor: Colors.transparent,
-          child: Image(
-            image: AssetImage(model.revelationType == 'مكية'
-                ? "assets/images/kaaba.png"
-                : "assets/images/madina.png"),
-          ),
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Image(
+          image: AssetImage(model.revelationType == 'Meccan'
+              ? "assets/images/kaaba.png"
+              : "assets/images/madina.png"),
         ),
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              navigatAndReturn(
-                context: context,
-                page: ShowCaseWidget(
-                  onFinish: () async {
-                    await CachHelper.putcache(
-                            key: 'isFirstTimeQuran', value: false)
-                        .then((value) {
-                      isFirstTimeQuranCH = false;
-                    });
-                  },
-                  builder: Builder(
-                    builder: (context) => SoraQuran(
-                      id: model.number! - 1,
-                    ),
-                  ),
-                ),
-              );
+      ),
+      title: Text(
+        model.name!,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+      ),
+      onTap: () {
+        navigatAndReturn(
+          context: context,
+          page: ShowCaseWidget(
+            onFinish: () async {
+              await CachHelper.putcache(key: 'isFirstTimeQuran', value: false)
+                  .then((value) {
+                isFirstTimeQuranCH = false;
+              });
             },
-            child: Row(
-              children: [
-                const Spacer(),
-                Text(
-                  model.name!,
-                  style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
-                ),
-              ],
+            builder: Builder(
+              builder: (context) => SoraQuran(
+                id: model.number! - 1,
+              ),
             ),
           ),
-        )
-      ]),
+        );
+      },
     );
   }
 }

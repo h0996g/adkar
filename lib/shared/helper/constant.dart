@@ -54,19 +54,19 @@ List<dynamic> notifications = [
   {
     "description":
         'اللَّهُمَّ إنِّي أَسْأَلُكَ الهُدَى وَالتُّقَى، وَالْعَفَافَ وَالْغِنَى',
-    "date": const TimeOfDay(hour: 17, minute: 17),
+    "date": const TimeOfDay(hour: 00, minute: 00),
     "id": 1
   },
   {
     "description":
         'رَبِّ إِنِّي أَعُوذُ بِكَ أَنْ أَسْأَلَكَ مَا لَيْسَ لِي بِهِ عِلْمٌ ۖ وَإِلَّا تَغْفِرْ لِي وَتَرْحَمْنِي أَكُن مِّنَ الْخَاسِرِينَ',
-    "date": const TimeOfDay(hour: 17, minute: 18),
+    "date": const TimeOfDay(hour: 1, minute: 52),
     "id": 2
   },
   {
     "description":
         'رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا ۖ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ',
-    "date": const TimeOfDay(hour: 17, minute: 19),
+    "date": const TimeOfDay(hour: 1, minute: 53),
     "id": 3
   },
   {

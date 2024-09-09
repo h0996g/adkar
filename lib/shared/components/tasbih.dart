@@ -1,27 +1,27 @@
 import 'dart:async';
-
-import 'package:adkar/shared/helper/cash_helper.dart';
-import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:adkar/shared/helper/cash_helper.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Tasbih extends StatefulWidget {
-  const Tasbih({super.key, required this.globalKey});
+  const Tasbih({Key? key, required this.globalKey}) : super(key: key);
   final GlobalKey globalKey;
+
   @override
   State<Tasbih> createState() => _TasbihState();
 }
 
-class _TasbihState extends State<Tasbih> {
+class _TasbihState extends State<Tasbih> with SingleTickerProviderStateMixin {
   final items = ['10', '33', '100'];
-  String? value = CachHelper.getData(key: 'nOfTasbih') ?? '10';
+  String? value = CachHelper.getData(key: 'nOfTasbih') ?? '33';
   double _counter = 0;
   int index = 0;
 
   int _indexTasbih = 0;
   String? selectTasbih = CachHelper.getData(key: 'selectTasbih') ?? "1";
   List<String> tasbih = [
-    'سُبْحَانَ اللَّهِ\n وَبِحَمْدِهِ',
+    'سُبْحَانَ اللَّهِ\n وَبِحَمْدِهِ',
     'سُبْحَانَ اللَّه\n الْعَظِيم'
   ];
   List<String> tasbih2 = [
@@ -31,52 +31,41 @@ class _TasbihState extends State<Tasbih> {
     'اللَّهُ أَكْبَر'
   ];
 
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 1, end: 0.95).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   void _incrementCounter() {
     setState(() {
-      if (selectTasbih == "1") {
-        if (_counter >= 0.98) {
-          _counter = 0.0;
-          index = 0;
-          _indexTasbih = _indexTasbih == 0 ? 1 : 0;
-          return;
-        }
-        index++;
-        _counter = _counter + (1 / int.parse(value!));
-        if (_counter >= 0.98) {
-          Future.delayed(const Duration(milliseconds: 700), () {
-            if (_counter >= 0.98) {
-              setState(() {
-                _counter = 0.0;
-                index = 0;
-                _indexTasbih = _indexTasbih == 0 ? 1 : 0;
-                return;
-              });
-            }
-          });
-        }
-      } else if (selectTasbih == "2") {
-        if (_counter >= 0.98) {
-          _counter = 0.0;
-          index = 0;
-          _indexTasbih = (_indexTasbih + 1) % tasbih2.length;
-          return;
-        }
-        index++;
-        _counter = _counter + (1 / int.parse(value!));
-        if (_counter >= 0.98) {
-          Future.delayed(const Duration(milliseconds: 700), () {
-            if (_counter >= 0.98) {
-              setState(() {
-                _counter = 0.0;
-                index = 0;
-                _indexTasbih = (_indexTasbih + 1) % tasbih2.length;
-                return;
-              });
-            }
-          });
-        }
+      if (_counter >= 0.98) {
+        _counter = 0.0;
+        index = 0;
+        _indexTasbih = selectTasbih == "1"
+            ? (_indexTasbih == 0 ? 1 : 0)
+            : (_indexTasbih + 1) % tasbih2.length;
+        return;
       }
+      index++;
+      _counter = _counter + (1 / int.parse(value!));
     });
+    _animationController.forward().then((_) => _animationController.reverse());
   }
 
   void _showTasbihSelectionDialog(BuildContext context) {
@@ -86,10 +75,14 @@ class _TasbihState extends State<Tasbih> {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: SimpleDialog(
+            title: Text('اختر نوع التسبيح',
+                style: TextStyle(color: Colors.brown[800])),
+            backgroundColor: Colors.brown[50],
             children: <Widget>[
               ListTile(
-                title: const Text(
-                    'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'),
+                title: Text(
+                    'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+                    style: TextStyle(color: Colors.brown[700])),
                 onTap: () {
                   setState(() {
                     selectTasbih = "1";
@@ -100,8 +93,9 @@ class _TasbihState extends State<Tasbih> {
                 },
               ),
               ListTile(
-                title: const Text(
-                    'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر'),
+                title: Text(
+                    'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر',
+                    style: TextStyle(color: Colors.brown[700])),
                 onTap: () {
                   setState(() {
                     selectTasbih = "2";
@@ -120,122 +114,126 @@ class _TasbihState extends State<Tasbih> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey.shade50,
-          shape: BoxShape.rectangle,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.shade500,
-                offset: const Offset(4.0, 4.0),
-                blurRadius: 15,
-                spreadRadius: 1),
-            const BoxShadow(
-                color: Colors.white,
-                offset: Offset(-4.0, -4.0),
-                blurRadius: 15,
-                spreadRadius: 1.0)
-          ]),
-      padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
-      width: size.width * 0.8,
-      child: Column(
-        children: [
-          Row(
-            textDirection: TextDirection.rtl,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  'حلقة التسبيح  ',
-                  style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade700),
-                ),
-              ),
-              const Spacer(),
-              ShowCaseView(
-                description: 'افتح القائمة واختر عدد تكرار التسبيح',
-                globalKey: widget.globalKey,
-                title: 'عدد تكرار التسبيح',
-                child: DropdownButton(
-                  iconSize: 28,
-                  value: value,
-                  items: items.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() {
-                    this.value = value;
-                    CachHelper.putcache(key: 'nOfTasbih', value: this.value);
-                    _counter = 0.0;
-                    index = 0;
-                  }),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.brown.shade50, Colors.brown.shade100],
+        ),
+        borderRadius: BorderRadius.circular(15.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.brown.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(0, 2),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          InkWell(
-            onTap: () {
-              _incrementCounter();
-              print(value);
-              print(_counter);
-            },
-            onLongPress: () {
-              _showTasbihSelectionDialog(context);
-            },
-            child: CircularPercentIndicator(
-              animation: true,
-              animateFromLastPercent: true,
-              circularStrokeCap: CircularStrokeCap.round,
-              curve: Curves.easeInQuad,
-              addAutomaticKeepAlive: true,
-              radius: 104,
-              animationDuration: 250,
-              lineWidth: 20.0,
-              percent: _counter,
-              center: Text(
-                selectTasbih == "1"
-                    ? tasbih[_indexTasbih]
-                    : tasbih2[_indexTasbih],
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    shadows: [
-                      Shadow(
-                        color: Colors.grey,
-                        blurRadius: 6,
-                      )
-                    ]),
-              ),
-              progressColor: const Color.fromARGB(255, 83, 34, 8),
-              backgroundColor: const Color.fromARGB(47, 83, 34, 8),
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            '$index',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          )
         ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'حلقة التسبيح',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown[800],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  decoration: BoxDecoration(
+                    color: Colors.brown[50],
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: DropdownButton<String>(
+                    value: value,
+                    underline: SizedBox(),
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.brown[700]),
+                    dropdownColor: Colors.brown[50],
+                    items: items.map((String item) {
+                      return DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(item,
+                            style: TextStyle(
+                                color: Colors.brown[700], fontSize: 16.sp)),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        value = newValue;
+                        CachHelper.putcache(key: 'nOfTasbih', value: value);
+                        _counter = 0.0;
+                        index = 0;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            GestureDetector(
+              onTap: _incrementCounter,
+              onLongPress: () => _showTasbihSelectionDialog(context),
+              child: AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _animation.value,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircularPercentIndicator(
+                          radius: 120.r,
+                          lineWidth: 18.w,
+                          percent: _counter,
+                          progressColor: Colors.brown[600],
+                          backgroundColor: Colors.brown[100]!,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          animation: true,
+                          animateFromLastPercent: true,
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              selectTasbih == "1"
+                                  ? tasbih[_indexTasbih]
+                                  : tasbih2[_indexTasbih],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.brown[800],
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              '$index / ${value!}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.sp,
+                                color: Colors.brown[800],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      );
 }
