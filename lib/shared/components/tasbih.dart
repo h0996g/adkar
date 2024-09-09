@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
@@ -72,41 +72,36 @@ class _TasbihState extends State<Tasbih> with SingleTickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: SimpleDialog(
-            title: Text('اختر نوع التسبيح',
-                style: TextStyle(color: Colors.brown[800])),
-            backgroundColor: Colors.brown[50],
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                    'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
-                    style: TextStyle(color: Colors.brown[700])),
-                onTap: () {
-                  setState(() {
-                    selectTasbih = "1";
-                    CachHelper.putcache(
-                        key: 'selectTasbih', value: selectTasbih);
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                title: Text(
-                    'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر',
-                    style: TextStyle(color: Colors.brown[700])),
-                onTap: () {
-                  setState(() {
-                    selectTasbih = "2";
-                    CachHelper.putcache(
-                        key: 'selectTasbih', value: selectTasbih);
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
+        return SimpleDialog(
+          title: Text('اختر نوع التسبيح',
+              style: TextStyle(color: Colors.brown[800])),
+          backgroundColor: Colors.brown[50],
+          children: <Widget>[
+            ListTile(
+              title: Text(
+                  'سُبْحَانَ اللَّه الْعَظِيم, سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+                  style: TextStyle(color: Colors.brown[700])),
+              onTap: () {
+                setState(() {
+                  selectTasbih = "1";
+                  CachHelper.putcache(key: 'selectTasbih', value: selectTasbih);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text(
+                  'سُبْحَانَ اللَّهِ, الْحَمْدُ لِلَّهِ, لا إِلَهَ إِلا اللَّهُ, اللَّهُ أَكْبَر',
+                  style: TextStyle(color: Colors.brown[700])),
+              onTap: () {
+                setState(() {
+                  selectTasbih = "2";
+                  CachHelper.putcache(key: 'selectTasbih', value: selectTasbih);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
       },
     );
@@ -147,33 +142,39 @@ class _TasbihState extends State<Tasbih> with SingleTickerProviderStateMixin {
                     color: Colors.brown[800],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  decoration: BoxDecoration(
-                    color: Colors.brown[50],
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: DropdownButton<String>(
-                    value: value,
-                    underline: SizedBox(),
-                    icon: Icon(Icons.arrow_drop_down, color: Colors.brown[700]),
-                    dropdownColor: Colors.brown[50],
-                    items: items.map((String item) {
-                      return DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(item,
-                            style: TextStyle(
-                                color: Colors.brown[700], fontSize: 16.sp)),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        value = newValue;
-                        CachHelper.putcache(key: 'nOfTasbih', value: value);
-                        _counter = 0.0;
-                        index = 0;
-                      });
-                    },
+                ShowCaseView(
+                  description: 'افتح القائمة واختر عدد تكرار التسبيح',
+                  globalKey: widget.globalKey,
+                  title: 'عدد تكرار التسبيح',
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    decoration: BoxDecoration(
+                      color: Colors.brown[50],
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: DropdownButton<String>(
+                      value: value,
+                      underline: SizedBox(),
+                      icon:
+                          Icon(Icons.arrow_drop_down, color: Colors.brown[700]),
+                      dropdownColor: Colors.brown[50],
+                      items: items.map((String item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item,
+                              style: TextStyle(
+                                  color: Colors.brown[700], fontSize: 16.sp)),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          value = newValue;
+                          CachHelper.putcache(key: 'nOfTasbih', value: value);
+                          _counter = 0.0;
+                          index = 0;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ],

@@ -1,7 +1,10 @@
 import 'package:adkar/Screens/quran/cubit/quran_cubit.dart';
 import 'package:adkar/models/quran_api.dart';
 import 'package:adkar/shared/components/functions.dart';
+import 'package:adkar/shared/components/show_case_widget.dart';
+import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../shared/components/audio_quran.dart';
 
@@ -16,6 +19,16 @@ class SoraQuran extends StatefulWidget {
 class _SoraQuranState extends State<SoraQuran> {
   final GlobalKey globalKeyOne = GlobalKey();
   final GlobalKey globalKeyTwo = GlobalKey();
+  @override
+  void initState() {
+    if (isFirstTimeQuranCH) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context)
+            .startShowCase([globalKeyOne, globalKeyTwo]),
+      );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,71 +91,77 @@ class _SoraQuranState extends State<SoraQuran> {
               globalKey: globalKeyOne,
               index: index,
             ),
-            index == 0
-                ? IconButton(
-                    onPressed: () {
-                      QuranCubit.get(context)
-                          .tafsirAya(
-                              suraNumber: widget.id + 1,
-                              ayahNumber: model.numberInSurah!)
-                          .then((value) {
-                        showModalBottomSheet(
-                          enableDrag: true,
-                          isDismissible: true,
-                          context: context,
-                          builder: (context) => Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Text(
-                                QuranCubit.get(context).tafseerModel!.text!,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w400,
-                                ),
+            if (index == 0)
+              ShowCaseView(
+                description: '',
+                globalKey: globalKeyTwo,
+                title: 'شرح الاية القرانية',
+                child: IconButton(
+                  onPressed: () {
+                    QuranCubit.get(context)
+                        .tafsirAya(
+                            suraNumber: widget.id + 1,
+                            ayahNumber: model.numberInSurah!)
+                        .then((value) {
+                      showModalBottomSheet(
+                        enableDrag: true,
+                        isDismissible: true,
+                        context: context,
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Text(
+                              QuranCubit.get(context).tafseerModel!.text!,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
-                        );
-                      });
-                    },
-                    icon: Image.asset(
-                      'assets/images/languages.png',
-                      height: 30,
-                    ),
-                  )
-                : IconButton(
-                    onPressed: () {
-                      QuranCubit.get(context)
-                          .tafsirAya(
-                              suraNumber: widget.id + 1,
-                              ayahNumber: model.numberInSurah!)
-                          .then((value) {
-                        showModalBottomSheet(
-                          enableDrag: true,
-                          isDismissible: true,
-                          context: context,
-                          builder: (context) => Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Text(
-                                QuranCubit.get(context).tafseerModel!.text!,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      });
-                    },
-                    icon: Image.asset(
-                      'assets/images/languages.png',
-                      height: 30,
-                    ),
+                        ),
+                      );
+                    });
+                  },
+                  icon: Image.asset(
+                    'assets/images/languages.png',
+                    height: 30,
                   ),
+                ),
+              )
+            else
+              IconButton(
+                onPressed: () {
+                  QuranCubit.get(context)
+                      .tafsirAya(
+                          suraNumber: widget.id + 1,
+                          ayahNumber: model.numberInSurah!)
+                      .then((value) {
+                    showModalBottomSheet(
+                      enableDrag: true,
+                      isDismissible: true,
+                      context: context,
+                      builder: (context) => Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Text(
+                            QuranCubit.get(context).tafseerModel!.text!,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+                icon: Image.asset(
+                  'assets/images/languages.png',
+                  height: 30,
+                ),
+              ),
           ],
         ),
       ],

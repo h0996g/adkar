@@ -1,3 +1,5 @@
+import 'package:adkar/shared/components/functions.dart';
+import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:adkar/Screens/Adkar/adkar_home.dart';
@@ -7,6 +9,7 @@ import 'package:adkar/Screens/settings/settings.dart';
 import 'package:adkar/Screens/home/suggest.dart';
 import 'package:adkar/shared/components/tasbih.dart';
 import 'package:adkar/shared/components/audio.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey globalKeyOne = GlobalKey();
+  final GlobalKey globalKeyTwo = GlobalKey();
   final List<Map<String, dynamic>> _menuItems = [
     {
       'title': 'اذكار المسلم',
@@ -38,6 +43,20 @@ class _HomeScreenState extends State<HomeScreen> {
       'page': Suggest(),
     },
   ];
+  @override
+  void initState() {
+    if (isFirstTimeAdkarCH) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([
+          globalKeyOne,
+          globalKeyTwo,
+        ]),
+      );
+    }
+    super.initState();
+    listenNotification(context);
+    checkUpdate(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildTasbihSection() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Tasbih(globalKey: GlobalKey()),
+      child: Tasbih(globalKey: globalKeyOne),
     );
   }
 
@@ -231,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAudioPlayer() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Audio(globalKey: GlobalKey()),
+      child: Audio(globalKey: globalKeyTwo),
     );
   }
 }

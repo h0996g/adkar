@@ -7,7 +7,6 @@ import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:adkar/shared/network/dio_halper.dart';
-import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -99,28 +98,28 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: Colors.white),
         title: 'Flutter Demo',
-        home: Directionality(
-          textDirection: TextDirection.rtl, // Set the direction to RTL
-          child: ShowCaseWidget(
-            onStart: (index, key) async {
-              if (index == 1) {
-                await Scrollable.ensureVisible(
-                  key.currentContext!,
-                  alignment: -1,
-                );
-              }
-            },
-            onComplete: (index, key) async {},
-            onFinish: () async {
-              print('test finish');
-              await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)
-                  .then((value) {
-                isFirstTimeAdkarCH = false;
-              });
-            },
-            builder: Builder(
-              builder: (context) => const HomeScreen(),
-            ),
+        home: ShowCaseWidget(
+          onStart: (index, key) async {
+            if (index == 1) {
+              await Scrollable.ensureVisible(
+                key.currentContext!,
+                alignment: -1,
+              );
+            }
+          },
+          onComplete: (index, key) async {},
+          onFinish: () async {
+            print('test finish');
+            await CachHelper.putcache(key: 'isFirstTimeAdkar', value: false)
+                .then((value) {
+              isFirstTimeAdkarCH = false;
+            });
+          },
+          builder: Builder(
+            builder: (context) => const Directionality(
+                textDirection: TextDirection.rtl, // Set the direction to RTL
+
+                child: HomeScreen()),
           ),
         ),
       ),
