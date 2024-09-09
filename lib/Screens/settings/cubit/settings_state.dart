@@ -5,3 +5,9 @@ class SettingsInitial extends SettingsState {}
 class ChangeSwitchListTileNoti extends SettingsState {}
 
 class ChangeTimePickerState extends SettingsState {}
+
+class ChangeTypeNotificationState extends SettingsState {
+  final String notificationType;
+
+  ChangeTypeNotificationState({required this.notificationType});
+}

@@ -1,4 +1,5 @@
 import 'package:adkar/shared/components/custom_dialog.dart';
+import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -21,25 +22,49 @@ int getExtendedVersionNumber(String version) {
 Future<void> firstTimeNoti({required bool isFirstTime}) async {
   if (isFirstTime == false) {
     print('awel mra ');
-    await activeNotification();
+    // await activeNotification();
+    await CustomNotification().startCustomNotificationService();
+    // await activeSaba7Masa();
+
     await CachHelper.putcache(key: 'isFirstTime', value: true); //kant  isNotiOn
   }
 }
 
 Future<void> activeNotification() async {
   print('ra7 ndir active l notificaiotn');
-  // for (var notif in notifications) {
-  //   await Noti.showTimeNotificationDaily(
-  //     payload: 'adkar',
-  //     id: notif['id'],
-  //     title: 'فَذَكِّرْ',
-  //     body: notif['description']!,
-  //     time: notif['date'],
-  //     fln: Noti.flutterLocalNotificationsPlugin,
-  //     removeAfter: const Duration(seconds: 120),
-  //   );
-  // }
+  for (var notif in notifications) {
+    await Noti.showTimeNotificationDaily(
+      payload: 'adkar',
+      id: notif['id'],
+      title: 'فَذَكِّرْ',
+      body: notif['description']!,
+      time: notif['date'],
+      fln: Noti.flutterLocalNotificationsPlugin,
+      removeAfter: const Duration(seconds: 120),
+    );
+  }
+  await activeSaba7Masa();
 
+  // await Noti.showTimeNotificationDaily(
+  //     id: 25,
+  //     payload: 'adkarSabah',
+  //     title: 'اذكار الصباح',
+  //     body: 'اذكار الصباح',
+  //     // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+  //     time: adkarTimeSabahCH,
+  //     fln: Noti.flutterLocalNotificationsPlugin);
+
+  // await Noti.showTimeNotificationDaily(
+  //     id: 26,
+  //     payload: 'adkarMasa1',
+  //     title: 'اذكار المساء',
+  //     body: 'اذكار المساء',
+  //     // scheduleDate: DateTime.now().add(Duration(seconds: 10)),
+  //     time: adkarTimeMasaaCH,
+  //     fln: Noti.flutterLocalNotificationsPlugin);
+}
+
+Future<void> activeSaba7Masa() async {
   await Noti.showTimeNotificationDaily(
       id: 25,
       payload: 'adkarSabah',

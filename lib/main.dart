@@ -28,7 +28,6 @@ main() async {
   );
   DioHelper.init();
   Noti.init();
-  CustomNotification().startCustomNotificationService();
   await cacheHelperRecoveryValue();
   await firstTimeNoti(isFirstTime: isFirstTimeAppCH);
   runApp(const MyApp());

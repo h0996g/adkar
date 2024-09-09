@@ -18,7 +18,12 @@ class MainActivity: FlutterActivity() {
             if (call.method == "startCustomNotificationService") {
                 startCustomNotificationService()
                 result.success(null)
-            } else {
+            }  else if (call.method == "stopCustomNotificationService") {
+    stopCustomNotificationService()
+    result.success(null)
+  } 
+            
+            else {
                 result.notImplemented()
             }
         }
@@ -37,6 +42,10 @@ class MainActivity: FlutterActivity() {
             }
         }
     }
+    private fun stopCustomNotificationService() {
+  val serviceIntent = Intent(this, CustomNotificationService::class.java)
+  stopService(serviceIntent)
+}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

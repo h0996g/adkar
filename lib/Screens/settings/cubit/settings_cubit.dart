@@ -1,6 +1,7 @@
 import 'package:adkar/Screens/settings/cubit/settings_state.dart';
 import 'package:adkar/notification.dart';
 import 'package:adkar/shared/helper/constant.dart';
+import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,14 +15,31 @@ class SettingsCubit extends Cubit<SettingsState> {
   TimeOfDay selectedTimeSabah = adkarTimeSabahCH;
   TimeOfDay selectedTimeMasaa = adkarTimeMasaaCH;
   bool switchNoti = isNotiOnCH;
-  Future<void> changeSwitchListTile(bool value, String wichOne) async {
+  Future<void> changeSwitchListTile(bool value, String wichOne,
+      {String? off, String? on}) async {
     if (wichOne == 'switchNoti') {
       switchNoti = value;
       if (switchNoti == false) {
-        Noti.cancelAll();
+        if (off == 'custom') {
+          await CustomNotification().stopCustomNotificationService();
+        } else if (off == 'normal') {
+          Noti.cancelAll();
+        } else {
+          await CustomNotification().stopCustomNotificationService();
+          Noti.cancelAll();
+        }
+
         await CachHelper.putcache(key: 'isNotiOn', value: false);
       } else {
-        activeNotification();
+        if (on == 'custom') {
+          CustomNotification().startCustomNotificationService();
+        } else if (on == 'normal') {
+          await activeNotification();
+        } else {
+          CustomNotification().startCustomNotificationService();
+          await activeNotification();
+        }
+
         await CachHelper.putcache(key: 'isNotiOn', value: true);
       }
       emit(ChangeSwitchListTileNoti());
@@ -65,5 +83,16 @@ class SettingsCubit extends Cubit<SettingsState> {
           time: timeOfDay,
           fln: Noti.flutterLocalNotificationsPlugin);
     }
+  }
+
+  String _notificationType = 'custom';
+
+  String get notificationType => _notificationType;
+
+  Future<void> changeNotificationType(String value) async {
+    _notificationType = value;
+    await CachHelper.putcache(key: 'typeNoti', value: value);
+
+    emit(ChangeTypeNotificationState(notificationType: value));
   }
 }

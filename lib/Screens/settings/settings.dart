@@ -1,6 +1,5 @@
 import 'package:adkar/Screens/settings/cubit/settings_cubit.dart';
-import 'package:adkar/notification.dart';
-import 'package:adkar/shared/helper/cash_helper.dart';
+import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,11 +62,68 @@ class Setting extends StatelessWidget {
                             : showToast(
                                 msg: 'تم تعطيل التنبيهات',
                                 state: ToastStates.warning);
-                        cubit.changeSwitchListTile(value, 'switchNoti');
+                        cubit.changeSwitchListTile(value, 'switchNoti',
+                            off: 'all');
                       },
                       activeColor: Colors.brown,
                     ),
                   ),
+                  if (cubit.switchNoti)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.brown.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: const Text('تنبيهات عائمة'),
+                            trailing: Radio(
+                              value: 'custom',
+                              activeColor: Colors.brown,
+                              hoverColor: Colors.brown,
+                              groupValue: cubit.notificationType,
+                              onChanged: (value) {
+                                cubit.changeNotificationType(value!);
+                                // CustomNotification()
+                                //     .startCustomNotificationService();
+                                cubit.changeSwitchListTile(false, 'switchNoti',
+                                    off: 'normal');
+                                cubit.changeSwitchListTile(true, 'switchNoti',
+                                    on: 'custom');
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('تنبيهات عادية'),
+                            trailing: Radio(
+                              activeColor: Colors.brown,
+                              value: 'normal',
+                              groupValue: cubit.notificationType,
+                              onChanged: (value) {
+                                cubit.changeNotificationType(value!);
+                                cubit.changeSwitchListTile(false, 'switchNoti',
+                                    off: 'custom');
+                                cubit.changeSwitchListTile(true, 'switchNoti',
+                                    on: 'normal');
+                                // CustomNotification()
+                                //     .stopCustomNotificationService();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   _buildSettingItem(
                     title: 'تفعيل الاهتزاز عند القراءة',
                     child: Switch.adaptive(
