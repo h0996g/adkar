@@ -107,6 +107,7 @@ class _SoraQuranState extends State<SoraQuran> {
                         enableDrag: true,
                         isDismissible: true,
                         context: context,
+                        backgroundColor: Colors.white,
                         builder: (context) => Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: SingleChildScrollView(
@@ -141,6 +142,7 @@ class _SoraQuranState extends State<SoraQuran> {
                       enableDrag: true,
                       isDismissible: true,
                       context: context,
+                      backgroundColor: Colors.white,
                       builder: (context) => Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: SingleChildScrollView(

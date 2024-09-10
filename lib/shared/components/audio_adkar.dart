@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:adkar/shared/components/show_case_widget.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +13,7 @@ class AudioAdkar extends StatefulWidget {
 }
 
 class _AudioAdkarState extends State<AudioAdkar> {
-  final audioPlay = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   String url = '';
 
@@ -26,24 +26,24 @@ class _AudioAdkarState extends State<AudioAdkar> {
   @override
   void initState() {
     super.initState();
-    audioPlay.onPlayerStateChanged.listen((event) {
+    _audioPlayer.playerStateStream.listen((state) {
       if (mounted) {
         setState(() {
-          isPlaying = event == PlayerState.playing;
+          isPlaying = state.playing;
         });
       }
     });
-    audioPlay.onDurationChanged.listen((event) {
-      if (mounted) {
+    _audioPlayer.durationStream.listen((d) {
+      if (mounted && d != null) {
         setState(() {
-          duration = event;
+          duration = d;
         });
       }
     });
-    audioPlay.onPositionChanged.listen((event) {
+    _audioPlayer.positionStream.listen((p) {
       if (mounted) {
         setState(() {
-          position = event;
+          position = p;
         });
       }
     });
@@ -51,7 +51,7 @@ class _AudioAdkarState extends State<AudioAdkar> {
 
   @override
   void dispose() {
-    audioPlay.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -115,9 +115,6 @@ class _AudioAdkarState extends State<AudioAdkar> {
   }
 
   Widget _buildProgressBar() {
-    final maxDuration = duration.inSeconds.toDouble();
-    final currentPosition = position.inSeconds.toDouble();
-
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.r),
@@ -125,13 +122,11 @@ class _AudioAdkarState extends State<AudioAdkar> {
         trackHeight: 4.h,
       ),
       child: Slider(
-        value: currentPosition <= maxDuration
-            ? currentPosition
-            : 0.0, // Ensure valid value
-        max: maxDuration > 0 ? maxDuration : 1.0, // Prevent max from being 0
+        value: position.inSeconds.toDouble(),
+        max: duration.inSeconds.toDouble(),
         onChanged: (value) async {
           final newPosition = Duration(seconds: value.toInt());
-          await audioPlay.seek(newPosition);
+          await _audioPlayer.seek(newPosition);
         },
         activeColor: Colors.black,
         inactiveColor: Colors.grey.shade300,
@@ -143,11 +138,13 @@ class _AudioAdkarState extends State<AudioAdkar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildControlButton(Icons.skip_previous, _playPreviousAya),
+        _buildControlButton(Icons.skip_next, _playPreviousAya),
         SizedBox(width: 16.w),
         _buildPlayPauseButton(),
         SizedBox(width: 16.w),
-        _buildControlButton(Icons.skip_next, _playNextAya),
+        _buildControlButton(Icons.skip_previous, _playNextAya),
+        SizedBox(width: 16.w),
+        _buildRepeatButton(),
       ],
     );
   }
@@ -185,6 +182,24 @@ class _AudioAdkarState extends State<AudioAdkar> {
     );
   }
 
+  Widget _buildRepeatButton() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        icon: Icon(Icons.replay, color: Colors.black),
+        onPressed: _restartAudio,
+      ),
+    );
+  }
+
+  Future<void> _restartAudio() async {
+    await _audioPlayer.seek(Duration.zero);
+    await _audioPlayer.play();
+  }
+
   Future<void> _playAya(int ayaId) async {
     await FirebaseFirestore.instance
         .collection('quran')
@@ -193,7 +208,8 @@ class _AudioAdkarState extends State<AudioAdkar> {
         .then((value) {
       url = value['link'];
     });
-    await audioPlay.play(UrlSource(url));
+    await _audioPlayer.setUrl(url);
+    await _audioPlayer.play();
   }
 
   Future<void> _playNextAya() async {
@@ -219,12 +235,12 @@ class _AudioAdkarState extends State<AudioAdkar> {
 
   Future<void> _playPause() async {
     if (isPlaying) {
-      await audioPlay.pause();
+      await _audioPlayer.pause();
     } else {
       if (url.isEmpty) {
         await _playNextAya();
       } else {
-        await audioPlay.resume();
+        await _audioPlayer.play();
       }
     }
   }

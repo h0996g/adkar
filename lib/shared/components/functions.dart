@@ -125,10 +125,8 @@ void listenNotification(context) =>
           navigatAndReturn(
             context: context,
             page: ShowCaseWidget(
-              builder: Builder(
-                builder: (context) => const AdkarDetails(
-                  title: 'اذكار الصباح',
-                ),
+              builder: (context) => const AdkarDetails(
+                title: 'اذكار الصباح',
               ),
             ),
           );
@@ -140,10 +138,9 @@ void listenNotification(context) =>
           navigatAndReturn(
               context: context,
               page: ShowCaseWidget(
-                builder: Builder(
-                    builder: ((context) => const AdkarDetails(
-                          title: 'اذكار المساء',
-                        ))),
+                builder: (context) => const AdkarDetails(
+                  title: 'اذكار المساء',
+                ),
               ));
         });
       }

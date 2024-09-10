@@ -29,14 +29,11 @@ class SettingsCubit extends Cubit<SettingsState> {
           Noti.cancelAll();
         }
 
-        await CachHelper.putcache(key: 'isNotiOn', value: false);
+        CachHelper.putcache(key: 'isNotiOn', value: false);
       } else {
         if (on == 'custom') {
-          CustomNotification().startCustomNotificationService();
+          await CustomNotification().startCustomNotificationService();
         } else if (on == 'normal') {
-          await activeNotification();
-        } else {
-          CustomNotification().startCustomNotificationService();
           await activeNotification();
         }
 
@@ -85,7 +82,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  String _notificationType = 'custom';
+  String _notificationType = CachHelper.getData(key: 'typeNoti') ?? 'custom';
 
   String get notificationType => _notificationType;
 

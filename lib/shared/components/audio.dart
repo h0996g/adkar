@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:adkar/shared/components/show_case_widget.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +13,7 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-  final audioPlay = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   String url = '';
 
@@ -26,24 +26,24 @@ class _AudioState extends State<Audio> {
   @override
   void initState() {
     super.initState();
-    audioPlay.onPlayerStateChanged.listen((event) {
+    _audioPlayer.playerStateStream.listen((state) {
       if (mounted) {
         setState(() {
-          isPlaying = event == PlayerState.playing;
+          isPlaying = state.playing;
         });
       }
     });
-    audioPlay.onDurationChanged.listen((event) {
-      if (mounted) {
+    _audioPlayer.durationStream.listen((d) {
+      if (mounted && d != null) {
         setState(() {
-          duration = event;
+          duration = d;
         });
       }
     });
-    audioPlay.onPositionChanged.listen((event) {
+    _audioPlayer.positionStream.listen((p) {
       if (mounted) {
         setState(() {
-          position = event;
+          position = p;
         });
       }
     });
@@ -51,7 +51,7 @@ class _AudioState extends State<Audio> {
 
   @override
   void dispose() {
-    audioPlay.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -119,9 +119,6 @@ class _AudioState extends State<Audio> {
   }
 
   Widget _buildProgressBar() {
-    final maxDuration = duration.inSeconds.toDouble();
-    final currentPosition = position.inSeconds.toDouble();
-
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.r),
@@ -129,13 +126,11 @@ class _AudioState extends State<Audio> {
         trackHeight: 4.h,
       ),
       child: Slider(
-        value: currentPosition <= maxDuration
-            ? currentPosition
-            : 0.0, // Ensure valid value
-        max: maxDuration > 0 ? maxDuration : 1.0, // Prevent max from being 0
+        value: position.inSeconds.toDouble(),
+        max: duration.inSeconds.toDouble(),
         onChanged: (value) async {
           final newPosition = Duration(seconds: value.toInt());
-          await audioPlay.seek(newPosition);
+          await _audioPlayer.seek(newPosition);
         },
         activeColor: Colors.brown.shade600,
         inactiveColor: Colors.brown.shade200,
@@ -152,20 +147,20 @@ class _AudioState extends State<Audio> {
         _buildPlayPauseButton(),
         SizedBox(width: 16.w),
         _buildControlButton(Icons.skip_previous, _playNextAya),
+        SizedBox(width: 16.w),
+        _buildControlButton(Icons.replay, _restartCurrentAudio),
       ],
     );
   }
 
   Widget _buildControlButton(IconData icon, VoidCallback onPressed) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.brown.shade100,
-        shape: BoxShape.circle,
+    return IconButton(
+      icon: Icon(
+        icon,
+        color: Colors.brown.shade700,
+        size: 30,
       ),
-      child: IconButton(
-        icon: Icon(icon, color: Colors.brown.shade700),
-        onPressed: onPressed,
-      ),
+      onPressed: onPressed,
     );
   }
 
@@ -197,7 +192,8 @@ class _AudioState extends State<Audio> {
         .then((value) {
       url = value['link'];
     });
-    await audioPlay.play(UrlSource(url));
+    await _audioPlayer.setUrl(url);
+    await _audioPlayer.play();
   }
 
   Future<void> _playNextAya() async {
@@ -223,13 +219,18 @@ class _AudioState extends State<Audio> {
 
   Future<void> _playPause() async {
     if (isPlaying) {
-      await audioPlay.pause();
+      await _audioPlayer.pause();
     } else {
       if (url.isEmpty) {
         await _playNextAya();
       } else {
-        await audioPlay.resume();
+        await _audioPlayer.play();
       }
     }
+  }
+
+  Future<void> _restartCurrentAudio() async {
+    await _audioPlayer.seek(Duration.zero);
+    await _audioPlayer.play();
   }
 }

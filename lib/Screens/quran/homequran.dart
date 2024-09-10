@@ -135,10 +135,8 @@ class _QuranHomeScreenState extends State<QuranHomeScreen> {
                 isFirstTimeQuranCH = false;
               });
             },
-            builder: Builder(
-              builder: (context) => SoraQuran(
-                id: model.number! - 1,
-              ),
+            builder: (context) => SoraQuran(
+              id: model.number! - 1,
             ),
           ),
         );

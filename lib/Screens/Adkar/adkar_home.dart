@@ -77,10 +77,8 @@ class AdkarHome extends StatelessWidget {
           navigatAndReturn(
               context: context,
               page: ShowCaseWidget(
-                builder: Builder(
-                  builder: (context) => AdkarDetails(
-                    title: model.name!,
-                  ),
+                builder: (context) => AdkarDetails(
+                  title: model.name!,
                 ),
               ));
         });

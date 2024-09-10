@@ -8,7 +8,7 @@ class CustomNotification {
   Future<void> startCustomNotificationService() async {
     try {
       await platform.invokeMethod('startCustomNotificationService');
-      await activeSaba7Masa();
+      activeSaba7Masa();
     } on PlatformException catch (e) {
       print("Failed to start custom notification service: '${e.message}'.");
     }
@@ -17,6 +17,8 @@ class CustomNotification {
   Future<void> stopCustomNotificationService() async {
     try {
       await platform.invokeMethod('stopCustomNotificationService');
+      print(
+          "Custom notification service stoppedddddddddddddddddddddddddddddddd");
     } on PlatformException catch (e) {
       print("Failed to stop custom notification service: '${e.message}'");
     }

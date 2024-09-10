@@ -115,12 +115,10 @@ class MyApp extends StatelessWidget {
               isFirstTimeAdkarCH = false;
             });
           },
-          builder: Builder(
-            builder: (context) => const Directionality(
-                textDirection: TextDirection.rtl, // Set the direction to RTL
+          builder: (context) => const Directionality(
+              textDirection: TextDirection.rtl, // Set the direction to RTL
 
-                child: HomeScreen()),
-          ),
+              child: HomeScreen()),
         ),
       ),
     );

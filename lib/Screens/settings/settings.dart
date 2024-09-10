@@ -53,7 +53,9 @@ class Setting extends StatelessWidget {
                     title: 'تفعيل التنبيهات',
                     child: Switch.adaptive(
                       value: cubit.switchNoti,
-                      onChanged: (value) {
+                      onChanged: (value) async {
+                        print(value);
+
                         value
                             ? showToast(
                                 msg: 'تم تفعيل التنبيهات بنجاح',
@@ -61,8 +63,9 @@ class Setting extends StatelessWidget {
                             : showToast(
                                 msg: 'تم تعطيل التنبيهات',
                                 state: ToastStates.warning);
-                        cubit.changeSwitchListTile(value, 'switchNoti',
-                            off: 'all');
+
+                        await cubit.changeSwitchListTile(value, 'switchNoti',
+                            off: 'all', on: 'custom');
                       },
                       activeColor: Colors.brown,
                     ),
@@ -92,13 +95,15 @@ class Setting extends StatelessWidget {
                               activeColor: Colors.brown,
                               hoverColor: Colors.brown,
                               groupValue: cubit.notificationType,
-                              onChanged: (value) {
+                              onChanged: (value) async {
                                 cubit.changeNotificationType(value!);
                                 // CustomNotification()
                                 //     .startCustomNotificationService();
-                                cubit.changeSwitchListTile(false, 'switchNoti',
+                                await cubit.changeSwitchListTile(
+                                    false, 'switchNoti',
                                     off: 'normal');
-                                cubit.changeSwitchListTile(true, 'switchNoti',
+                                await cubit.changeSwitchListTile(
+                                    true, 'switchNoti',
                                     on: 'custom');
                               },
                             ),
@@ -109,11 +114,13 @@ class Setting extends StatelessWidget {
                               activeColor: Colors.brown,
                               value: 'normal',
                               groupValue: cubit.notificationType,
-                              onChanged: (value) {
-                                cubit.changeNotificationType(value!);
-                                cubit.changeSwitchListTile(false, 'switchNoti',
+                              onChanged: (value) async {
+                                await cubit.changeNotificationType(value!);
+                                await cubit.changeSwitchListTile(
+                                    false, 'switchNoti',
                                     off: 'custom');
-                                cubit.changeSwitchListTile(true, 'switchNoti',
+                                await cubit.changeSwitchListTile(
+                                    true, 'switchNoti',
                                     on: 'normal');
                                 // CustomNotification()
                                 //     .stopCustomNotificationService();
