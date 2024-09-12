@@ -7,6 +7,7 @@ import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:adkar/shared/network/dio_halper.dart';
+import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,9 +27,16 @@ main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   DioHelper.init();
-  Noti.init();
+  await Noti.init();
   await cacheHelperRecoveryValue();
   await firstTimeNoti(isFirstTime: isFirstTimeAppCH);
+  print('isFirstTimeAppCH $isFirstTimeAppCH');
+  if (isFirstTimeAppCH &&
+      await CachHelper.getData(key: "isNotiOn") != false &&
+      await CachHelper.getData(key: 'typeNoti') != 'normal' &&
+      !await CustomNotification().isCustomNotificationServiceRunning()) {
+    await CustomNotification().startCustomNotificationService();
+  }
   runApp(const MyApp());
 }
 

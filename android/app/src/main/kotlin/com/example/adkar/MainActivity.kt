@@ -1,5 +1,7 @@
 package com.example.adkar
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,26 +17,37 @@ class MainActivity: FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
-            if (call.method == "startCustomNotificationService") {
-                startCustomNotificationService()
-                result.success(null)
-            }  else if (call.method == "stopCustomNotificationService") {
-    stopCustomNotificationService()
-    result.success(null)
-  } 
-            
-            else {
-                result.notImplemented()
+            when (call.method) {
+                "startCustomNotificationService" -> {
+                    val repeatInterval = when (val interval = call.argument<Number>("repeatInterval")) {
+                        is Int -> interval.toLong()
+                        is Long -> interval
+                        else -> 1800000L // Default to 30 minutes if not provided or invalid
+                    }
+                    startCustomNotificationService(repeatInterval)
+                    result.success(null)
+                }
+                "stopCustomNotificationService" -> {
+                    stopCustomNotificationService()
+                    result.success(null)
+                }
+                "isCustomNotificationServiceRunning" -> {
+                    result.success(isServiceRunning(CustomNotificationService::class.java))
+                }
+                else -> {
+                    result.notImplemented()
+                }
             }
         }
     }
 
-    private fun startCustomNotificationService() {
+    private fun startCustomNotificationService(repeatInterval: Long) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
             startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION)
         } else {
             val serviceIntent = Intent(this, CustomNotificationService::class.java)
+            serviceIntent.putExtra("repeatInterval", repeatInterval)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
             } else {
@@ -42,16 +55,27 @@ class MainActivity: FlutterActivity() {
             }
         }
     }
+
     private fun stopCustomNotificationService() {
-  val serviceIntent = Intent(this, CustomNotificationService::class.java)
-  stopService(serviceIntent)
-}
+        val serviceIntent = Intent(this, CustomNotificationService::class.java)
+        stopService(serviceIntent)
+    }
+
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) {
-                startCustomNotificationService()
+                startCustomNotificationService(1800000L) // Default to 10 minutes if permission just granted
             }
         }
     }

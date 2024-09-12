@@ -65,7 +65,7 @@ class Setting extends StatelessWidget {
                                 state: ToastStates.warning);
 
                         await cubit.changeSwitchListTile(value, 'switchNoti',
-                            off: 'all', on: 'custom');
+                            on: cubit.notificationType);
                       },
                       activeColor: Colors.brown,
                     ),
@@ -87,46 +87,137 @@ class Setting extends StatelessWidget {
                         ],
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ListTile(
-                            title: const Text('تنبيهات عائمة'),
-                            trailing: Radio(
-                              value: 'custom',
-                              activeColor: Colors.brown,
-                              hoverColor: Colors.brown,
-                              groupValue: cubit.notificationType,
-                              onChanged: (value) async {
-                                cubit.changeNotificationType(value!);
-                                // CustomNotification()
-                                //     .startCustomNotificationService();
-                                await cubit.changeSwitchListTile(
-                                    false, 'switchNoti',
-                                    off: 'normal');
-                                await cubit.changeSwitchListTile(
-                                    true, 'switchNoti',
-                                    on: 'custom');
-                              },
+                          Text(
+                            'نوع التنبيهات',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.brown,
                             ),
                           ),
-                          ListTile(
-                            title: const Text('تنبيهات عادية'),
-                            trailing: Radio(
-                              activeColor: Colors.brown,
-                              value: 'normal',
-                              groupValue: cubit.notificationType,
-                              onChanged: (value) async {
-                                await cubit.changeNotificationType(value!);
-                                await cubit.changeSwitchListTile(
-                                    false, 'switchNoti',
-                                    off: 'custom');
-                                await cubit.changeSwitchListTile(
-                                    true, 'switchNoti',
-                                    on: 'normal');
-                                // CustomNotification()
-                                //     .stopCustomNotificationService();
-                              },
-                            ),
+                          SizedBox(height: 16.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    await cubit
+                                        .changeNotificationType('custom');
+                                    await cubit.changeSwitchListTile(
+                                        true, 'switchNoti',
+                                        on: 'custom');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(12.w),
+                                    decoration: BoxDecoration(
+                                      color: cubit.notificationType == 'custom'
+                                          ? Colors.brown
+                                          : Colors.brown.shade50,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: Text(
+                                      'تنبيهات عائمة',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            cubit.notificationType == 'custom'
+                                                ? Colors.white
+                                                : Colors.brown,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 16.w),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    await cubit
+                                        .changeNotificationType('normal');
+                                    await cubit.changeSwitchListTile(
+                                        true, 'switchNoti',
+                                        on: 'normal');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(12.w),
+                                    decoration: BoxDecoration(
+                                      color: cubit.notificationType == 'normal'
+                                          ? Colors.brown
+                                          : Colors.brown.shade50,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: Text(
+                                      'تنبيهات عادية',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color:
+                                            cubit.notificationType == 'normal'
+                                                ? Colors.white
+                                                : Colors.brown,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          if (cubit.notificationType == 'custom') ...[
+                            SizedBox(height: 16.h),
+                            Text(
+                              'تكرار التنبيهات العائمة',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.brown,
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Wrap(
+                              spacing: 8.w,
+                              runSpacing: 8.h,
+                              children: [
+                                '5 دقائق',
+                                '15 دقيقة',
+                                '30 دقيقة',
+                                '1 ساعة',
+                                '2 ساعة',
+                                '4 ساعات'
+                              ].map((interval) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      cubit.changeFloatingNotificationInterval(
+                                          interval),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w, vertical: 8.h),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          cubit.floatingNotificationInterval ==
+                                                  interval
+                                              ? Colors.brown
+                                              : Colors.brown.shade50,
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                    child: Text(
+                                      interval,
+                                      style: TextStyle(
+                                        color:
+                                            cubit.floatingNotificationInterval ==
+                                                    interval
+                                                ? Colors.white
+                                                : Colors.brown,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -135,7 +226,7 @@ class Setting extends StatelessWidget {
                     child: Switch.adaptive(
                       value: true,
                       onChanged: (value) {},
-                      activeColor: Colors.brown,
+                      activeColor: Colors.grey,
                     ),
                   ),
                   _buildSettingItem(
@@ -164,6 +255,31 @@ class Setting extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildIntervalDropdown(SettingsCubit cubit) {
+    return DropdownButton<String>(
+      value: cubit.floatingNotificationInterval,
+      items: <String>[
+        '15 minutes',
+        '30 minutes',
+        '1 hour',
+        '2 hours',
+        '4 hours'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        if (newValue != null) {
+          cubit.changeFloatingNotificationInterval(newValue);
+        }
+      },
+      style: TextStyle(color: Colors.brown, fontSize: 16.sp),
+      dropdownColor: Colors.brown.shade50,
     );
   }
 

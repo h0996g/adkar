@@ -15,28 +15,36 @@ class SettingsCubit extends Cubit<SettingsState> {
   TimeOfDay selectedTimeSabah = adkarTimeSabahCH;
   TimeOfDay selectedTimeMasaa = adkarTimeMasaaCH;
   bool switchNoti = isNotiOnCH;
+  String _notificationType = CachHelper.getData(key: 'typeNoti') ?? 'custom';
+  String get notificationType => _notificationType;
+
+  // final List<String> intervalOptions = [
+  //   '15 دقيقة',
+  //   '30 دقيقة',
+  //   '1 ساعة',
+  //   '2 ساعة',
+  //   '4 ساعات'
+  // ];
+  String _floatingNotificationInterval =
+      CachHelper.getData(key: 'floatingNotificationInterval') ?? '30 دقيقة';
+  String get floatingNotificationInterval => _floatingNotificationInterval;
   Future<void> changeSwitchListTile(bool value, String wichOne,
-      {String? off, String? on}) async {
+      {String? on}) async {
     if (wichOne == 'switchNoti') {
       switchNoti = value;
       if (switchNoti == false) {
-        if (off == 'custom') {
-          await CustomNotification().stopCustomNotificationService();
-        } else if (off == 'normal') {
-          Noti.cancelAll();
-        } else {
-          await CustomNotification().stopCustomNotificationService();
-          Noti.cancelAll();
-        }
-
+        await CustomNotification().stopCustomNotificationService();
+        Noti.cancelAll();
         CachHelper.putcache(key: 'isNotiOn', value: false);
       } else {
         if (on == 'custom') {
-          await CustomNotification().startCustomNotificationService();
+          await CustomNotification().startCustomNotificationService(
+              repeatIntervalSeconds: _getIntervalInSeconds());
+          Noti.cancelAll();
         } else if (on == 'normal') {
+          await CustomNotification().stopCustomNotificationService();
           await activeNotification();
         }
-
         await CachHelper.putcache(key: 'isNotiOn', value: true);
       }
       emit(ChangeSwitchListTileNoti());
@@ -82,14 +90,43 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  String _notificationType = CachHelper.getData(key: 'typeNoti') ?? 'custom';
-
-  String get notificationType => _notificationType;
-
   Future<void> changeNotificationType(String value) async {
     _notificationType = value;
     await CachHelper.putcache(key: 'typeNoti', value: value);
-
     emit(ChangeTypeNotificationState(notificationType: value));
+  }
+
+  // New method to change floating notification interval
+  Future<void> changeFloatingNotificationInterval(String interval) async {
+    _floatingNotificationInterval = interval;
+    print(_getIntervalInSeconds());
+    await CachHelper.putcache(
+        key: 'floatingNotificationInterval', value: interval);
+    if (switchNoti && _notificationType == 'custom') {
+      await CustomNotification().stopCustomNotificationService();
+      await CustomNotification().startCustomNotificationService(
+          repeatIntervalSeconds: _getIntervalInSeconds());
+    }
+    emit(ChangeFloatingNotificationIntervalState());
+  }
+
+  // Helper method to convert interval string to seconds
+  int _getIntervalInSeconds() {
+    switch (_floatingNotificationInterval) {
+      case '5 دقائق':
+        return 5 * 60;
+      case '15 دقيقة':
+        return 15 * 60;
+      case '30 دقيقة':
+        return 30 * 60;
+      case '1 ساعة':
+        return 60 * 60;
+      case '2 ساعة':
+        return 2 * 60 * 60;
+      case '4 ساعات':
+        return 4 * 60 * 60;
+      default:
+        return 30 * 60; // Default to 30 minutes
+    }
   }
 }
