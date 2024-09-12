@@ -1,6 +1,7 @@
 import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:adkar/Screens/Adkar/adkar_home.dart';
 import 'package:adkar/Screens/NamesOfAllah/names_of_allah.dart';
@@ -52,7 +53,17 @@ class _HomeScreenState extends State<HomeScreen> {
           globalKeyTwo,
         ]),
       );
+
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+      ]);
     }
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.initState();
     listenNotification(context);
     checkUpdate(context);

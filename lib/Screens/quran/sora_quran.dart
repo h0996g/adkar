@@ -4,6 +4,7 @@ import 'package:adkar/shared/components/functions.dart';
 import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,7 +29,22 @@ class _SoraQuranState extends State<SoraQuran> {
             .startShowCase([globalKeyOne, globalKeyTwo]),
       );
     }
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override

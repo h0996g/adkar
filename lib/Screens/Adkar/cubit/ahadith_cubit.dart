@@ -149,11 +149,21 @@ class AhadithCubit extends Cubit<AhadithState> {
     }
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    DateTime now = DateTime.now();
+    String timestamp = now.toIso8601String();
+
+    // Create document name
+    String docName = '${androidInfo.model}_$timestamp';
     // print('Running on ${androidInfo.model}');
-    await FirebaseFirestore.instance.collection('suggests').doc().set({
+    await FirebaseFirestore.instance.collection('suggests').doc(docName).set({
       'text': text ?? '',
       'link': linkSuggestImg ?? '',
-      "device": androidInfo.model
+      "device": androidInfo.model,
+      'brand': androidInfo.brand,
+      'androidVersion': androidInfo.version.release,
+      'sdkInt': androidInfo.version.sdkInt,
+      'manufacturer': androidInfo.manufacturer,
+      'timestamp': timestamp,
     }).then((value) {
       emit(UploadSeggestStateGood());
     }).catchError((e) {

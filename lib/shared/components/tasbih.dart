@@ -5,7 +5,7 @@ import 'package:adkar/shared/helper/cash_helper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Tasbih extends StatefulWidget {
-  const Tasbih({Key? key, required this.globalKey}) : super(key: key);
+  const Tasbih({super.key, required this.globalKey});
   final GlobalKey globalKey;
 
   @override
@@ -154,7 +154,7 @@ class _TasbihState extends State<Tasbih> with SingleTickerProviderStateMixin {
                     ),
                     child: DropdownButton<String>(
                       value: value,
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       icon:
                           Icon(Icons.arrow_drop_down, color: Colors.brown[700]),
                       dropdownColor: Colors.brown[50],
