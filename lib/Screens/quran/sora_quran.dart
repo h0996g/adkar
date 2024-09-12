@@ -5,6 +5,7 @@ import 'package:adkar/shared/components/show_case_widget.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/components/audio_quran.dart';
 
@@ -112,12 +113,30 @@ class _SoraQuranState extends State<SoraQuran> {
                           padding: const EdgeInsets.all(10.0),
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),
-                            child: Text(
-                              QuranCubit.get(context).tafseerModel!.text!,
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  QuranCubit.get(context).tafseerModel!.text!,
+                                  style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                GestureDetector(
+                                  onTap: () => _launchUrl(),
+                                  child: Text(
+                                    'المصدر',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.brown.shade700,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -147,12 +166,30 @@ class _SoraQuranState extends State<SoraQuran> {
                         padding: const EdgeInsets.all(10.0),
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Text(
-                            QuranCubit.get(context).tafseerModel!.text!,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                QuranCubit.get(context).tafseerModel!.text!,
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () => _launchUrl(),
+                                child: Text(
+                                  'المصدر',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.brown.shade700,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -168,5 +205,12 @@ class _SoraQuranState extends State<SoraQuran> {
         ),
       ],
     );
+  }
+
+  final Uri _url = Uri.parse('https://alquran.cloud/api');
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 }
