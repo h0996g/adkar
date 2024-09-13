@@ -4,6 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../models/section_details_model.dart';
@@ -181,7 +182,15 @@ class AdkarDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        // Share functionality
+                        Share.share(
+                          'شارك هذا الحديث:\n\n'
+                          '${model.content}\n\n'
+                          'عدد التكرارات: ${model.count}',
+                          subject: 'مشاركة حديث',
+                        );
+                      },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

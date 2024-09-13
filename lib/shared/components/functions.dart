@@ -23,7 +23,8 @@ Future<void> firstTimeNoti({required bool isFirstTime}) async {
   if (isFirstTime == false) {
     print('awel mra ');
     // await activeNotification();
-    await CustomNotification().startCustomNotificationService();
+    await CustomNotification().startCustomNotificationService(
+        repeatIntervalSeconds: getIntervalInSeconds());
     // await activeSaba7Masa();
 
     await CachHelper.putcache(key: 'isFirstTime', value: true); //kant  isNotiOn
@@ -103,6 +104,29 @@ Future<void> cacheHelperRecoveryValue() async {
           adkarTimeMasaaCH.hour,
       minute: await CachHelper.getData(key: 'adkarTimeMasaaCH.minute') ??
           adkarTimeMasaaCH.minute);
+
+  floatingNotificationIntervalCH =
+      CachHelper.getData(key: 'floatingNotificationInterval') ?? '30 دقيقة';
+}
+
+// Helper method to convert interval string to seconds
+int getIntervalInSeconds() {
+  switch (floatingNotificationIntervalCH) {
+    case '5 دقائق':
+      return 5 * 60;
+    case '15 دقيقة':
+      return 15 * 60;
+    case '30 دقيقة':
+      return 30 * 60;
+    case '1 ساعة':
+      return 60 * 60;
+    case '2 ساعة':
+      return 2 * 60 * 60;
+    case '4 ساعات':
+      return 4 * 60 * 60;
+    default:
+      return 30 * 60; // Default to 30 minutes
+  }
 }
 
 String replaceFarsiNumber(String input) {

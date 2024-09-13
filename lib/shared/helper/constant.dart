@@ -7,7 +7,7 @@ bool isFirstTimeQuranCH = true;
 TimeOfDay adkarTimeSabahCH = const TimeOfDay(hour: 6, minute: 00);
 TimeOfDay adkarTimeMasaaCH = const TimeOfDay(hour: 16, minute: 30);
 double sizeAdkarTextCH = 26;
-
+String floatingNotificationIntervalCH = '30 دقيقة';
 double arabicFontSize = 28;
 double mushafFontSize = 40;
 

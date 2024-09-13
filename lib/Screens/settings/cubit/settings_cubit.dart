@@ -25,9 +25,9 @@ class SettingsCubit extends Cubit<SettingsState> {
   //   '2 ساعة',
   //   '4 ساعات'
   // ];
-  String _floatingNotificationInterval =
-      CachHelper.getData(key: 'floatingNotificationInterval') ?? '30 دقيقة';
-  String get floatingNotificationInterval => _floatingNotificationInterval;
+  // String _floatingNotificationInterval =
+  //     CachHelper.getData(key: 'floatingNotificationInterval') ?? '30 دقيقة';
+  // String get floatingNotificationInterval => floatingNotificationInterval;
   Future<void> changeSwitchListTile(bool value, String wichOne,
       {String? on}) async {
     if (wichOne == 'switchNoti') {
@@ -39,7 +39,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       } else {
         if (on == 'custom') {
           await CustomNotification().startCustomNotificationService(
-              repeatIntervalSeconds: _getIntervalInSeconds());
+              repeatIntervalSeconds: getIntervalInSeconds());
           Noti.cancelAll();
         } else if (on == 'normal') {
           await CustomNotification().stopCustomNotificationService();
@@ -98,35 +98,15 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   // New method to change floating notification interval
   Future<void> changeFloatingNotificationInterval(String interval) async {
-    _floatingNotificationInterval = interval;
-    print(_getIntervalInSeconds());
+    floatingNotificationIntervalCH = interval;
+    print(getIntervalInSeconds());
     await CachHelper.putcache(
         key: 'floatingNotificationInterval', value: interval);
     if (switchNoti && _notificationType == 'custom') {
       await CustomNotification().stopCustomNotificationService();
       await CustomNotification().startCustomNotificationService(
-          repeatIntervalSeconds: _getIntervalInSeconds());
+          repeatIntervalSeconds: getIntervalInSeconds());
     }
     emit(ChangeFloatingNotificationIntervalState());
-  }
-
-  // Helper method to convert interval string to seconds
-  int _getIntervalInSeconds() {
-    switch (_floatingNotificationInterval) {
-      case '5 دقائق':
-        return 5 * 60;
-      case '15 دقيقة':
-        return 15 * 60;
-      case '30 دقيقة':
-        return 30 * 60;
-      case '1 ساعة':
-        return 60 * 60;
-      case '2 ساعة':
-        return 2 * 60 * 60;
-      case '4 ساعات':
-        return 4 * 60 * 60;
-      default:
-        return 30 * 60; // Default to 30 minutes
-    }
   }
 }

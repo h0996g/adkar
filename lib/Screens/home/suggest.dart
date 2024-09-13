@@ -103,7 +103,7 @@ class _SuggestState extends State<Suggest> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       const Text(
-                                        "Choose the source:",
+                                        "اختر المصدر :",
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -139,7 +139,7 @@ class _SuggestState extends State<Suggest> {
                                                             10), // Padding
                                               ),
                                               child: const Text(
-                                                "Camera",
+                                                "الكاميرا",
                                                 style: TextStyle(
                                                     color: Colors
                                                         .white), // White text color
@@ -172,7 +172,7 @@ class _SuggestState extends State<Suggest> {
                                                             10), // Padding
                                               ),
                                               child: const Text(
-                                                "Gallery",
+                                                "معرض الصور",
                                                 style: TextStyle(
                                                     color: Colors
                                                         .white), // White text color

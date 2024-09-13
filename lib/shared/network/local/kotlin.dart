@@ -6,7 +6,7 @@ class CustomNotification {
       MethodChannel('com.example.adkar/custom_notification');
 
   Future<void> startCustomNotificationService(
-      {int repeatIntervalSeconds = 60}) async {
+      {int repeatIntervalSeconds = 30 * 60}) async {
     try {
       await platform.invokeMethod('startCustomNotificationService', {
         'repeatInterval':

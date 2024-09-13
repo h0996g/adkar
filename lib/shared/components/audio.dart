@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:adkar/shared/components/show_case_widget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Audio extends StatefulWidget {
   const Audio({super.key, required this.globalKey});
@@ -12,7 +16,7 @@ class Audio extends StatefulWidget {
   State<Audio> createState() => _AudioState();
 }
 
-class _AudioState extends State<Audio> {
+class _AudioState extends State<Audio> with SingleTickerProviderStateMixin {
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   String url = '';
@@ -140,15 +144,13 @@ class _AudioState extends State<Audio> {
 
   Widget _buildControls() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildControlButton(Icons.skip_next, _playPreviousAya),
-        SizedBox(width: 16.w),
         _buildPlayPauseButton(),
-        SizedBox(width: 16.w),
         _buildControlButton(Icons.skip_previous, _playNextAya),
-        SizedBox(width: 16.w),
         _buildControlButton(Icons.replay, _restartCurrentAudio),
+        _buildControlButton(Icons.share, _shareAudio),
       ],
     );
   }
@@ -176,6 +178,7 @@ class _AudioState extends State<Audio> {
           icon: Icon(
             isPlaying ? Icons.pause : Icons.play_arrow,
             color: Colors.brown.shade800,
+            size: 36.sp,
           ),
           iconSize: 36.sp,
           onPressed: _playPause,
@@ -232,5 +235,42 @@ class _AudioState extends State<Audio> {
   Future<void> _restartCurrentAudio() async {
     await _audioPlayer.seek(Duration.zero);
     await _audioPlayer.play();
+  }
+
+  Future<void> _shareAudio() async {
+    if (url.isNotEmpty) {
+      try {
+        // Show loading indicator
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Preparing audio for sharing...')),
+        );
+
+        // Get the Firebase Storage reference from the URL
+        final ref = FirebaseStorage.instance.refFromURL(url);
+
+        // Get temporary directory
+        final dir = await getTemporaryDirectory();
+        final file = File('${dir.path}/shared_audio.mp3');
+
+        // Download to temporary file
+        await ref.writeToFile(file);
+
+        // Share the file
+        final result = await Share.shareXFiles([XFile(file.path)],
+            text: 'Check out this audio!');
+
+        if (result.status == ShareResultStatus.success) {
+          print('Thank you for sharing the audio!');
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error sharing audio: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No audio to share')),
+      );
+    }
   }
 }

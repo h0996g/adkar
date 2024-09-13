@@ -35,7 +35,8 @@ main() async {
       await CachHelper.getData(key: "isNotiOn") != false &&
       await CachHelper.getData(key: 'typeNoti') != 'normal' &&
       !await CustomNotification().isCustomNotificationServiceRunning()) {
-    await CustomNotification().startCustomNotificationService();
+    await CustomNotification().startCustomNotificationService(
+        repeatIntervalSeconds: getIntervalInSeconds());
   }
   runApp(const MyApp());
 }
