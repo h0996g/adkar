@@ -17,8 +17,10 @@ class NotificationSettingsPage extends StatefulWidget {
 class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   @override
   void initState() {
-    super.initState();
     SettingsCubit.get(context).loadNotificationSettings();
+    _showCustomNotification(context);
+
+    super.initState();
   }
 
   @override

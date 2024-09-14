@@ -226,7 +226,7 @@ class Setting extends StatelessWidget {
                                 }).toList(),
                               ),
                               _buildSettingItem(
-                                title: 'إعدادات التنبيهات',
+                                title: 'تخصيص شكل التنبيهات',
                                 child: ElevatedButton.icon(
                                   icon: const Icon(Icons.notifications_active,
                                       color: Colors.white),
@@ -245,7 +245,7 @@ class Setting extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              NotificationSettingsPage()),
+                                              const NotificationSettingsPage()),
                                     );
                                   },
                                 ),
