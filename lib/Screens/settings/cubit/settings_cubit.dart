@@ -118,7 +118,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   // double get notificationTextSize => _notificationTextSize.clamp(12.0, 30.0);
 
   double _notificationTextSize = 18.0;
-  Color _notificationTextColor = Color(0xFF964B00);
+  Color _notificationTextColor = const Color(0xFF964B00);
   double _notificationTransparency = 1.0;
 
   double get notificationTextSize => _notificationTextSize;
@@ -136,7 +136,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       var textColor = await CachHelper.getData(key: 'notificationTextColor');
       _notificationTextColor = textColor != null
           ? Color(int.parse(textColor.toString()))
-          : Color(0xFF964B00);
+          : const Color(0xFF964B00);
 
       // Transparency
       var transparency =
@@ -147,7 +147,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       print("Error loading notification settings: $e");
       // Use default values if there's an error
       _notificationTextSize = 18.0;
-      _notificationTextColor = Color(0xFF964B00);
+      _notificationTextColor = const Color(0xFF964B00);
       _notificationTransparency = 1.0;
     }
     emit(NotificationSettingsLoaded());
