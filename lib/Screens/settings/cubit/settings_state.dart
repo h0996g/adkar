@@ -15,3 +15,7 @@ class ChangeTypeNotificationState extends SettingsState {
 }
 
 class ChangeNotificationTextSizeState extends SettingsState {}
+
+class ChangeNotificationSettingsState extends SettingsState {}
+
+class NotificationSettingsLoaded extends SettingsState {}

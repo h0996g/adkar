@@ -74,9 +74,13 @@ class CustomNotificationService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         try {
             when (intent?.action) {
-                "UPDATE_TEXT_SIZE" -> {
-                    Log.d("CustomNotificationService", "Updating text size")
-                    updateTextSize()
+                "SHOW_CUSTOM_NOTIFICATION" -> {
+                val message = intent.getStringExtra("message") ?: ""
+                showNotification(message)
+            }
+                "UPDATE_NOTIFICATION_SETTINGS" -> {
+                    Log.d("CustomNotificationService", "Updating notification settings")
+                    updateNotificationSettings()
                 }
                 else -> {
                     repeatInterval = intent?.getLongExtra("repeatInterval", 1800 * 1000) ?: 1800 * 1000
@@ -95,10 +99,10 @@ class CustomNotificationService : Service() {
             override fun run() {
                 val randomAdkar = adkar.random()
                 showNotification(randomAdkar)
-                handler.postDelayed(this, repeatInterval) // Use the passed interval
+                handler.postDelayed(this, repeatInterval)
             }
         }
-        handler.post(runnable) // Start the periodic notifications
+        handler.post(runnable)
     }
 
     private fun createNotificationChannel() {
@@ -134,18 +138,14 @@ class CustomNotificationService : Service() {
     private fun showNotification(content: String) {
         try {
             if (notificationView != null) {
-            // Notification already showing, update the content
-                notificationView?.findViewById<TextView>(R.id.notification_text)?.text = content
+                updateNotificationContent(content)
                 return
             }
 
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             notificationView = inflater.inflate(R.layout.custom_notification_layout, null)
 
-            notificationView?.findViewById<TextView>(R.id.notification_text)?.apply {
-                text = content
-                textSize = getNotificationTextSize()
-            }
+            updateNotificationContent(content)
 
             val params = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -170,6 +170,15 @@ class CustomNotificationService : Service() {
         }
     }
 
+    private fun updateNotificationContent(content: String) {
+        notificationView?.findViewById<TextView>(R.id.notification_text)?.apply {
+            text = content
+            textSize = getNotificationTextSize()
+            setTextColor(getNotificationTextColor())
+        }
+        notificationView?.background?.alpha = (getNotificationTransparency() * 255).toInt()
+    }
+
     private fun removeNotification() {
         notificationView?.let {
             try {
@@ -181,34 +190,57 @@ class CustomNotificationService : Service() {
         }
     }
 
-   private fun getNotificationTextSize(): Float {
+    private fun getNotificationTextSize(): Float {
+        val sharedPreferences = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+        return try {
+            when (val size = sharedPreferences.getString("flutter.notificationTextSize", null)) {
+                null -> 18f
+                else -> size.toFloatOrNull() ?: 18f
+            }.coerceIn(12f, 30f)
+        } catch (e: Exception) {
+            Log.e("CustomNotificationService", "Error getting notification text size", e)
+            18f
+        }
+    }
+
+private fun getNotificationTextColor(): Int {
     val sharedPreferences = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
     return try {
-        when (val size = sharedPreferences.getString("flutter.notificationTextSize", null)) {
-            null -> 18f
-            else -> size.toFloatOrNull() ?: 18f
-        }.coerceIn(12f, 30f)
+        val colorValue = sharedPreferences.all["flutter.notificationTextColor"]
+        when (colorValue) {
+            is Int -> colorValue
+            is Long -> colorValue.toInt()
+            is String -> colorValue.toLongOrNull()?.toInt() ?: 0xFF964B00.toInt()
+            else -> 0xFF964B00.toInt() // Default brown color
+        }
     } catch (e: Exception) {
-        Log.e("CustomNotificationService", "Error getting notification text size", e)
-        18f
+        Log.e("CustomNotificationService", "Error getting notification text color", e)
+        0xFF964B00.toInt() // Default brown color
+    }
+}
+  private fun getNotificationTransparency(): Float {
+    val sharedPreferences = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+    return try {
+        val transparencyValue = sharedPreferences.all["flutter.notificationTransparency"]
+        when (transparencyValue) {
+            is Float -> transparencyValue
+            is String -> transparencyValue.toFloatOrNull() ?: 0.8f
+            else -> 0.8f
+        }
+    } catch (e: Exception) {
+        Log.e("CustomNotificationService", "Error getting notification transparency", e)
+        0.80f // Default full opacity
     }
 }
 
-    private fun updateTextSize() {
+    private fun updateNotificationSettings() {
         try {
-            val newSize = getNotificationTextSize()
-            Log.d("CustomNotificationService", "New text size: $newSize")
-            notificationView?.findViewById<TextView>(R.id.notification_text)?.let { textView ->
-                textView.textSize = newSize
-                Log.d("CustomNotificationService", "Text size updated successfully")
-            } ?: Log.e("CustomNotificationService", "TextView not found in notificationView")
-            
+            updateNotificationContent(notificationView?.findViewById<TextView>(R.id.notification_text)?.text.toString())
             notificationView?.let { view ->
                 windowManager.updateViewLayout(view, view.layoutParams)
-                Log.d("CustomNotificationService", "View layout updated")
-            } ?: Log.e("CustomNotificationService", "notificationView is null")
+            }
         } catch (e: Exception) {
-            Log.e("CustomNotificationService", "Error updating text size", e)
+            Log.e("CustomNotificationService", "Error updating notification settings", e)
         }
     }
 

@@ -10,7 +10,9 @@ import '../../../shared/components/functions.dart';
 import '../../../shared/helper/cash_helper.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
-  SettingsCubit() : super(SettingsInitial());
+  SettingsCubit() : super(SettingsInitial()) {
+    loadNotificationSettings();
+  }
   static SettingsCubit get(context) => BlocProvider.of(context);
 
   TimeOfDay selectedTimeSabah = adkarTimeSabahCH;
@@ -111,31 +113,82 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(ChangeFloatingNotificationIntervalState());
   }
 
-  double _notificationTextSize =
-      _parseTextSize(CachHelper.getData(key: 'notificationTextSize')) ?? 18.0;
-  double get notificationTextSize => _notificationTextSize.clamp(12.0, 30.0);
+  // double _notificationTextSize =
+  //     _parseTextSize(CachHelper.getData(key: 'notificationTextSize')) ?? 18.0;
+  // double get notificationTextSize => _notificationTextSize.clamp(12.0, 30.0);
 
-  static double? _parseTextSize(dynamic value) {
-    if (value is double) return value;
-    if (value is int) return value.toDouble();
-    if (value is String) return double.tryParse(value);
-    return null;
+  double _notificationTextSize = 18.0;
+  Color _notificationTextColor = Color(0xFF964B00);
+  double _notificationTransparency = 1.0;
+
+  double get notificationTextSize => _notificationTextSize;
+  Color get notificationTextColor => _notificationTextColor;
+  double get notificationTransparency => _notificationTransparency;
+
+  Future<void> loadNotificationSettings() async {
+    try {
+      // Text Size
+      var textSize = await CachHelper.getData(key: 'notificationTextSize');
+      _notificationTextSize =
+          textSize != null ? double.parse(textSize.toString()) : 18.0;
+
+      // Text Color
+      var textColor = await CachHelper.getData(key: 'notificationTextColor');
+      _notificationTextColor = textColor != null
+          ? Color(int.parse(textColor.toString()))
+          : Color(0xFF964B00);
+
+      // Transparency
+      var transparency =
+          await CachHelper.getData(key: 'notificationTransparency');
+      _notificationTransparency =
+          transparency != null ? double.parse(transparency.toString()) : 0.8;
+    } catch (e) {
+      print("Error loading notification settings: $e");
+      // Use default values if there's an error
+      _notificationTextSize = 18.0;
+      _notificationTextColor = Color(0xFF964B00);
+      _notificationTransparency = 1.0;
+    }
+    emit(NotificationSettingsLoaded());
   }
 
   Future<void> changeNotificationTextSize(double size) async {
+    _notificationTextSize = size.clamp(12.0, 30.0);
+    await CachHelper.putcache(
+        key: 'notificationTextSize', value: _notificationTextSize.toString());
+    await _updateNotificationSettings();
+    emit(ChangeNotificationSettingsState());
+  }
+
+  Future<void> changeNotificationTextColor(Color color) async {
+    _notificationTextColor = color;
+    await CachHelper.putcache(
+        key: 'notificationTextColor',
+        value: _notificationTextColor.value.toString());
+    await _updateNotificationSettings();
+    emit(ChangeNotificationSettingsState());
+  }
+
+  Future<void> changeNotificationTransparency(double transparency) async {
+    _notificationTransparency = transparency.clamp(0.0, 1.0);
+    await CachHelper.putcache(
+        key: 'notificationTransparency',
+        value: _notificationTransparency.toString());
+    await _updateNotificationSettings();
+    emit(ChangeNotificationSettingsState());
+  }
+
+  Future<void> _updateNotificationSettings() async {
+    const platform = MethodChannel('com.example.adkar/custom_notification');
     try {
-      _notificationTextSize = size.clamp(12.0, 30.0);
-      await CachHelper.putcache(
-          key: 'notificationTextSize', value: _notificationTextSize.toString());
-      print("New text size saved: $_notificationTextSize");
-
-      const platform = MethodChannel('com.example.adkar/custom_notification');
-      await platform.invokeMethod('updateNotificationTextSize');
-
-      emit(ChangeNotificationTextSizeState());
-    } catch (e, stackTrace) {
-      print("Error in changeNotificationTextSize: $e");
-      print("Stack trace: $stackTrace");
+      await platform.invokeMethod('updateNotificationSettings', {
+        'textSize': _notificationTextSize,
+        'textColor': _notificationTextColor.value,
+        'transparency': _notificationTransparency,
+      });
+    } catch (e) {
+      print("Error updating notification settings: $e");
     }
   }
 }

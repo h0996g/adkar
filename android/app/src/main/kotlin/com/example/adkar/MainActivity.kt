@@ -19,6 +19,11 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
+                "showCustomNotification" -> {
+                    val message = call.argument<String>("message") ?: ""
+                    showCustomNotification(message)
+                    result.success(null)
+                }
                 "startCustomNotificationService" -> {
                     val repeatInterval = when (val interval = call.argument<Number>("repeatInterval")) {
                         is Int -> interval.toLong()
@@ -35,20 +40,15 @@ class MainActivity: FlutterActivity() {
                 "isCustomNotificationServiceRunning" -> {
                     result.success(isServiceRunning(CustomNotificationService::class.java))
                 }
-                "updateNotificationTextSize" -> {
+                "updateNotificationSettings" -> {
                     try {
-                        if (isServiceRunning(CustomNotificationService::class.java)) {
-                            val intent = Intent(this, CustomNotificationService::class.java)
-                            intent.action = "UPDATE_TEXT_SIZE"
-                            startService(intent)
-                            result.success(null)
-                        } else {
-                            Log.e("MainActivity", "CustomNotificationService is not running")
-                            result.error("SERVICE_NOT_RUNNING", "CustomNotificationService is not running", null)
-                        }
+                        val intent = Intent(this, CustomNotificationService::class.java)
+                        intent.action = "UPDATE_NOTIFICATION_SETTINGS"
+                        startService(intent)
+                        result.success(null)
                     } catch (e: Exception) {
-                        Log.e("MainActivity", "Error updating notification text size", e)
-                        result.error("UPDATE_ERROR", "Failed to update notification text size", e.message)
+                        Log.e("MainActivity", "Error updating notification settings", e)
+                        result.error("UPDATE_ERROR", "Failed to update notification settings", e.message)
                     }
                 }
                 else -> {
@@ -56,6 +56,12 @@ class MainActivity: FlutterActivity() {
                 }
             }
         }
+    }
+    private fun showCustomNotification(message: String) {
+        val intent = Intent(this, CustomNotificationService::class.java)
+        intent.action = "SHOW_CUSTOM_NOTIFICATION"
+        intent.putExtra("message", message)
+        startService(intent)
     }
 
     private fun startCustomNotificationService(repeatInterval: Long) {

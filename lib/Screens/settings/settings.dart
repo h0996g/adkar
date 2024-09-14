@@ -1,4 +1,5 @@
 import 'package:adkar/Screens/settings/cubit/settings_cubit.dart';
+import 'package:adkar/Screens/settings/notification_settings.dart';
 import 'package:adkar/shared/components/share_app.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:flutter/material.dart';
@@ -225,28 +226,30 @@ class Setting extends StatelessWidget {
                                 }).toList(),
                               ),
                               _buildSettingItem(
-                                title: 'حجم نص التنبيهات العائمة',
-                                child: Column(
-                                  children: [
-                                    Slider(
-                                      value: cubit.notificationTextSize,
-                                      min: 12.0,
-                                      max: 30.0,
-                                      divisions: 18,
-                                      label:
-                                          '${cubit.notificationTextSize.toStringAsFixed(1)} sp',
-                                      onChanged: (value) {
-                                        cubit.changeNotificationTextSize(value);
-                                      },
-                                      activeColor: Colors.brown,
+                                title: 'إعدادات التنبيهات',
+                                child: ElevatedButton.icon(
+                                  icon: const Icon(Icons.notifications_active,
+                                      color: Colors.white),
+                                  label: const Text('تخصيص',
+                                      style: TextStyle(color: Colors.white)),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.brown,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    Text(
-                                      '${cubit.notificationTextSize.toStringAsFixed(1)} sp',
-                                      style: TextStyle(color: Colors.brown),
-                                    ),
-                                  ],
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              NotificationSettingsPage()),
+                                    );
+                                  },
                                 ),
-                              ),
+                              )
                             ],
                           ],
                         ),
