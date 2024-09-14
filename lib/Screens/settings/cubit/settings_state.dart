@@ -13,3 +13,5 @@ class ChangeTypeNotificationState extends SettingsState {
 
   ChangeTypeNotificationState({required this.notificationType});
 }
+
+class ChangeNotificationTextSizeState extends SettingsState {}

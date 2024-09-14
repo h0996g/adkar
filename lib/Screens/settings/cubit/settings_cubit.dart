@@ -3,6 +3,7 @@ import 'package:adkar/notification.dart';
 import 'package:adkar/shared/helper/constant.dart';
 import 'package:adkar/shared/network/local/kotlin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/components/functions.dart';
@@ -108,5 +109,33 @@ class SettingsCubit extends Cubit<SettingsState> {
           repeatIntervalSeconds: getIntervalInSeconds());
     }
     emit(ChangeFloatingNotificationIntervalState());
+  }
+
+  double _notificationTextSize =
+      _parseTextSize(CachHelper.getData(key: 'notificationTextSize')) ?? 18.0;
+  double get notificationTextSize => _notificationTextSize.clamp(12.0, 30.0);
+
+  static double? _parseTextSize(dynamic value) {
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
+  }
+
+  Future<void> changeNotificationTextSize(double size) async {
+    try {
+      _notificationTextSize = size.clamp(12.0, 30.0);
+      await CachHelper.putcache(
+          key: 'notificationTextSize', value: _notificationTextSize.toString());
+      print("New text size saved: $_notificationTextSize");
+
+      const platform = MethodChannel('com.example.adkar/custom_notification');
+      await platform.invokeMethod('updateNotificationTextSize');
+
+      emit(ChangeNotificationTextSizeState());
+    } catch (e, stackTrace) {
+      print("Error in changeNotificationTextSize: $e");
+      print("Stack trace: $stackTrace");
+    }
   }
 }

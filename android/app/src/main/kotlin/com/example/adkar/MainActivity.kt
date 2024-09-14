@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -33,6 +34,22 @@ class MainActivity: FlutterActivity() {
                 }
                 "isCustomNotificationServiceRunning" -> {
                     result.success(isServiceRunning(CustomNotificationService::class.java))
+                }
+                "updateNotificationTextSize" -> {
+                    try {
+                        if (isServiceRunning(CustomNotificationService::class.java)) {
+                            val intent = Intent(this, CustomNotificationService::class.java)
+                            intent.action = "UPDATE_TEXT_SIZE"
+                            startService(intent)
+                            result.success(null)
+                        } else {
+                            Log.e("MainActivity", "CustomNotificationService is not running")
+                            result.error("SERVICE_NOT_RUNNING", "CustomNotificationService is not running", null)
+                        }
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error updating notification text size", e)
+                        result.error("UPDATE_ERROR", "Failed to update notification text size", e.message)
+                    }
                 }
                 else -> {
                     result.notImplemented()
@@ -75,7 +92,7 @@ class MainActivity: FlutterActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) {
-                startCustomNotificationService(1800000L) // Default to 10 minutes if permission just granted
+                startCustomNotificationService(1800000L) // Default to 30 minutes if permission just granted
             }
         }
     }

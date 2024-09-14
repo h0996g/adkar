@@ -125,6 +125,7 @@ class _QuranHomeScreenState extends State<QuranHomeScreen> {
         model.name!,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
       ),
+      splashColor: Colors.transparent,
       onTap: () {
         navigatAndReturn(
           context: context,

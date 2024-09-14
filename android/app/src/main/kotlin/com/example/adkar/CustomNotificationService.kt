@@ -7,6 +7,7 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -68,12 +69,24 @@ class CustomNotificationService : Service() {
         createNotificationChannel()
     }
 
- private var repeatInterval: Long = 1800 * 1000 // Default to 30 minutes
+    private var repeatInterval: Long = 1800 * 1000 // Default to 30 minutes
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        repeatInterval = intent?.getLongExtra("repeatInterval", 1800 * 1000) ?: 1800 * 1000
-        startForeground(NOTIFICATION_ID, createNotification("التطبيق شغال في الخلفية لاظهار الاذكار"))
-        startPeriodicNotifications()
+        try {
+            when (intent?.action) {
+                "UPDATE_TEXT_SIZE" -> {
+                    Log.d("CustomNotificationService", "Updating text size")
+                    updateTextSize()
+                }
+                else -> {
+                    repeatInterval = intent?.getLongExtra("repeatInterval", 1800 * 1000) ?: 1800 * 1000
+                    startForeground(NOTIFICATION_ID, createNotification("التطبيق شغال في الخلفية لاظهار الاذكار"))
+                    startPeriodicNotifications()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("CustomNotificationService", "Error in onStartCommand", e)
+        }
         return START_STICKY
     }
 
@@ -102,54 +115,57 @@ class CustomNotificationService : Service() {
         }
     }
 
-private fun createNotification(content: String): Notification {
-    val intent = Intent(this, MainActivity::class.java)
-    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+    private fun createNotification(content: String): Notification {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-    return NotificationCompat.Builder(this, CHANNEL_ID)
-        .setContentTitle("")
-        .setContentText(content)
-        .setSmallIcon(R.drawable.ic_notification)
-        .setContentIntent(pendingIntent)
-        .setPriority(NotificationCompat.PRIORITY_MIN)
-        .setCategory(NotificationCompat.CATEGORY_SERVICE)
-        .setOngoing(true)
-        .setSilent(true)
-        .build()
-}
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("")
+            .setContentText(content)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setOngoing(true)
+            .setSilent(true)
+            .build()
+    }
 
     private fun showNotification(content: String) {
-        if (notificationView != null) {
-            // Notification already showing, update the content
-            notificationView?.findViewById<TextView>(R.id.notification_text)?.text = content
-            return
-        }
-
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        notificationView = inflater.inflate(R.layout.custom_notification_layout, null)
-
-        notificationView?.findViewById<TextView>(R.id.notification_text)?.text = content
-
-        val params = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        )
-
-        params.gravity = Gravity.TOP or Gravity.START
-        params.x = 0
-        params.y = 100
-
-        notificationView?.setOnClickListener {
-            removeNotification()
-        }
-
         try {
+            if (notificationView != null) {
+            // Notification already showing, update the content
+                notificationView?.findViewById<TextView>(R.id.notification_text)?.text = content
+                return
+            }
+
+            val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            notificationView = inflater.inflate(R.layout.custom_notification_layout, null)
+
+            notificationView?.findViewById<TextView>(R.id.notification_text)?.apply {
+                text = content
+                textSize = getNotificationTextSize()
+            }
+
+            val params = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT
+            )
+
+            params.gravity = Gravity.TOP or Gravity.START
+            params.x = 0
+            params.y = 100
+
+            notificationView?.setOnClickListener {
+                removeNotification()
+            }
+
             windowManager.addView(notificationView, params)
         } catch (e: Exception) {
-            // Handle exception (e.g., permission not granted)
+            Log.e("CustomNotificationService", "Error showing notification", e)
             removeNotification()
         }
     }
@@ -159,9 +175,40 @@ private fun createNotification(content: String): Notification {
             try {
                 windowManager.removeView(it)
             } catch (e: IllegalArgumentException) {
-                // View not attached, ignore
+                Log.e("CustomNotificationService", "Error removing notification view", e)
             }
             notificationView = null
+        }
+    }
+
+   private fun getNotificationTextSize(): Float {
+    val sharedPreferences = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+    return try {
+        when (val size = sharedPreferences.getString("flutter.notificationTextSize", null)) {
+            null -> 18f
+            else -> size.toFloatOrNull() ?: 18f
+        }.coerceIn(12f, 30f)
+    } catch (e: Exception) {
+        Log.e("CustomNotificationService", "Error getting notification text size", e)
+        18f
+    }
+}
+
+    private fun updateTextSize() {
+        try {
+            val newSize = getNotificationTextSize()
+            Log.d("CustomNotificationService", "New text size: $newSize")
+            notificationView?.findViewById<TextView>(R.id.notification_text)?.let { textView ->
+                textView.textSize = newSize
+                Log.d("CustomNotificationService", "Text size updated successfully")
+            } ?: Log.e("CustomNotificationService", "TextView not found in notificationView")
+            
+            notificationView?.let { view ->
+                windowManager.updateViewLayout(view, view.layoutParams)
+                Log.d("CustomNotificationService", "View layout updated")
+            } ?: Log.e("CustomNotificationService", "notificationView is null")
+        } catch (e: Exception) {
+            Log.e("CustomNotificationService", "Error updating text size", e)
         }
     }
 
@@ -169,7 +216,7 @@ private fun createNotification(content: String): Notification {
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(runnable) // Stop the handler
+        handler.removeCallbacks(runnable)
         removeNotification()
         stopForeground(true)
     }

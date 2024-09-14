@@ -224,6 +224,29 @@ class Setting extends StatelessWidget {
                                   );
                                 }).toList(),
                               ),
+                              _buildSettingItem(
+                                title: 'حجم نص التنبيهات العائمة',
+                                child: Column(
+                                  children: [
+                                    Slider(
+                                      value: cubit.notificationTextSize,
+                                      min: 12.0,
+                                      max: 30.0,
+                                      divisions: 18,
+                                      label:
+                                          '${cubit.notificationTextSize.toStringAsFixed(1)} sp',
+                                      onChanged: (value) {
+                                        cubit.changeNotificationTextSize(value);
+                                      },
+                                      activeColor: Colors.brown,
+                                    ),
+                                    Text(
+                                      '${cubit.notificationTextSize.toStringAsFixed(1)} sp',
+                                      style: TextStyle(color: Colors.brown),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ],
                         ),
