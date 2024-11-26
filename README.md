@@ -64,23 +64,43 @@ Adkar is a comprehensive mobile application designed to assist Muslims with thei
 - Custom notifications with Kotlin
 - Vibration feedback
 
-## 📱 Screenshots
+## 🔗 Connect & Download
 
-## 🚀 Installation
-
-1. Download from [Google Play Store](https://play.google.com/store/apps/details?id=com.h0774g.alhou)
-1. git clone https://github.com/h0996g/adkarcd adkarflutter pub getflutter run
-
-## 🔗 Links
-
-- [GitHub Repository](https://github.com/h0996g/adkar)
-- [Play Store](https://play.google.com/store/apps/details?id=com.h0774g.alhou)
-- [Live Demo](https://play.google.com/store/apps/details?id=com.h0774g.alhou)
+<p align="left">
+<a href="https://github.com/h0996g/adkar">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+</a>&nbsp;
+<a href="https://play.google.com/store/apps/details?id=com.h0774g.alhou">
+  <img src="https://img.shields.io/badge/Get_it_on_Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white" alt="Play Store" />
+</a>&nbsp;
+</p>
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
+## 📱 Screenshots
 
+<p align="center">
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/1.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/2.jpg" width="200" /> 
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/3.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/4.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/5.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/6.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/7.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/8.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/9.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/10.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/11.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/12.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/13.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/14.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/15.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/16.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/17.jpg" width="200" />
+<img src="https://github.com/h0996g/adkar/blob/2c9e82349d4831cd29594727d000c038509a0f49/screenShoots/adkar/18.jpg" width="200" />
+</p>
+   
 <br>
