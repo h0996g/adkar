@@ -81,20 +81,6 @@ Adkar is a comprehensive mobile application designed to assist Muslims with thei
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-1. Fork the repository
-1. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-1. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-1. Push to the branch (`git push origin feature/AmazingFeature`)
-1. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Contact
-
-For support or queries, please open an issue in the GitHub repository.
-
 ---
 
 <br>
