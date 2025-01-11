@@ -175,6 +175,19 @@ class AdkarDetails extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    MaterialButton(
+                      onPressed: () {
+                        Vibration.vibrate(duration: 20);
+                        AhadithCubit.get(context).readAdkar(index);
+                      },
+                      child: Text(
+                        "التكرار ${model.count}",
+                        style: TextStyle(
+                          fontSize: 22.sp,
+                          color: Colors.brown[400],
+                        ),
+                      ),
+                    ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.brown[600],
@@ -205,19 +218,6 @@ class AdkarDetails extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        Vibration.vibrate(duration: 20);
-                        AhadithCubit.get(context).readAdkar(index);
-                      },
-                      child: Text(
-                        "التكرار ${model.count}",
-                        style: TextStyle(
-                          fontSize: 22.sp,
-                          color: Colors.brown[400],
-                        ),
                       ),
                     ),
                   ],
