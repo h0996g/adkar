@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'title': 'ابلاغ او اقتراح',
       'icon': 'assets/images/suggestion.png',
-      'page': Suggest(),
+      'page': const Suggest(),
     },
   ];
   @override

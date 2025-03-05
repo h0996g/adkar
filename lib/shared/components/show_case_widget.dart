@@ -3,13 +3,12 @@ import 'package:showcaseview/showcaseview.dart';
 
 class ShowCaseView extends StatelessWidget {
   const ShowCaseView(
-      {Key? key,
+      {super.key,
       required this.globalKey,
       required this.title,
       required this.description,
       required this.child,
-      this.shapeBorder = const CircleBorder()})
-      : super(key: key);
+      this.shapeBorder = const CircleBorder()});
 
   final GlobalKey globalKey;
   final String title;

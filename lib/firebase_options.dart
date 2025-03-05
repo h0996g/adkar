@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -61,9 +52,38 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDSNczzZZNC9pmDy8WrVwaLy0dgig5FU_o',
-    appId: '1:835096401918:android:96607cad770a1d262dd2af',
+    appId: '1:835096401918:android:d2b89b270cf239432dd2af',
     messagingSenderId: '835096401918',
     projectId: 'quran-28f24',
     storageBucket: 'quran-28f24.appspot.com',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC72ixAkKFMjyaDRZ3YtcDg1kM4rlgt-hk',
+    appId: '1:835096401918:ios:75d49d6b8c5fe8332dd2af',
+    messagingSenderId: '835096401918',
+    projectId: 'quran-28f24',
+    storageBucket: 'quran-28f24.appspot.com',
+    iosBundleId: 'com.h0774g.alhou',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyC72ixAkKFMjyaDRZ3YtcDg1kM4rlgt-hk',
+    appId: '1:835096401918:ios:75d49d6b8c5fe8332dd2af',
+    messagingSenderId: '835096401918',
+    projectId: 'quran-28f24',
+    storageBucket: 'quran-28f24.appspot.com',
+    iosBundleId: 'com.h0774g.alhou',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBzzpnpDD4uMY1bTWnXl8Z9biDpaukDQss',
+    appId: '1:835096401918:web:a1838a87e48756692dd2af',
+    messagingSenderId: '835096401918',
+    projectId: 'quran-28f24',
+    authDomain: 'quran-28f24.firebaseapp.com',
+    storageBucket: 'quran-28f24.appspot.com',
+    measurementId: 'G-751BNLGXZC',
+  );
+
 }
