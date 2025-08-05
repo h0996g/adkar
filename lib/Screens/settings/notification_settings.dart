@@ -170,7 +170,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   }
 
   void _showCustomNotification(BuildContext context) {
-    const platform = MethodChannel('com.example.adkar/custom_notification');
+    const platform = MethodChannel('com.h0774g.alhou/custom_notification');
     platform.invokeMethod('showCustomNotification', {
       'message':
           'اللَّهُمَّ إنِّي أَسْأَلُكَ الهُدَى وَالتُّقَى، وَالْعَفَافَ وَالْغِنَى',

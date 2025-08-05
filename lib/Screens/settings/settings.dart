@@ -293,31 +293,6 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget _buildIntervalDropdown(SettingsCubit cubit) {
-    return DropdownButton<String>(
-      value: floatingNotificationIntervalCH,
-      items: <String>[
-        '15 minutes',
-        '30 minutes',
-        '1 hour',
-        '2 hours',
-        '4 hours'
-      ].map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        if (newValue != null) {
-          cubit.changeFloatingNotificationInterval(newValue);
-        }
-      },
-      style: TextStyle(color: Colors.brown, fontSize: 16.sp),
-      dropdownColor: Colors.brown.shade50,
-    );
-  }
-
   Widget _buildSettingItem({required String title, required Widget child}) {
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),

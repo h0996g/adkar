@@ -2,8 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:adkar/shared/components/functions.dart';
 
 class CustomNotification {
-  static const platform =
-      MethodChannel('com.example.adkar/custom_notification');
+  static const platform = MethodChannel('com.h0774g.alhou/custom_notification');
 
   Future<void> startCustomNotificationService(
       {int repeatIntervalSeconds = 30 * 60}) async {

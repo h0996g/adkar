@@ -1,0 +1,2 @@
+C:/Users/user/Desktop/houssam/adkar/android/app/.cxx/Debug/2n4o4z5d/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/user/Desktop/houssam/adkar/android/app/.cxx/Debug/2n4o4z5d/x86_64/CMakeFiles/rebuild_cache.dir

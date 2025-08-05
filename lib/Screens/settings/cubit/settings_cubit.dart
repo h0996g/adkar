@@ -180,7 +180,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> _updateNotificationSettings() async {
-    const platform = MethodChannel('com.example.adkar/custom_notification');
+    const platform = MethodChannel('com.h0774g.alhou/custom_notification');
     try {
       await platform.invokeMethod('updateNotificationSettings', {
         'textSize': _notificationTextSize,

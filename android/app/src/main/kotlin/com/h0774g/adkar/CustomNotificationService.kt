@@ -1,4 +1,4 @@
-package com.example.adkar
+package com.h0774g.alhou
 
 import android.app.*
 import android.content.Context
